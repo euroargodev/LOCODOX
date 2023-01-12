@@ -1,0 +1,54 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Thierry"
+  given-names: "Virginie"
+  orcid: "https://orcid.org/0000-0003-1602-6478"
+- family-names: "Brion"
+  given-names: "Emilie"
+- family-names: "Gallian"
+  given-names: "Marine"
+- family-names: "Reynaud"
+  given-names: "Thierry"
+  orcid: "https://orcid.org/0000-0001-5252-3717"
+- family-names: "Bouinot"
+  given-names: "Thomas"
+- family-names: "Lagadec"
+  given-names: "Catherine"
+- family-names: "Piron"
+  given-names: "Anne"
+- family-names: "Zunino Rodriguez"
+  given-names: "Patricia"
+  orcid: "https://orcid.org/0000-0001-7057-7049"
+title: "LOCODOX: a Software for Argo Oxygen data correction"
+doi: 10.13155/74190
+url: "https://github.com/euroargodev/LOCODOX"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Thierry"
+      given-names: "Virginie"
+      orcid: "https://orcid.org/0000-0003-1602-6478"
+    - family-names: "Brion"
+      given-names: "Emilie"
+    - family-names: "Gallian"
+      given-names: "Marine"
+    - family-names: "Reynaud"
+      given-names: "Thierry"
+      orcid: "https://orcid.org/0000-0001-5252-3717"
+    - family-names: "Bouinot"
+      given-names: "Thomas"
+    - family-names: "Lagadec"
+      given-names: "Catherine"
+    - family-names: "Piron"
+      given-names: "Anne"
+    - family-names: "Zunino Rodriguez"
+      given-names: "Patricia"
+      orcid: "https://orcid.org/0000-0001-7057-7049"
+  doi: "10.13155/74190"
+  journal: "Technical document (specification, manual)"
+  title: "Locodox: un logiciel de correction des données d'oxygène du programme ARGO - Manuel d'utilisation"
+  year: 2022
+  volume:
+  issue:
+  page:
