@@ -13,8 +13,3 @@ LOCODOX works with Argo v3.1 netcdf files and provides files with corrected and 
 ## New features
 
 The tool can now offer correction based on PPOX
-
-
-
-
-
