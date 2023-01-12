@@ -1,0 +1,203 @@
+#CORIOLIS PROFILER DECODER, 2011/07/23 08:10, www.coriolis.eu.org
+#Type         Version       Name                                      WMO code      Parameters    Float cycle
+PROVOR        4.41          PROVOR Profiling Float                    1901213       PTSDO         1             
+
+#DESCENDING VERTICAL PROFILE
+#Date         Time          Date QC       Latitude      Longitude     Pos. QC       Mes. Nb       Max Press.
+#yyyy/mm/dd   hh24:mi:ss    IGOSS scale   S:-,N:+       W:-,E:+       IGOSS scale                 dBar
+2011/07/07    09:26:00      1             51.8500       -35.5920      1             0             
+
+#ASCENDING VERTICAL PROFILE
+#Date         Time          Date QC       Latitude      Longitude     Pos. QC       Mes. Nb       Max Press.
+#yyyy/mm/dd   hh24:mi:ss    IGOSS scale   S:-,N:+       W:-,E:+       IGOSS scale                 dBar
+2011/07/16    17:02:00      1             51.8630       -33.4410      1             2             1             
+
+#Date         Time          Pressure      Temperature   Salinity      Raw oxygen    Oxygen        Density       
+#yyyy/mm/dd   hh24:mi:ss    dBar          蚓            P.S.U.        然/l          然/kg         kg/dm3        
+2011/07/16    16:50:00      1             11.563        34.582        333           260.965       1.026351      
+                            0             11.569        34.583        333           260.958       1.026346      
+
+#IMMERSION DRIFT
+#Start date   Time          Date QC       Mes. Nb
+#yyyy/mm/dd   hh24:mi:ss    IGOSS scale
+2011/07/07    19:38:00      1             17            
+
+#Date         Time          Pressure      Temperature   Salinity      Raw oxygen    Oxygen        Density       
+#yyyy/mm/dd   hh24:mi:ss    dBar          蚓            P.S.U.        然/l          然/kg         kg/dm3        
+2011/07/07    21:23:00      0             11.087        34.468        335           262.501       1.026345      
+2011/07/07    22:47:00      0             11.707        34.568        338           264.973       1.026309      
+2011/07/07    23:51:00      1             11.071        34.592        336           263.053       1.026449      
+2011/07/08    01:27:00      51            8.572         34.911        304           236.701       1.027348      
+2011/07/08    21:23:00      0             11.425        34.468        339           265.804       1.026284      
+2011/07/08    22:47:00      862           4.027         34.903        319           252.551       1.031683      
+2011/07/08    23:51:00      20            11.068        34.602        333           260.843       1.026543      
+2011/07/09    01:27:00      13            11.272        34.583        332           260.137       1.026460      
+2011/07/09    21:23:00      0             11.018        34.468        339           265.601       1.026358      
+2011/07/09    22:47:00      28            9.043         34.684        326           254.292       1.026991      
+2011/07/09    23:51:00      7             11.142        34.584        336           263.154       1.026457      
+2011/07/10    21:23:00      0             11.085        34.529        341           267.086       1.026393      
+2011/07/10    22:47:00      17            10.915        34.575        335           262.359       1.026537      
+2011/07/10    23:51:00      1             11.157        34.582        333           260.766       1.026426      
+2011/07/11    21:23:00      0             11.016        34.544        339           265.456       1.026418      
+2011/07/11    23:51:00      1             11.296        34.588        334           261.606       1.026405      
+2011/07/12    23:51:00      2             11.261        34.578        332           260.049       1.026408      
+
+#SURFACE DRIFT
+#Mes. Nb
+18            
+
+#Date         Time          Latitude      Longitude     Pos. QC       
+#yyyy/mm/dd   hh24:mi:ss    S:-,N:+       W:-,E:+       Argos scale   
+2011/07/16    17:40:35      
+2011/07/16    17:38:37      51.8630       -33.4410      2             
+2011/07/16    17:49:58      51.8690       -33.4190      2             
+2011/07/16    17:52:38      51.8680       -33.4390      1             
+2011/07/16    18:20:36      51.8640       -33.4090      2             
+2011/07/16    19:27:11      51.8560       -33.4110      3             
+2011/07/16    19:47:13      51.8520       -33.3900      2             
+2011/07/16    19:58:56      51.8500       -33.4030      2             
+2011/07/16    19:59:58      51.8490       -33.4040      3             
+2011/07/16    21:18:39      51.8410       -33.3980      3             
+2011/07/16    21:40:18      51.8390       -33.4000      2             
+2011/07/16    21:47:08      51.8380       -33.4000      3             
+2011/07/16    22:57:38      51.8330       -33.3940      2             
+2011/07/16    23:19:15      51.8300       -33.3820      2             
+2011/07/16    23:28:18      51.8310       -33.3850      2             
+2011/07/17    00:41:18      51.8210       -33.3620      3             
+2011/07/17    02:41:02      51.8040       -33.3280      2             
+2011/07/17    02:49:58      
+
+#ARGO TRAJECTORY INFORMATION
+#Descent information
+#Start date   Start time    Start status  End date      End time      End status
+2011/07/07    09:26:00      2-Transmitted 2011/07/07    19:38:00      2-Transmitted 
+
+#Ascent information
+#Start date   Start time    Start status  End date      End time      End status
+2011/07/16    16:50:00      2-Transmitted 2011/07/16    17:02:00      2-Transmitted 
+
+#Transmission information
+#Start date   Start time    Start status
+2011/07/16    17:38:37      2-Transmitted 
+
+#Reception information
+#Start date   Start time    Start status  End date      End time      End status
+2011/07/16    17:40:35      2-Transmitted 2011/07/17    02:49:58      2-Transmitted 
+
+#Miscellaneous information
+#Grounded
+Yes           
+
+#TECHNICAL STATUS
+#Time correction :
+#Internal     Argos time    Time
+#time                       correction
+#hh24:mi:ss   hh24:mi:ss    mi:ss
+17:41:42      17:43:16      -1:34         
+
+#Sensors :
+#Pressure     Internal      DO
+#offset       pressure      state
+#dBar         mBar
+0.0           <= 725        Ok            
+
+#Descent float control :
+#Start time   End time      Surface valve First stab.   First stab.   Depth valve   Depth pump    Max           Entries in
+#                           actions       time          pressure      actions       actions       pressure      gap order
+#hh24:mi      hh24:mi                     hh24:mi       dBar                                      dBar
+09:26         19:38         29            09:44         20            14            15            2200          1             
+
+#Immersion drift float control :
+#Depth        Min           Max           Grounded
+#corrections  pressure      pressure
+#             dBar          dBar
+10            0             2120          Yes           
+
+#Descent to profile float control :
+#Start time   End time      Depth valve   Depth pump    Depth         Max           Battery       RTC           Entries in
+#                           actions       actions       corrections   pressure      voltage       state         gap order
+#hh24:mi      hh24:mi                                                 dBar
+07:32         07:38         0             0             0             0             10.0          Ok            1             
+
+#Ascent float control :
+#Start time   End time      Depth pump
+#                           actions
+#hh24:mi      hh24:mi
+16:50         17:02         0             
+
+#Descending profile reduction :
+#NTS          NTF
+0             0             
+
+#Ascending profile reduction :
+#NTS          NTF
+2             0             
+
+#Descending profile temperature measurements :
+#Profile      Profile       Profile
+#total        relative      absolute
+0             0             0             
+
+#Descending profile salinity measurements :
+#Profile      Profile       Profile
+#total        relative      absolute
+0             0             0             
+
+#Descending profile oxygen measurements :
+#Profile      Profile       Profile
+#total        relative      absolute
+0             0             0             
+
+#Immersion drift temperature measurements :
+#Internal     Drift         Drift         Drift
+#counter      total         relative      absolute
+17            17            9             8             
+
+#Immersion drift salinity measurements :
+#Internal     Drift         Drift         Drift
+#counter      total         relative      absolute
+17            17            10            7             
+
+#Immersion drift oxygen measurements :
+#Internal     Drift         Drift         Drift
+#counter      total         relative      absolute
+17            17            11            6             
+
+#Ascending profile temperature measurements :
+#Profile      Profile       Profile
+#total        relative      absolute
+2             1             1             
+
+#Ascending profile salinity measurements :
+#Profile      Profile       Profile
+#total        relative      absolute
+2             1             1             
+
+#Ascending profile oxygen measurements :
+#Profile      Profile       Profile
+#total        relative      absolute
+2             1             1             
+
+#Positionning (ARGOS message) :
+#Total        Class 3       Class 2       Class 1       Class 0       Class A       Class B       Class Z
+19            5             10            1             0             0             0             3             
+
+#Total transmission (Profiler frames) :
+#Received     Complete      CRC OK        Recombined    Technical fr. Technical OK
+164           163           124           0             59            47            
+
+#Descending profile transmission (Profiler frames) :
+#Received     Complete      CRC OK        Recombined    Distinct      Emitted
+0             0             0             0             0             0             
+
+#Immersion drift transmission (Profiler frames) :
+#Received     Complete      CRC OK        Recombined    Distinct      Emitted
+87            86            62            0             4             4             
+
+#Ascending profile transmission (Profiler frames) :
+#Received     Complete      CRC OK        Recombined    Distinct      Emitted
+18            18            15            0             1             1             
+
+#Decoder version :
+Last build : lundi, 2 mai 2011, 14:36:33 MET DST on mengam
+

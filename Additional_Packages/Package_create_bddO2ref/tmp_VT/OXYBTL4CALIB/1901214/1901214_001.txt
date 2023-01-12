@@ -1,0 +1,319 @@
+#CORIOLIS PROFILER DECODER, 2011/08/09 08:10, www.coriolis.eu.org
+#Type         Version       Name                                      WMO code      Parameters    Float cycle
+PROVOR        4.41          PROVOR Profiling Float                    1901214       PTSDO         1             
+
+#DESCENDING VERTICAL PROFILE
+#Date         Time          Date QC       Latitude      Longitude     Pos. QC       Mes. Nb       Max Press.
+#yyyy/mm/dd   hh24:mi:ss    IGOSS scale   S:-,N:+       W:-,E:+       IGOSS scale                 dBar
+2011/07/23    09:20:00      1             54.7640       -43.4320      1             0             
+
+#ASCENDING VERTICAL PROFILE
+#Date         Time          Date QC       Latitude      Longitude     Pos. QC       Mes. Nb       Max Press.
+#yyyy/mm/dd   hh24:mi:ss    IGOSS scale   S:-,N:+       W:-,E:+       IGOSS scale                 dBar
+2011/08/01    22:26:00      1             54.7100       -43.6240      1             120           1988          
+
+#Date         Time          Pressure      Temperature   Salinity      Raw oxygen    Oxygen        Density       
+#yyyy/mm/dd   hh24:mi:ss    dBar          蚓            P.S.U.        然/l          然/kg         kg/dm3        
+2011/08/01    16:50:00      1988          3.224         34.902        305           249.530       1.036888      
+                            1963          3.236         34.902        307           250.984       1.036774      
+                            1938          3.250         34.901        307           250.804       1.036659      
+                            1913          3.258         34.900        308           251.437       1.036545      
+                            1888          3.270         34.898        308           251.257       1.036429      
+                            1863          3.280         34.897        309           251.890       1.036315      
+                            1838          3.297         34.897        309           251.709       1.036200      
+2011/08/01    17:14:00      1813          3.312         34.897        309           251.526       1.036086      
+                            1788          3.332         34.897        309           251.346       1.035970      
+                            1763          3.353         34.897        309           251.167       1.035855      
+                            1738          3.374         34.898        309           250.985       1.035740      
+                            1713          3.396         34.898        309           250.806       1.035625      
+2011/08/01    17:34:00      1688          3.410         34.898        309           250.623       1.035510      
+                            1663          3.426         34.898        309           250.441       1.035395      
+                            1639          3.444         34.898        309           250.267       1.035284      
+                            1613          3.462         34.898        309           250.079       1.035165      
+                            1588          3.479         34.899        309           249.895       1.035050      
+                            1563          3.497         34.899        309           249.714       1.034935      
+                            1538          3.516         34.899        309           249.533       1.034819      
+2011/08/01    18:03:00      1513          3.540         34.899        309           249.355       1.034703      
+                            1488          3.558         34.899        309           249.174       1.034588      
+                            1463          3.585         34.901        309           248.994       1.034472      
+                            1438          3.595         34.900        310           249.616       1.034357      
+                            1413          3.605         34.900        310           249.430       1.034243      
+2011/08/01    18:25:00      1388          3.621         34.898        311           250.055       1.034126      
+                            1364          3.625         34.896        311           249.877       1.034015      
+                            1338          3.619         34.892        313           251.288       1.033895      
+                            1313          3.618         34.890        314           251.900       1.033780      
+                            1288          3.617         34.888        315           252.512       1.033665      
+                            1262          3.610         34.883        317           253.918       1.033544      
+                            1238          3.612         34.880        318           254.538       1.033432      
+2011/08/01    18:52:00      1213          3.625         34.880        319           255.149       1.033317      
+                            1188          3.626         34.878        320           255.756       1.033201      
+                            1163          3.622         34.875        321           256.361       1.033086      
+                            1138          3.626         34.873        322           256.967       1.032970      
+                            1113          3.628         34.871        323           257.571       1.032854      
+2011/08/01    19:14:00      1088          3.622         34.869        324           258.170       1.032739      
+                            1063          3.618         34.866        325           258.770       1.032624      
+                            1037          3.626         34.866        326           259.362       1.032504      
+                            1013          3.626         34.865        326           259.171       1.032393      
+                            988           3.622         34.862        327           259.768       1.032277      
+                            962           3.629         34.861        328           260.358       1.032157      
+                            938           3.621         34.859        329           260.957       1.032047      
+2011/08/01    19:41:00      913           3.627         34.859        330           261.550       1.031931      
+                            888           3.645         34.860        329           260.563       1.031816      
+                            863           3.675         34.863        329           260.370       1.031700      
+                            838           3.681         34.862        329           260.172       1.031584      
+                            813           3.729         34.868        328           259.193       1.031468      
+2011/08/01    20:02:00      788           3.755         34.871        328           258.999       1.031353      
+                            763           3.775         34.872        328           258.805       1.031236      
+                            739           3.783         34.872        328           258.615       1.031125      
+                            713           3.791         34.871        330           259.987       1.031004      
+                            688           3.832         34.875        329           259.010       1.030888      
+                            663           3.850         34.876        329           258.815       1.030772      
+                            638           3.838         34.871        330           259.401       1.030654      
+2011/08/01    20:28:00      613           3.877         34.875        330           259.211       1.030538      
+                            588           3.899         34.876        329           258.232       1.030421      
+                            563           3.923         34.877        330           258.824       1.030304      
+                            538           3.941         34.877        330           258.630       1.030187      
+                            513           3.954         34.876        330           258.435       1.030069      
+2011/08/01    20:47:00      495           3.986         34.878        330           258.302       1.029984      
+                            485           3.999         34.879        330           258.225       1.029937      
+                            476           4.010         34.879        330           258.158       1.029894      
+                            466           4.024         34.880        330           258.082       1.029847      
+                            456           3.998         34.875        332           259.560       1.029800      
+                            446           3.968         34.868        338           264.165       1.029752      
+                            435           3.977         34.868        339           264.860       1.029700      
+2011/08/01    21:00:00      425           3.982         34.868        340           265.560       1.029654      
+                            415           3.988         34.868        340           265.479       1.029607      
+                            405           3.994         34.866        340           265.403       1.029558      
+                            397           4.001         34.865        340           265.341       1.029520      
+                            386           3.998         34.863        340           265.252       1.029468      
+2011/08/01    21:09:00      376           3.987         34.858        341           265.952       1.029419      
+                            366           3.970         34.852        342           266.650       1.029370      
+                            356           3.950         34.848        343           267.343       1.029323      
+                            345           4.054         34.859        339           264.166       1.029269      
+                            335           3.951         34.843        338           263.281       1.029222      
+2011/08/01    21:16:00      326           3.856         34.825        345           268.642       1.029176      
+                            316           3.779         34.811        350           272.435       1.029127      
+                            306           3.742         34.803        353           274.679       1.029079      
+                            296           3.707         34.795        355           276.145       1.029030      
+                            285           3.681         34.789        356           276.825       1.028977      
+2011/08/01    21:23:00      275           3.634         34.779        358           278.286       1.028927      
+                            265           3.590         34.769        360           279.748       1.028878      
+                            256           3.542         34.759        362           281.216       1.028833      
+                            245           3.539         34.751        363           281.910       1.028776      
+                            235           3.538         34.743        364           282.613       1.028723      
+2011/08/01    21:32:00      225           3.565         34.741        364           282.543       1.028672      
+                            215           3.624         34.743        363           281.706       1.028621      
+                            206           3.661         34.741        362           280.875       1.028574      
+                            196           3.674         34.733        361           280.034       1.028520      
+                            185           3.745         34.727        354           274.559       1.028456      
+                            175           3.815         34.726        351           272.186       1.028402      
+                            165           3.950         34.733        348           269.833       1.028346      
+2011/08/01    21:45:00      155           3.962         34.721        346           268.227       1.028289      
+                            145           3.921         34.708        349           270.471       1.028237      
+                            135           3.994         34.705        350           271.205       1.028180      
+                            125           4.162         34.714        349           270.417       1.028123      
+                            115           4.241         34.706        352           272.714       1.028061      
+2011/08/01    21:55:00      106           4.216         34.691        353           273.427       1.028010      
+                            96            4.260         34.682        355           274.931       1.027952      
+                            85            4.289         34.669        356           275.651       1.027887      
+                            76            4.423         34.666        355           274.878       1.027828      
+                            66            4.511         34.658        356           275.629       1.027766      
+                            56            4.661         34.650        357           276.413       1.027696      
+                            46            4.919         34.636        360           278.819       1.027609      
+2011/08/01    22:07:00      35            6.457         34.566        355           275.825       1.027311      
+                            26            8.336         34.488        356           277.690       1.026940      
+                            20            8.750         34.486        363           283.325       1.026846      
+2011/08/01    22:11:00      17            9.105         34.481        364           284.282       1.026772      
+                            15            9.503         34.473        362           282.933       1.026692      
+                            13            9.783         34.476        360           281.496       1.026638      
+                            11            9.850         34.480        360           281.506       1.026621      
+                            9             9.853         34.481        360           281.487       1.026612      
+                            8             9.852         34.482        359           280.694       1.026609      
+                            6             9.853         34.483        359           280.674       1.026600      
+2011/08/01    22:13:00      5             9.852         34.483        359           280.665       1.026596      
+                            3             9.850         34.478        359           280.656       1.026583      
+                            1             9.849         34.477        360           281.421       1.026574      
+                            0             9.848         34.480        360           281.406       1.026572      
+
+#IMMERSION DRIFT
+#Start date   Time          Date QC       Mes. Nb
+#yyyy/mm/dd   hh24:mi:ss    IGOSS scale
+2011/07/23    18:08:00      1             17            
+
+#Date         Time          Pressure      Temperature   Salinity      Raw oxygen    Oxygen        Density       
+#yyyy/mm/dd   hh24:mi:ss    dBar          蚓            P.S.U.        然/l          然/kg         kg/dm3        
+2011/07/23    20:22:00      1004          3.618         34.859        330           262.285       1.032349      
+2011/07/23    21:58:00      1005          3.640         34.865        328           260.704       1.032355      
+2011/07/23    23:34:00      1007          3.629         34.864        324           257.537       1.032365      
+2011/07/24    20:22:00      1005          3.619         34.861        329           261.495       1.032355      
+2011/07/24    21:58:00      1007          3.624         34.862        329           261.512       1.032364      
+2011/07/24    23:34:00      1008          3.630         34.865        324           257.543       1.032370      
+2011/07/25    20:22:00      1005          3.637         34.864        328           260.704       1.032355      
+2011/07/25    21:58:00      1006          3.616         34.861        328           260.707       1.032360      
+2011/07/25    23:34:00      1007          3.632         34.865        321           255.152       1.032365      
+2011/07/26    20:22:00      1002          3.639         34.865        329           261.474       1.032342      
+2011/07/26    21:58:00      1011          3.628         34.865        327           259.951       1.032384      
+2011/07/26    23:34:00      1003          3.632         34.865        321           255.120       1.032347      
+2011/07/27    20:22:00      1005          3.630         34.866        329           261.491       1.032357      
+2011/07/27    21:58:00      1005          3.634         34.865        326           259.111       1.032356      
+2011/07/27    23:34:00      1008          3.630         34.865        321           255.159       1.032370      
+2011/07/28    20:22:00      1004          3.623         34.865        328           260.687       1.032353      
+2011/07/28    21:58:00      1006          3.628         34.863        325           258.325       1.032360      
+
+#SURFACE DRIFT
+#Mes. Nb
+16            
+
+#Date         Time          Latitude      Longitude     Pos. QC       
+#yyyy/mm/dd   hh24:mi:ss    S:-,N:+       W:-,E:+       Argos scale   
+2011/08/01    22:31:59      
+2011/08/01    22:36:13      54.7100       -43.6240      3             
+2011/08/01    23:34:10      54.7050       -43.6480      2             
+2011/08/01    23:43:11      54.7040       -43.6500      3             
+2011/08/02    00:17:27      54.7040       -43.6500      3             
+2011/08/02    01:52:39      54.7020       -43.6750      2             
+2011/08/02    03:15:38      54.7100       -43.6730      2             
+2011/08/02    04:48:26      54.7090       -43.6790      3             
+2011/08/02    04:57:06      54.7110       -43.6770      2             
+2011/08/02    06:07:34      54.7160       -43.6790      1             
+2011/08/02    06:30:07      54.7170       -43.6870      3             
+2011/08/02    06:37:58      54.7160       -43.6850      3             
+2011/08/02    07:42:31      54.7180       -43.6860      3             
+2011/08/02    08:12:45      54.7190       -43.6860      3             
+2011/08/02    08:17:08      54.7190       -43.6840      2             
+2011/08/02    08:24:01      
+
+#ARGO TRAJECTORY INFORMATION
+#Descent information
+#Start date   Start time    Start status  End date      End time      End status
+2011/07/23    09:20:00      2-Transmitted 2011/07/23    18:08:00      2-Transmitted 
+
+#Ascent information
+#Start date   Start time    Start status  End date      End time      End status
+2011/08/01    16:50:00      2-Transmitted 2011/08/01    22:26:00      2-Transmitted 
+
+#Transmission information
+#Start date   Start time    Start status
+2011/08/01    22:36:13      2-Transmitted 
+
+#Reception information
+#Start date   Start time    Start status  End date      End time      End status
+2011/08/01    22:31:59      2-Transmitted 2011/08/02    08:24:01      2-Transmitted 
+
+#Miscellaneous information
+#Grounded
+No            
+
+#TECHNICAL STATUS
+#Time correction :
+#Internal     Argos time    Time
+#time                       correction
+#hh24:mi:ss   hh24:mi:ss    mi:ss
+22:37:47      22:39:59      -2:12         
+
+#Sensors :
+#Pressure     Internal      DO
+#offset       pressure      state
+#dBar         mBar
+0.0           <= 725        Ok            
+
+#Descent float control :
+#Start time   End time      Surface valve First stab.   First stab.   Depth valve   Depth pump    Max           Entries in
+#                           actions       time          pressure      actions       actions       pressure      gap order
+#hh24:mi      hh24:mi                     hh24:mi       dBar                                      dBar
+09:20         18:08         32            09:50         20            10            0             1000          1             
+
+#Immersion drift float control :
+#Depth        Min           Max           Grounded
+#corrections  pressure      pressure
+#             dBar          dBar
+0             1000          1010          No            
+
+#Descent to profile float control :
+#Start time   End time      Depth valve   Depth pump    Depth         Max           Battery       RTC           Entries in
+#                           actions       actions       corrections   pressure      voltage       state         gap order
+#hh24:mi      hh24:mi                                                 dBar
+07:32         15:08         8             0             0             1990          9.9           Ok            1             
+
+#Ascent float control :
+#Start time   End time      Depth pump
+#                           actions
+#hh24:mi      hh24:mi
+16:50         22:26         8             
+
+#Descending profile reduction :
+#NTS          NTF
+0             0             
+
+#Ascending profile reduction :
+#NTS          NTF
+60            60            
+
+#Descending profile temperature measurements :
+#Profile      Profile       Profile
+#total        relative      absolute
+0             0             0             
+
+#Descending profile salinity measurements :
+#Profile      Profile       Profile
+#total        relative      absolute
+0             0             0             
+
+#Descending profile oxygen measurements :
+#Profile      Profile       Profile
+#total        relative      absolute
+0             0             0             
+
+#Immersion drift temperature measurements :
+#Internal     Drift         Drift         Drift
+#counter      total         relative      absolute
+17            17            14            3             
+
+#Immersion drift salinity measurements :
+#Internal     Drift         Drift         Drift
+#counter      total         relative      absolute
+17            17            14            3             
+
+#Immersion drift oxygen measurements :
+#Internal     Drift         Drift         Drift
+#counter      total         relative      absolute
+17            17            14            3             
+
+#Ascending profile temperature measurements :
+#Profile      Profile       Profile
+#total        relative      absolute
+120           94            26            
+
+#Ascending profile salinity measurements :
+#Profile      Profile       Profile
+#total        relative      absolute
+120           95            25            
+
+#Ascending profile oxygen measurements :
+#Profile      Profile       Profile
+#total        relative      absolute
+120           98            22            
+
+#Positionning (ARGOS message) :
+#Total        Class 3       Class 2       Class 1       Class 0       Class A       Class B       Class Z
+15            8             5             1             0             0             0             1             
+
+#Total transmission (Profiler frames) :
+#Received     Complete      CRC OK        Recombined    Technical fr. Technical OK
+209           209           171           0             14            11            
+
+#Descending profile transmission (Profiler frames) :
+#Received     Complete      CRC OK        Recombined    Distinct      Emitted
+0             0             0             0             0             0             
+
+#Immersion drift transmission (Profiler frames) :
+#Received     Complete      CRC OK        Recombined    Distinct      Emitted
+21            21            17            0             3             3             
+
+#Ascending profile transmission (Profiler frames) :
+#Received     Complete      CRC OK        Recombined    Distinct      Emitted
+174           174           143           0             21            21            
+
+#Decoder version :
+Last build : lundi, 2 mai 2011, 14:36:33 MET DST on mengam
+
