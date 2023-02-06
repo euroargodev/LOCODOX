@@ -123,6 +123,8 @@ if strfind(username,'treynaud')
     % External data directories : NCEP, WOA and TOPOGRAPHY
     CONFIG.ExtDataDir = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_DATA/';
     % added by Thierry Reynaud 23.04.2020
+    CONFIG.LOPSDataDir = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/';
+    % added by Thierry Reynaud 06.02.2023
     CONFIG.NCEPDataDir= '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_DATA/NCEP/';
     % added by Thierry Reynaud 23.04.2020
     CONFIG.WOADataDir= '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_DATA/WOA/';
@@ -140,6 +142,8 @@ elseif strfind(username,'vthierry')
     % External data directories : NCEP, WOA and TOPOGRAPHY
     CONFIG.ExtDataDir = '/Users/vthierry/matlab/GITHUB_LOCODOX/LOCODOX/LOCODOX_EXTERNAL_DATA/';
     % added by Thierry Reynaud 23.04.2020
+    CONFIG.LOPSDataDir = '/Users/vthierry/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/';
+    % added by Thierry Reynaud 06.02.2023
     CONFIG.NCEPDataDir= '/Users/vthierry/matlab/GITHUB_LOCODOX/LOCODOX/LOCODOX_EXTERNAL_DATA/NCEP/';
     % added by Thierry Reynaud 23.04.2020
     CONFIG.WOADataDir= '/Users/vthierry/matlab/GITHUB_LOCODOX/LOCODOX/LOCODOX_EXTERNAL_DATA/WOA/';
@@ -161,7 +165,7 @@ addpath(hydcalDir);
 addpath(seawaterDir);
 addpath(fullfile(CONFIG.LocodoxMainDir,'share',filesep));
 addpath(fullfile(CONFIG.LocodoxMainDir,'doxy_corr',filesep));
-addpath(fullfile(CONFIG.LocodoxMainDir,'data_input',filesep));
+addpath(fullfile(CONFIG.LOPSDataDir,'data_input',filesep));% TR 06.02.2023
 % woa_pth added by Thierry Reynaud 09.04.2020
 %woa_pth=fullfile(CONFIG.ExtDataDir,'WOA',filesep);
 %addpath(woa_pth);
@@ -267,7 +271,7 @@ CONFIG.QC_S = [1 2 3]; % PSAL
 % (order 1, y ~ ax+b). The polynomial degree can be increased up to 3. 
 % A new equation could be used if the parameter CONFIG.drift_spec is 
 % activated and if the parameter CONFIG.drift_fittype is filled.
-CONFIG.drift_fitPolynomialDegree = 1;
+CONFIG.drift_fitPolynomialDegree = 2;
 CONFIG.drift_spec = 0;
 if CONFIG.drift_spec == 1
     % If the fitting equation is a classical one (ex : a*exp(b*x)), enter
