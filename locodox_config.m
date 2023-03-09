@@ -271,7 +271,7 @@ CONFIG.QC_S = [1 2 3]; % PSAL
 % (order 1, y ~ ax+b). The polynomial degree can be increased up to 3. 
 % A new equation could be used if the parameter CONFIG.drift_spec is 
 % activated and if the parameter CONFIG.drift_fittype is filled.
-CONFIG.drift_fitPolynomialDegree = 2;
+CONFIG.drift_fitPolynomialDegree = 1;
 CONFIG.drift_spec = 0;
 if CONFIG.drift_spec == 1
     % If the fitting equation is a classical one (ex : a*exp(b*x)), enter

@@ -300,8 +300,9 @@ if Work.anteriorcorr==1 %|| Work.DODRIFT==true
                 myStr = eval([scientifield{f} '.' param]);
                 %argo.(['scientific_calib_' scientifield{f}]).data(idxNewCalib,isok,1:length(myStr),n) = myStr;%Commented by T.Reynaud 05.09.2022
                 % Added by T. Reynaud 05.09.2022
-                %if f==4 & ~isempty(deblank(myStr)) %commented T. Reynaud 09.03.2023
-                if ~isempty(deblank(myStr))
+                %if f==4 & ~isempty(deblank(myStr)) %commented T. Reynaud
+                %09.03.2023
+                if f==4 & ~isempty(deblank(myStr))
                   argo.(['scientific_calib_' scientifield{f}]).data(idxNewCalib,isok,1:length(myStr),n) = myStr;
                 end
 
@@ -489,9 +490,7 @@ for n = 1:n_prof
             myStr = eval([scientifield{f} '.' param]);
             %argo.(['scientific_calib_' scientifield{f}]).data(idxNewCalib,isok,1:length(myStr),n) =myStr;% Commented TR 01/09/2022
             % Test on isempty myStr added by T. Reynaud 01/09/2022 ==> date only
-
-            %if f==4 & ~isempty(deblank(myStr)) %Commented T. Reynaud 09.03.2023         
-            if ~isempty(deblank(myStr))
+            if f==4 & ~isempty(deblank(myStr))
                 argo.(['scientific_calib_' scientifield{f}]).data(idxNewCalib,isok,1:length(myStr),n) = myStr;
             end
             %end
