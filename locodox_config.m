@@ -292,17 +292,18 @@ CONFIG.ok_inair_drift=1;
 %CONFIG.max_drift_depth_deep=2500;
 %CONFIG.step_drift_depth_deep=100;
 
-CONFIG.min_drift_depth_deep=1500;
-CONFIG.max_drift_depth_deep=1800;
+CONFIG.min_drift_depth_deep=1700;
+%CONFIG.max_drift_depth_deep=1800;% Normal
+CONFIG.max_drift_depth_deep=2100;
 CONFIG.step_drift_depth_deep=100;
 
 %CONFIG.min_drift_depth_deep=2500;
 %CONFIG.max_drift_depth_deep=4000;
 %CONFIG.step_drift_depth_deep=100;
 
-%CONFIG.min_drift_depth_deep=1400;
-%CONFIG.max_drift_depth_deep=1800;
-%CONFIG.step_drift_depth_deep=100;
+%CONFIG.min_drift_depth_deep=450;
+%CONFIG.max_drift_depth_deep=550;
+%CONFIG.step_drift_depth_deep=50;
 
 %CONFIG.min_drift_depth_deep=800;
 %CONFIG.max_drift_depth_deep=1000;
@@ -311,8 +312,8 @@ CONFIG.step_drift_depth_deep=100;
 % Near surface
 % Introduced by TR 12/04/2021
 CONFIG.min_drift_depth_surf= 0;
-CONFIG.max_drift_depth_surf=25;%Normal
-%CONFIG.max_drift_depth_surf=35;
+%CONFIG.max_drift_depth_surf=25;%Normal
+CONFIG.max_drift_depth_surf=30;
 CONFIG.step_drift_depth_surf=5;
 
 % WOA or REF correction

@@ -118,6 +118,8 @@
 % HISTORY
 %   $created: 03/12/2015 $author: Emilie Brion, Altran Ouest
 %   $Revision: version $Date: $author:
+%   23.03.2023 Kermabon Catherine ==> dist.m not used properly. Bug
+%   corrected
 
 
 function [WOA] = DOXY_interp_WOA_2_argo(WOA,argoWork, argo, PorD, nearShore, datat,presEff)
@@ -218,7 +220,38 @@ for z=1:nlevels
         for v=2:length(VarInWoa)
             if any(any(test_pos))                
                 for j=1:length(Tq)
-                    vect_dist=dist([Y(pos_ok_Y),Yq(j)],[X(pos_ok_X),Xq(j)]);
+                  %  vect_dist=dist([Y(pos_ok_Y),Yq(j)],[X(pos_ok_X),Xq(j)]);
+                  %
+                  % 20/03/2023 : Modif. C. Kermabon.
+                  % L'utilisation de dist ci-dessus calcule la distance
+                  % entre 2 points consecutifs definis par Y et X au lieu
+                  % de calculer la distance entre chaque point de (Y,X)
+                  % et le point flotteur (Yq(j),Xq(j)).
+                  %
+                    vect_Y = ones(2,length(pos_ok_Y));
+                    vect_X = vect_Y;
+                    vect_Y(1,:)=Y(pos_ok_Y);
+                    vect_Y(2,:) = Yq(j);
+                    vect_X(1,:) = X(pos_ok_X);
+                    vect_X(2,:) = Xq(j);
+                    if length(pos_ok_Y)==2
+                        vect_Y = vect_Y';
+                        vect_X = vect_X';
+                    end
+                    vect_dist = dist(vect_Y,vect_X);
+                    %
+                    % Fin Modif. C. Kermabon (20/03/2023).
+                    %
+                    % A noter qu'ici, des lors qu'un cycle est pres des
+                    % cotes, on interpole les valeurs de la variable WOA du
+                    % point le plus proche. Or, meme pres des cotes, les 4
+                    % points entourant le flotteur peuvent avoir des
+                    % donnees  WOA pour certaines profondeurs (en surface par exemple). On pourrait alors tres bien faire
+                    % une interpolation interpn classique pour ces profondeurs. Neanmoins, V.
+                    % Thierry suggere de prendre les donnees WOA du point
+                    % le plus proche pour tout le profil, afin d'assurer
+                    % une coherence sur la verticale.
+                    %
                     ind_coord=find(vect_dist==min(vect_dist));
 
                     

@@ -72,6 +72,7 @@
 % HISTORYD
 %   $created: 25/11/2015 $author: Emilie Brion, Altran Ouest
 %   $Revision: version $Date: $author:
+%   23.03.2023 Kermabon Catherine and T. Reynaud ==> read properly the optode height 
 
 function [argo_primary, argo_nearsurf, argo_secondary, argo_other, DimP, DimNS, DimS, DimO, argo, Dim] = ...
     DOXY_argo_read(DataDir,wmo,replist,whichCorr,LogDir,metafiledir)
@@ -213,10 +214,27 @@ hh=str2num(metaval.launch_date.data(9:10));
 mn=str2num(metaval.launch_date.data(11:12));
 ss=str2num(metaval.launch_date.data(13:14));
 argo.launchdate=datenum(yyyy,mm,dd,hh,mn,ss)-datenum(1950,1,1,0,0,0);
-    
-if isfield(metaval,'OptodeVerticalPressureOffset_dbar'), argo.heightoptode=abs(-metaval.OptodeVerticalPressureOffset_dbar);
-else, argo.heightoptode=0.2; % 20 cm assumed as default height of optode above sea surface, if not given in 'CONFIG_OptodeVerticalPressureOffset_dbar' in meta file
+
+% Added by T. Reynaud and K. Kermabon : 23.03.2023
+%config_launch = ncread(metafile,'LAUNCH_CONFIG_PARAMETER_NAME');
+%config_launch = config_launch';
+%config_launch = cellstr(config_launch);
+%isinfo_optode = find(strcmp(config_launch,'CONFIG_OptodeVerticalPressureOffset_dbar'));
+
+argo.heightoptode = 0.2; % 20 cm assumed as default height of optode above sea surface, if not given in 'CONFIG_OptodeVerticalPressureOffset_dbar' in meta file
+if isfield(metaval,'OptodeVerticalPressureOffset_dbar')
+    argo.heightoptode=abs(-metaval.OptodeVerticalPressureOffset_dbar);
+%
+% 27/03/2023 : C. Kermabon - T. Reynaud : Reading OptodeVerticalPressureOffset.
+%
+elseif isfield(metaval,'launch_config_parameter_name') 
+    if ~isempty(find(strcmp(cellstr(metaval.launch_config_parameter_name.data),'CONFIG_OptodeVerticalPressureOffset_dbar')))
+     isinfo_optode = find(strcmp(cellstr(metaval.launch_config_parameter_name.data),'CONFIG_OptodeVerticalPressureOffset_dbar'));
+     argo.heightoptode = metaval.launch_config_parameter_value.data(isinfo_optode); 
+    end
 end
+% End 27.03.2023
+
 if argo.heightoptode<0, argo.heightoptode=-argo.heightoptode; disp(['  Assume optode to be ' num2str(argo.heightoptode) ' m above the pressure sensor, not below'])
 elseif argo.heightoptode==0, argo.heightoptode=1e-4; % to be able to use same equation below; equal to sea-surface water vapor pressure
 end 
