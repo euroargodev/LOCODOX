@@ -598,6 +598,15 @@ while goProg
         DRIFT=0;
         DRIFT2=0;
     end
+
+%  For H. Bittig/Schmichtig calculations
+%     OFFSET=0;
+%     SLOPE=1.0740;
+%     DRIFT=1.110;
+%     INCLINE_T=0;
+%     DRIFT2=0;
+
+
     Work.SLOPE=SLOPE;
     Work.DRIFT=DRIFT;
     Work.DRIFT2=DRIFT2;
@@ -610,6 +619,7 @@ while goProg
     disp(['DRIFT = ', num2str(DRIFT)]);
     disp(['DRIFT2 = ', num2str(DRIFT2)]);
     INCLINE_T=0;
+    disp(['INCLINE_T = ', num2str(INCLINE_T)]);
     
     for n = 1:4
     argoStruct = eval(['argo' num2str(n) 'Struct;']);  

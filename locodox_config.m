@@ -120,6 +120,7 @@ if strfind(username,'treynaud')
     CONFIG.LocodoxMainDir = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX4.2/';
     % Directory of the Argo NetCDF data
     CONFIG.DataDir = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_FLOAT_DATA/DMQC_PSAL/coriolis/';
+    %CONFIG.DataDir = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_FLOAT_DATA/CORIOLIS/coriolis/';% Pour CK 2023.04.06
     % External data directories : NCEP, WOA and TOPOGRAPHY
     CONFIG.ExtDataDir = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_DATA/';
     % added by Thierry Reynaud 23.04.2020
@@ -240,6 +241,7 @@ CONFIG.presEff = 0;   % 0/1 option unactivated/activated
 % Application in the Ocean", Henry Bittig and al (2018)
 CONFIG.isokC=1;
 
+%CONFIG.isokC=0;% Pour CK 2023.04.06
 % Data mode selection
 % '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 % Do you want to force the use of the 'Real Time' fields even if the 
@@ -255,6 +257,9 @@ CONFIG.DM_pres = 1;
 CONFIG.DM_temp = 1;
 CONFIG.DM_psal = 1; 
  
+% CONFIG.DM_pres = 0;% Pour CK 2023.04.06
+% CONFIG.DM_temp = 0;% Pour CK 2023.04.06
+% CONFIG.DM_psal = 0;% Pour CK 2023.04.06
 % QC selection: 
 % '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 % Only the data whose QC equal to these values are 
