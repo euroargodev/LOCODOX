@@ -45,6 +45,7 @@
 %   v1.2 05/07/2018  Emilie Brion, Altran Ouest
 %                    ppox_doxy field in argoTrajWork : get
 %                    ppox_doxy_adjusted or ppox_doxy
+%   v1.3 27/06/2028  T. Reynaud Read Rtraj if BRtraj not available
 
 function [argoTraj, argoTrajC, argoTrajWork, Dim] = ...
     DOXY_argoTraj_read(CONFIG,wmo)
@@ -55,6 +56,10 @@ function [argoTraj, argoTrajC, argoTrajWork, Dim] = ...
 trajDir = fullfile(CONFIG.DataDir,num2str(wmo));
 
 bio_file = dir(fullfile(trajDir,'*B*traj.nc'));
+
+if isempty(bio_file)
+    bio_file=dir(fullfile(trajDir,'*Rtraj.nc'));
+end
 [argoTraj,Dim] = NCR_file(fullfile(trajDir,bio_file.name));
 argoTraj.cycle_number.data = double(argoTraj.cycle_number.data);
 argoTraj.cycle_number.type = 6;
