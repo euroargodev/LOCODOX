@@ -151,7 +151,7 @@ fprintf('\t Drift correction is done with PRES\n');
 % levels or at the sea surface
 
 if    strcmp(Work.whichDrift,'WOA')
-    a=questdlg('Do you want to compute the Time Drift on deep levels (No ==> Time Drift will be computed at the sea surface ?',sprintf('Levels of WOA_based dirft correction - %d',Work.wmo),'Yes','No','No');   
+    a=input('Do you want to compute the Time Drift on deep levels (No ==> Time Drift will be computed at the sea surface ? Yes/No','s');   
     if strcmp(a,'Yes')
         Work.driftondeeplevels = 1;
     else
@@ -349,10 +349,10 @@ end
 if Work.drift_spec == 1
     v =  ver;
     if all(cellfun('isempty',strfind({v.Name},'Statistics')))
-        input = inputdlg({'Statistics Toolbox unavailable : Matlab can''t apply your drift equation. The drift will be compute with a polynomial equation. The default degree is 1. Do you wan''t to change it ?'},...
+        inputval = inputdlg({'Statistics Toolbox unavailable : Matlab can''t apply your drift equation. The drift will be compute with a polynomial equation. The default degree is 1. Do you wan''t to change it ?'},...
             'DOXY_drift : non statistic toolbox',1,{'1'});
         Work.drift_spec = 0;
-        Work.drift_fitPolynomialDegree = str2num(char(input)); %#ok<ST2NM>
+        Work.drift_fitPolynomialDegree = str2num(char(inputval)); %#ok<ST2NM>
     end
 end
 if Work.drift_spec == 0
@@ -682,16 +682,17 @@ if ~noDriftComputation
 %             DRIFT.applyDriftC='NO';
 %         end
 %     else
-        DRIFT.applyDriftC = questdlg({sprintf('Float #%d',Work.wmo);...
-            ' ---------------------------';
-            'The statistical method results in: '; ...
-            ' ---------------------------';DRIFT.explanation0;
-            DRIFT.explanation1; DRIFT.explanation2; ...
-            '---------------------------';...
-            driftCorrSuggestion; DRIFT.explanation; DRIFT.explanation3;...
-            ' ---------------------------';...
-            'Apply time drift correction ?';''},...
-            'TIME DRIFT CORRECTION','YES','NO','YES');
+%        DRIFT.applyDriftC = questdlg({sprintf('Float #%d',Work.wmo);...
+%            ' ---------------------------';
+%            'The statistical method results in: '; ...
+%            ' ---------------------------';DRIFT.explanation0;
+%            DRIFT.explanation1; DRIFT.explanation2; ...
+%            '---------------------------';...
+%            driftCorrSuggestion; DRIFT.explanation; DRIFT.explanation3;...
+%            ' ---------------------------';...
+%            'Apply time drift correction ?';''},...
+%            'TIME DRIFT CORRECTION','YES','NO','YES');
+       DRIFT.applyDriftC = input('Apply the drift correction ? (YES/NO)','s');
 %     end
     
 else
@@ -702,6 +703,6 @@ else
     DRIFT.explanation = sprintf('* State: %s',errorMess);
     DRIFT.applyDriftC='NO';
     % to small drift
-    waitfor(warndlg({driftCorrSuggestion;explanation},'NO DRIFT COMPUTATION')); %marine 12/06/19
+    waitfor(warndlg({driftCorrSuggestion;DRIFT.explanation},'NO DRIFT COMPUTATION')); %marine 12/06/19
 end
 

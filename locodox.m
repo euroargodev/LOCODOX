@@ -65,7 +65,7 @@ goProg = 1;
 
 % Read the configuration file, addpath and load files
 if nargin == 0
-    config_prog = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX4.2/locodox_config';
+    config_prog = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX/locodox_config';
 end
 % if nargin == 0
 %     config_prog = '/Users/vthierry/matlab/GITHUB_LOCODOX/LOCODOX/locodox_config';

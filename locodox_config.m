@@ -117,7 +117,7 @@ end
 
 if strfind(username,'treynaud')
     % Main directory of LOCODOX
-    CONFIG.LocodoxMainDir = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX4.2/';
+    CONFIG.LocodoxMainDir = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX/';
     % Directory of the Argo NetCDF data
     CONFIG.DataDir = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_FLOAT_DATA/DMQC_PSAL/coriolis/';
     %CONFIG.DataDir = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_FLOAT_DATA/CORIOLIS/coriolis/';% Pour CK 2023.04.06
@@ -208,12 +208,12 @@ CONFIG.logo = fullfile(CONFIG.LocodoxMainDir,'locodox_logo.jpg');
 % ncepFtpSubDir : the sub directory where to find the NCEP data in the ftp website
 % ncepFiles : the NCEP files to be read
 % ncepYears : read the NCEP data for the years specified
-CONFIG.ncepDoUpdate = 1;
+CONFIG.ncepDoUpdate = 1;  
 CONFIG.ncepFtp = 'ftp.cdc.noaa.gov';
 CONFIG.ncepFtpDir = 'Datasets/ncep.reanalysis/';
 CONFIG.ncepFtpSubDir = {'surface','surface','surface'};
 CONFIG.ncepFiles = {'slp','air.sig995','rhum.sig995'};
-CONFIG.ncepYears = [2014:2022];% To be used
+CONFIG.ncepYears = [2014:2023];% To be used
 CONFIG.ncepGetYears = str2double(datestr(now,'YYYY'));% To be downloaded
 %CONFIG.ncepGetYears = [2021:2022];% To be downloaded
 
@@ -354,7 +354,7 @@ CONFIG.adjusted_error_rel = 3;
 % -------------------------------------------------------------------------
 CONFIG.history_software = 'LOCODOX';
 CONFIG.history_reference = ['LOPS2020_WOA',WOA_YEAR];
-CONFIG.history_software_release = '4.2';
+CONFIG.history_software_release = '4.3';
 CONFIG.prefix = 'BD';
 
 % -------------------------------------------------------------------------

@@ -76,6 +76,10 @@
 %       22/03/2019      Marine GALLIAN, Altran Ouest
 %                       Update function in order to manage new MC
 %                       measurement code for in air data
+%
+% 27/04:2023 : C. Kermabon.
+%                       Utilisation interpn + prise en compte ERA5.
+%
 
 function [NCEP] = DOXY_NCEP_colocalize(NCEP,argoTrajWork,CONFIG)
 
@@ -93,176 +97,82 @@ function [NCEP] = DOXY_NCEP_colocalize(NCEP,argoTrajWork,CONFIG)
 % Interpolate argoTrajWork time, lat and lon over a 6h daily grid
 % =========================================================================
 if iscell(argoTrajWork.juld.data)
-    juld = cellfun(@(x) x+datenum(strrep(argoTrajWork.juld.units,...
+    juld_argo = cellfun(@(x) x+datenum(strrep(argoTrajWork.juld.units,...
             'days since',''),'yyyy-mm-dd HH:MM:SS'),...
             argoTrajWork.juld.data,'UniformOutput',false);
-    juld = cell2mat(juld);
+    juld_argo = cell2mat(juld_argo);
 else
-    juld = argoTrajWork.juld.data + ...
+    juld_argo = argoTrajWork.juld.data + ...
         datenum(strrep(argoTrajWork.juld.units,'days since',''),'yyyy-mm-dd HH:MM:SS');
 end
-
-
-% Argo Traj Latitude and longitude
-% The position of the PPOX is the first localization of Argo, for the same
-% cycle_number
-[myunik, idxunik] = unique(argoTrajWork.cycle_number.data);
-idxunik = idxunik(isfinite(myunik));
-idxunik(end+1) = length(argoTrajWork.cycle_number.data);
-
-if iscell(argoTrajWork.latitude.data)
-    lat = cell2mat(argoTrajWork.latitude.data);
-    lon = cell2mat(argoTrajWork.longitude.data);
-else
-    lat = NaN(1,length(idxunik)-1);
-    lon = NaN(1,length(idxunik)-1);
-    for i = 1:length(idxunik)-1
-        k = idxunik(i);
-        isok = find(~isnan(argoTrajWork.latitude.data(k:idxunik(i+1))),1,'first');
-        if ~isempty(isok)
-            lat(i) = argoTrajWork.latitude.data(k+isok-1);
-            lon(i) = argoTrajWork.longitude.data(k+isok-1);
-        end
-    end
-end
-
-% Define the 6h daily grid (4 times a day)
-    % Force start/end date to 4-times daily grid (6h daily)
-startdate = floor(min(juld)*4)/4; %--MG
-enddate = ceil(max(juld)*4)/4; %--MG
-    % new time grid : times at which to extract data
-argo6h.juld = (startdate:1/4:enddate)';
-
-% keep nan values in memory
-%idxnan = isnan(juld); % Commented by T. Reynaud 06.11.2020
-idxnan = isnan(juld.*lat);% Filter date without positions
-
-% Interpolation over the argoTrajWork track, taking into account the new time grid
-    % If any non unique values (example : repeated AET), add infinitesimal data
-    % to array and then interpolate.
-varToManage = {juld,lat,lon};
-varNameToManage = {'juld','lat','lon'};
-for v = 1:length(varToManage)
-    y = varToManage{v};
-    uniqueTab = unique(y);
-    if length(uniqueTab) ~= length(y)
-        eval([varNameToManage{v} '= y + linspace(0, 1, length(y))*1E-5;']);
-    end
-end
-
-    % interpolate lat and lon over new grid time (extrapolated over NaN values)
-argo6h.lat = interp1(juld(~idxnan),lat(~idxnan),argo6h.juld,'pchip',NaN);
-argo6h.lat(isnan(argo6h.lat)) = interp1(juld(~idxnan),lat(~idxnan),argo6h.juld(isnan(argo6h.lat)),'nearest','extrap');
-argo6h.lon = interp1(juld(~idxnan),lon(~idxnan),argo6h.juld,'pchip',NaN);
-argo6h.lon(isnan(argo6h.lon)) = interp1(juld(~idxnan),lon(~idxnan),argo6h.juld(isnan(argo6h.lon)),'nearest','extrap');
-
-% =========================================================================
-% Find NCEP data near to argoTrajWork regridded data (time, lat and lon over a 6h
-% daily grid)
-% =========================================================================
-varNames = fieldnames(NCEP.init);
-varNames = varNames(~ismember(varNames,'nodata'));
-ind_h=0;
-for i = 1:length(varNames)
-    nbdata = length(argo6h.juld);
-    easyVar = varNames{i};
-    dataNcepOnArgo.(easyVar).data = ones(nbdata,1)*NaN;
-    dataNcepOnArgo.(easyVar).juld = argo6h.juld;
-    dataNcepOnArgo.(easyVar).lat = argo6h.lat;
-    dataNcepOnArgo.(easyVar).lon = argo6h.lon;
-    
-    % get NCEP data
-    data = NCEP.init.(easyVar).(easyVar).data;
-    lat = NCEP.init.(easyVar).lat.data;
-    lon = NCEP.init.(easyVar).lon.data;
-    juld = NCEP.init.(easyVar).juld.data + ...
-        datenum(strrep(NCEP.init.(easyVar).juld.units,'days since',''),'yyyy-mm-dd HH:MM:SS');
-
-    % look for the nearest NCEP juld from the argo6h juld
-    isok = dsearchn(juld,argo6h.juld);
-
-    %% FROM HENRY BITIIG: NCEPgetdata_netcdf4
-    if length(isok) ~= length(unique(isok))
-        % option 1: abort completely
-        % Time index assigments to gridded data do not match uniquely!!
-        % Check time resolution / multi-year assignment !
-        % option 2: remove entries out of range and adjust time frame for
-        % simulation
-        if any(juld(isok) - argo6h.juld <= 1/4) && ind_h==0
-            ind_h=1;
-            idx=find(argo6h.juld>juld(end));% Added By TR 10.04.2020
-            if ~isempty(idx)
-                h = warndlg({sprintf('Float Time series longer than NCEP gridded data !!'),' '...
-                strcat('INFO :  NCEP data are loaded up to: ',datestr(juld(end),31),'Float lasts: ',datestr(argo6h.juld(end),31)),'Update NCEP files!'});
-            uiwait(h);
-            else
-            h = warndlg({sprintf('Time index assigments to gridded data do not match uniquely!!'),' '...
-                strcat('INFO :  NCEP data are loaded for year ',num2str(CONFIG.ncepYears(1),'%4.4i'),'  to ',num2str(CONFIG.ncepYears(end),'%4.4i'),' ; see the configuration file. '),'Update NCEP files!'});
-            uiwait(h);
-            end
-        elseif ind_h==0
-            ind_h=1;
-            h = warndlg({sprintf('Time index assigments to gridded data do not match uniquely!!'),' '...
-                strcat('INFO :  NCEP data are loaded for year ',num2str(CONFIG.ncepYears(1),'%4.4i'),'  to ',num2str(CONFIG.ncepYears(end),'%4.4i'),' ; see the configuration file. '), 'Check time resolution / multi-year assignment or update NCEP files!'});
-            uiwait(h);
-        end
-        % find indices to be removed at the end based on time difference
-        % In particular, if the NCEP data doesn't cover the argo data time span in whole
-        % or in part, operator is warned up
-        rmind = find(abs(juld(isok) - argo6h.juld) >= 1/4/2); % >= 3 hours (half NCEP resolution)
-        dataNcepOnArgo.(easyVar).data(rmind) = [];
-        dataNcepOnArgo.(easyVar).juld(rmind)= [];
-        dataNcepOnArgo.(easyVar).lat(rmind) = [];
-        dataNcepOnArgo.(easyVar).lon(rmind) = [];
-        nbdata = length(dataNcepOnArgo.(easyVar).juld);
-    end
-    
-    %% Look for the nearest latitude and longitude indices
-    ilat = NaN(nbdata,2);
-    ilon = NaN(nbdata,2);
-    for j = 1:nbdata
-        isoklat = [find(lat >= dataNcepOnArgo.(easyVar).lat(j),1,'last') find(lat < dataNcepOnArgo.(easyVar).lat(j),1,'first')];
-        if ~isempty(isoklat)
-            % catch events when no proper index is obtained and NaN remains...
-            ilat(j,:) = isoklat;
-            ilon(j,:) = [find(lon - 360 < dataNcepOnArgo.(easyVar).lon(j),1,'last') ...
-                         find(lon - 360 >= dataNcepOnArgo.(easyVar).lon(j),1,'first')];
-        end
-    end
-    
-    % Replace NaNs with 1 and keep index for later NaN replacement
-    idxnan = isnan(ilat(:,1)) & isnan(ilat(:,2));
-    ilat(idxnan,:) = 1;
-    ilon(idxnan,:) = 1;
-    
-    % Simple 2D bilinear interpolation over lat/lon 
-    % Henry Bittg comments :
-    % the following lines attribute a linear weight in latitude and
-    % longitude to the four corners surrounding the current interpolation
-    % point. I made this to avoid a more time-consuming 2d bilinear
-    % interpolation, which wasn???t readymade in Matlab available.
-    wlat = 1 - abs(lat(ilat) - repmat(dataNcepOnArgo.(easyVar).lat,1,2))./...
-        repmat(sum(abs(lat(ilat) - repmat(dataNcepOnArgo.(easyVar).lat,1,2)),2),1,2);
-    wlon = 1 - abs(lon(ilon) - 360 - repmat(dataNcepOnArgo.(easyVar).lon,1,2))./...
-        repmat(sum(abs(lon(ilon) - 360 - repmat(dataNcepOnArgo.(easyVar).lon,1,2)),2),1,2);
-    
-    % now extract scaled values
-    for j = 1:nbdata
-        dataNcepOnArgo.(easyVar).data(j) = sum(sum(double(squeeze(data(isok(j),...
-            ilat(j,:),ilon(j,:)))).*(wlat(j,:)'*wlon(j,:))))/sum(sum(wlat(j,:)'*wlon(j,:)));
-    end
-    % replace NaN again (double-proof; wlat/wlon should be NaN already)
-    dataNcepOnArgo.(easyVar).data(idxnan) = NaN;
-    clear juld isok ilat ilon wlat wlon output
-end
+ 
 
 % =========================================================================
 % Interpolate data to argoTrajWork profile date
 % Finalize data
 % =========================================================================
+varNames = fieldnames(NCEP.init);
+varNames = varNames(~ismember(varNames,'nodata'));
 NCEP.coloc.juld = cell2mat(argoTrajWork.juld.data);
-for i = 1:length(varNames)
+juld_ncep =  NCEP.init.(varNames{1}).juld.data + ...
+        datenum(strrep(NCEP.init.(varNames{1}).juld.units,'days since',''),'yyyy-mm-dd HH:MM:SS');
+
+if max(juld_ncep)<max(juld_argo)
+        fprintf('\n\nAttention : INAIR DATA are loaded until %s.\nARGO are loaded until %s.\nUpdate the INAIR Data.',datestr(max(juld_ncep)),datestr(max(juld_argo)));
+end
+if min(juld_ncep)>min(juld_argo)
+        fprintf('\n\nAttention : INAIR DATA are loaded from %s.\nARGO are loaded from %s.\nUpdate INAIR DATA.\n',datestr(min(juld_ncep)),datestr(min(juld_argo)));
+end
+%
+% Verification que certaines annees, exceptee la derniere, ne sont pas
+% tronquees.
+%
+diff_juld_ncep = diff(juld_ncep);
+unic_diff = uniquetol(diff_juld_ncep,1/48);
+if length(unic_diff)~=1
+    fprintf('Attention : Error on INAIR DATA between\nThe difference between data are not unic.\n');
+end
+for i = 1:length(varNames)    
     easyVar = varNames{i};
-    NCEP.coloc.(easyVar) = interp1(dataNcepOnArgo.(easyVar).juld,dataNcepOnArgo.(easyVar).data,...
-        NCEP.coloc.juld + datenum(strrep(argoTrajWork.juld.units,'days since',''),'yyyy-mm-dd HH:MM:SS'));
+    % Longitude between 0 and 360.
+    %
+    lon_ncep = double(NCEP.init.(easyVar).lon.data);
+    lon_ncep(lon_ncep<0) = lon_ncep(lon_ncep<0)+360;
+    %[lon_sort,IndLon]=sort(lon_ncep);
+    lon_argo = cell2mat(argoTrajWork.longitude.data);
+    lon_argo(lon_argo<0) = lon_argo(lon_argo<0) + 360;
+    juld_ncep =  NCEP.init.(easyVar).juld.data + ...
+        datenum(strrep(NCEP.init.(easyVar).juld.units,'days since',''),'yyyy-mm-dd HH:MM:SS');
+    
+%     NCEP.coloc.(easyVar) = interp1(juld_ncep,dataNcepOnArgo.(easyVar).data,...
+%         NCEP.coloc.juld + datenum(strrep(argoTrajWork.juld.units,'days since',''),'yyyy-mm-dd HH:MM:SS'));
+%
+% NCEP ne va que jusqu'à la longitude 357.5. 
+% On boucle le tableau sur 360 degre.
+%
+% EX : 
+% si la longitude va de 5° à 355°, ce qui suit permet d'avoir des longitudes de 5° à
+% 365°. Toutes les longitudes sont ainsi couvertes.
+% Les longitudes ARGO superieures à 355° seront correctement
+% interpolées. Les longitudes ARGO inferieures à 5°, il faut alors leur
+% rajouter 360° pour qu'elles puissent etre interpolees correctement.
+%
+bid = NaN(length(lon_ncep)+1,1);
+bid(1:end-1) = lon_ncep;
+bid(end) = min(lon_ncep) + 360; % min(lon_ncep) proche de 0 car lon entre 0 et 360.
+lon_ncep = bid;
+[lon_sort,IndLon]=sort(lon_ncep);
+bid = NaN(size(NCEP.init.(easyVar).(easyVar).data,1),size(NCEP.init.(easyVar).(easyVar).data,2),size(NCEP.init.(easyVar).(easyVar).data,3)+1);
+bid(:,:,1:end-1) = NCEP.init.(easyVar).(easyVar).data(:,:,1:end);
+ind_min_lon = find(lon_ncep==min(lon_ncep));
+bid(:,:,end) = NCEP.init.(easyVar).(easyVar).data(:,:,ind_min_lon);
+
+%
+% Prise en compte du cas où la longitude ARGO est inferieure à la longitude
+% NCEP/ERA5.
+%
+isbad = find(lon_argo<min(lon_ncep));
+lon_argo(isbad) = lon_argo(isbad) + 360;
+
+     NCEP.coloc.(easyVar) =interpn(juld_ncep,double(NCEP.init.(easyVar).lat.data),lon_ncep(IndLon),bid(:,:,IndLon),juld_argo,cell2mat(argoTrajWork.latitude.data),lon_argo);
 end
