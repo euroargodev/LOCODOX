@@ -30,9 +30,9 @@ close all;
 
 path_func='Function/';
 
-rep_data_lpo='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_DATA/Convert_CTD/data_lpo/';
+rep_data_lpo='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/Convert_CTD/data_lpo/';
 
-for ifile=1:14
+for ifile=15:15
 %for ifile=10:10    
     
 %     if i==1; path_file='/Volumes/qlpo5/HYDROCEAN/MLT_NC/LPO/OVIDE/ovid10_PRES.nc';name_func='rd_O2data_hydro_LOPS';end
@@ -55,10 +55,11 @@ for ifile=1:14
     if ifile==8; path_file='strass';name_func='rd_O2data_hydro_strass';end
     if ifile==9; path_file='ov11me';name_func= 'rd_O2data_hydro_ovid11';end
     if ifile==10; path_file='ov11di';name_func= 'rd_O2data_hydro_ovid11';end
-    if ifile==11; path_file='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_DATA/Convert_CTD/data/PANGAE_POS348_ctd_2007.tab.xlsx';name_func= 'rd_O2data_hydro_pangae';end
-    if ifile==12; path_file='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_DATA/Convert_CTD/data/MSM_08_1_phys_oce.tab_tr.xlsx';name_func= 'rd_O2data_hydro_pangae';end
-    if ifile==13; path_file='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_DATA/Convert_CTD/data/ATA03_phys_oce.tr.xlsx';name_func= 'rd_O2data_hydro_pangae';end
+    if ifile==11; path_file='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/Convert_CTD/data/PANGAE_POS348_ctd_2007.tab.xlsx';name_func= 'rd_O2data_hydro_pangae';end
+    if ifile==12; path_file='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/Convert_CTD/data/MSM_08_1_phys_oce.tab_tr.xlsx';name_func= 'rd_O2data_hydro_pangae';end
+    if ifile==13; path_file='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/Convert_CTD/data/ATA03_phys_oce.tr.xlsx';name_func= 'rd_O2data_hydro_pangae';end
     if ifile==14; path_file=strcat(rep_data_lpo,'ovid21_PRES.nc');name_func='rd_O2data_hydro_LOPS';end
+    if ifile==15; path_file=strcat(rep_data_lpo,'bo23_PRES.nc');name_func='rd_O2data_hydro_LOPS';end
     display(path_file);
     
     %Path of the .mat structure to update, or create

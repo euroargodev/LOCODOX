@@ -77,7 +77,7 @@ clear Depth_a
 
 % Writting timewoa2 : day numbers of the current year
 timewoa2=datenum(2019,1:12,15)-datenum(2019,1,1)+1;
-timewoa2(3:end)=timewoa2(3:end)+1;
+%timewoa2(3:end)=timewoa2(3:end)+1;
 nccreate(dest,'time','Format','netcdf4_classic','Dimensions',{'time' nT});
 ncwrite(dest,'time', timewoa2);
 ncwriteatt(dest,'time','long_name','time');
@@ -123,7 +123,7 @@ tmp(1:size(ibeg,1),:,:,:)=Pdens_woa_full(ibeg,:,:,:);
 tmp(size(ibeg,1)+1:end,:,:,:)=Pdens_woa_full(iend,:,:,:);
 nccreate(dest,'density','Format','netcdf4_classic','Dimensions',{'lon' nLon 'lat' nLat 'Depth' nZ 'time' nT});
 ncwrite(dest,'density', tmp);
-ncwriteatt(dest,'density','long_name','density from WOA 2018');
+ncwriteatt(dest,'density','long_name','Potential density from WOA 2018');
 ncwriteatt(dest,'density','units','kg/m3');
 clear tmp Pdens_woa_full
 
@@ -488,10 +488,10 @@ function DIR=define_dir
 % Path, directories and file names are here define.
 
 % Sea Water Library
-SeaWaterLibrary='/Users/thierry_reynaud/IFREMER/MATLAB/LOCODOX/LOCODOX3.4/share/seawater/seawater_330_its90_lpo';
+SeaWaterLibrary='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX/share/seawater/seawater_330_its90_lpo';
 addpath(SeaWaterLibrary);
 
-dirhome = '/Users/thierry_reynaud/IFREMER/MATLAB/LOCODOX/WOA/';
+dirhome = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/WOA/';
 addpath(dirhome)
 DIR.dirhome=dirhome;
 % sauvegarde

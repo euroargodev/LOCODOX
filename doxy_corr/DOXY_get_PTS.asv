@@ -204,7 +204,7 @@ if Work.Wdata.DM_psal == 0
 end
 
 % T. Reynaud 10.11.2023 Hybrid DM+TR PSAL data
-if isfield(Work.Wdata,'RT_psal_cycle')
+if ~isnan(Work.Wdata.RT_psal_cycle)
     getR_psal(Work.Wdata.RT_psal_cycle:end) = true;
 end 
 

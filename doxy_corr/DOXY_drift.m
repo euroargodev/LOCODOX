@@ -131,6 +131,7 @@
 %            09/07/2021         Thierry Reynaud fitting degree 2 find
 %                               extremum day.
 %            11.04.2022         Bug corrected for Work.launchdate (T.Reynaud)
+%            31.10.2023         Online questions versus Dialog Box choice added (T. Reynaud and C. Kermabon)
 
 
 function [Work, DRIFT] = DOXY_drift(Work, argoWork, argo, argoTrajWork)
@@ -151,7 +152,12 @@ fprintf('\t Drift correction is done with PRES\n');
 % levels or at the sea surface
 
 if    strcmp(Work.whichDrift,'WOA')
-    a=input('Do you want to compute the Time Drift on deep levels (No ==> Time Drift will be computed at the sea surface ? Yes/No','s');   
+    if Work.onlineq
+        a=input('Do you want to compute the Time Drift on deep levels (No ==> Time Drift will be computed at the sea surface ? Yes/No','s');% Cathy Kermabon
+    else
+        a=questdlg('Do you want to compute the drift on deep levels (No means that the drift will be computed at the sea surface ?',sprintf('Levels of WOA_based dirft correction - %d',Work.wmo),'Yes','No','No');
+    end
+
     if strcmp(a,'Yes')
         Work.driftondeeplevels = 1;
     else
@@ -692,7 +698,11 @@ if ~noDriftComputation
 %            ' ---------------------------';...
 %            'Apply time drift correction ?';''},...
 %            'TIME DRIFT CORRECTION','YES','NO','YES');
-       DRIFT.applyDriftC = input('Apply the drift correction ? (YES/NO)','s');
+    if Work.onlineq
+       DRIFT.applyDriftC = input('Apply the Time Drift correction ? (YES/NO)','s');
+    else
+       DRIFT.applyDriftC = questdlg('Apply the Time Drift correction ?','Time Drift Gain','YES','NO','YES');
+    end
 %     end
     
 else

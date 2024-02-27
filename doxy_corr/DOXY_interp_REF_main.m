@@ -223,7 +223,7 @@ REF_ARGO.idxRef=idxRef;% Added by T. Reynaud 10.02.2022
 REF.idxRef=idxRef;% Added by T. Reynaud 11.02.2022
 
 iokCyc=logical(zeros(size(argo.cycle_number.data,1),size(REF_ARGO.refId,2)));%Added by T. Reynaud 07/02/2022
-for k=1:size(REF_ARGO.refId,2)
+ for k=1:size(REF_ARGO.refId,2)
     iokCyc(:,k) = argo.cycle_number.data == REF_ARGO.cycle(k) & argo.direction.data == 'A';% Comumn following the order in the bdd_REF_ARGO.txt file
 end
 % End of modifications T. Reynaud 07.02.2022

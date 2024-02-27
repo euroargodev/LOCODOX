@@ -257,9 +257,10 @@ CONFIG.DM_pres = 1;
 CONFIG.DM_temp = 1;
 CONFIG.DM_psal = 1; 
  
-% CONFIG.DM_pres = 0;% Pour CK 2023.04.06
-% CONFIG.DM_temp = 0;% Pour CK 2023.04.06
-% CONFIG.DM_psal = 0;% Pour CK 2023.04.06
+% CONFIG.DM_pres = 0;% Pour CK
+% CONFIG.DM_temp = 0;% Pour CK
+% CONFIG.DM_psal = 0;% Pour CK
+
 % QC selection: 
 % '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 % Only the data whose QC equal to these values are 
@@ -269,6 +270,11 @@ CONFIG.QC_O = [1 2 3]; % DOXY
 CONFIG.QC_P = [1 2]; % PRES
 CONFIG.QC_T = [1 2]; % TEMP
 CONFIG.QC_S = [1 2 3]; % PSAL
+
+% For FSD floats: Hybrid DM a,d RT
+% Comment otherwise
+% CONFIG.RT_psal_cycle=158;% Pour 6902806 FSD use RT PSAL data from specified cycle ==> DM_PSAL=1
+% CONFIG.QC_S = [1 2 3 4]; % PSAL FSD 6902806 ==> DP_psal=1
 
 % Time Drift correction
 % '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -385,5 +391,25 @@ CONFIG.M_MAP_ACTIVE=1; % set to 0 ==> google_map plots
 mmp = fullfile(CONFIG.LocodoxMainDir,'share','m_map1.4m',filesep);
 CONFIG.M_MAPDir=mmp;
 CONFIG.M_MAP_PLOT_BATHY=1;% PLOTTING ==> Reading ETOPO2 File
+
+% -------------------------------------------------------------------------
+% Ask online questions or not
+% -------------------------------------------------------------------------
+% By T. Reynaud and C. Kermabon 31/10/2023
+CONFIG.onlineq=0;%Open dialog box for questions
+%CONFIG.onlineq=1;%matlab prompt questions
+
+% -------------------------------------------------------------------------
+% climatological PSAL subtitution
+% Added by T. Reynaud 14/12/2023
+% -------------------------------------------------------------------------
+CONFIG.PSAL_REPLACE=false;
+CONFIG.PSAL_REPLACE_CLIM='ISAS';
+CONFIG.PSAL_REPLACE_DIR='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/ISAS/';
+CONFIG.PSAL_REPLACE_CLIM_file='isas17_PSAL.mat';
+%Config.PSAL_REPLACE_CLIM_file='isas15_PSAL.mat';
+CONFIG.PSAL_REPLACE_plot=false;
+CONFIG.PSAL_REPLACE_cycle_beg=6;
+CONFIG.PSAL_REPLACE_cycle_end=90;
 
 

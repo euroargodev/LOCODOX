@@ -55,7 +55,7 @@
 %     v12 11.04.2022    Bug corrected for Work.launchdate (T.Reynaud)
 %     v13 31.10.2023    Online or Dialog Box questions (T. Reynaud and C.Kermabon)
 %     v14 10.11.2023    Hybrid DM PSAL and RT PSAL used
-%     v15 15.12.2023    PSAL values can be replaced by climatological values
+%     v14 10.11.2023    Hybrid DM PSAL and RT PSAL used
 
 
 function [] = locodox(config_prog)
@@ -317,10 +317,8 @@ while goProg
     % *****************************************************************
     % Subtitute PSAL by climatological values for selected cycles
     % Added by T. Reynaud 14/12/2023
-    % ***************************************************************** 
-    if CONFIG.PSAL_REPLACE
-        DATA=DOXY_PSAL_clim_replace_main(DATA,WOA,Work);
-    end
+    % *****************************************************************    
+    DATA=DOXY_PSAL_clim_replace_main(DATA,WOA,Work);
     
     %Prepare data to compute drift on NCEP %marine 20/06/19
     if CONFIG.ok_inair_drift==1 && ~strcmp(Work.whichCorr,'INAIR')

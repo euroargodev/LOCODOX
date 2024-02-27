@@ -32,24 +32,20 @@
 %         mL/L*1.42903 = mg/L
 %         mg/L * 44.66/1.42903 = mumol/L = mmol/m3
 %         mumol/L = (rho/1000)* mumol/kg
-
 %
 % OUTPUT
 %   valout (?)          oxygen data converted in uout unit.
 %
-% CALL :
+% CALL 
 %
 % SEE ALSO
 %   DOXY_corr_main
 %
-
 % HISTORY
 %   $created: //2009 $author: ?, LPO, CNRS
 %   $Revision: version $Date: $author:
 %       v2 21/11/2015   Emilie Brion, ALTRAN OUEST
 %                       adapted to be shared to the O2 community
-
-
 
 function [valout] = DOXY_convert(valin,uin,uout,pdensAno)
 
@@ -72,8 +68,14 @@ valout=[];
 % Checks unit in and out in possible name, and define the different cases
 % -------------------------------------------------------------------------
 % Possible name for doxy units
-doxyUnits.molPerVol = {'mumol/L'  'mumol/m3' 'mmol/L'  'mmol/m3' 'micromole per liter' 'micromole per m3' 'micromole/L'  'micromole/m3'};
-doxyUnits.molPerWeight = {'mumol/kg' 'mmol/kg' 'micromole per kilogram' 'micromole/kg'};
+%
+% O2/2024 : C. Kermabon.
+% Modification : 1 mumol/L = 1 mmol/m3.
+%                Dans molPerVol, on enleve l'unité mumol/m3. On ne garde que les unités equivalentes au mumol/L.
+%                Dans molPerWeight, on enlève l'unité mmol/kg (millimole/kg) pour ne garder que le micromole/kg.
+%
+doxyUnits.molPerVol = {'mumol/L'  'mmol/m3'  'micromole per liter' 'millimole per m3' 'micromole/L'  'millimole/m3'};
+doxyUnits.molPerWeight = {'mumol/kg' 'micromole per kilogram' 'micromole/kg'};
 doxyUnits.volPerVol = {'mL/L' 'milliliter per liter' 'milliliter/L'};
 doxyUnits.weightPerVol = {'mg/L' 'milligram per liter' 'milligram/L'};
 doxyUnitFields = fieldnames(doxyUnits);
@@ -138,6 +140,4 @@ switch ucaseIn
                 valout = valin;                
         end
 end
-
-
 
