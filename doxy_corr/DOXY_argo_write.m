@@ -104,11 +104,14 @@
 %                       new repertories names to save final netcdf files, takes
 %                       into account PSAT or DOXY correction in the
 %                       directories names
-%          21/03/2019   Marine GALLIAN, Altran Ouest, 
+%       v4  21/03/2019   Marine GALLIAN, Altran Ouest, 
 %                       new repertories names to save final netcdf files, takes
 %                       into account drift computed on WOA or NCEP in the
 %                       directories names and if a constant correction was
 %                       applied
+%       v5 26.04.2024   PWLF option added for Time Drift Gain Correction (T. Reynaud)
+%                       kwrite = 1 ==> SLOPE(1) and DRIFT(1) all cases+PWLF linear segment 1 
+%                       kwrite = 2 ==> SLOPE(2) and DRIFT(2) PWLF linear segment 2
 
 
 function [] = DOXY_argo_write(varargin)
@@ -146,8 +149,16 @@ for k = 1:length(bio_files)
         
     % Updates scientific calib fields, history fields,
     % data_state_indicator, data_mode, date_update.
-    
-    [monoProf, Dim] = DOXY_update_fields(Work,monoProf,Dim,REF_ARGO,k);
+
+    % Modified by T.Reynaud 26.04.2024
+    diffday=monoProf.juld.data(1)-Work.launchdate;
+    kwrite=1;
+    if Work.drift_PWLF & diffday>=Work.PPOX_DRIFTCORR_SEG(2)
+        kwrite=2;
+    end
+    %[monoProf, Dim] = DOXY_update_fields(Work,monoProf,Dim,REF_ARGO,k); % Commented by TR 26.04.2024   
+    [monoProf, Dim] = DOXY_update_fields(Work,monoProf,Dim,REF_ARGO,kwrite);
+
     monoProf = fillValue_2_nan(monoProf);
     monoProf.hereDoxyFull.name = 'hereDoxy';
     monoProf.hereDoxyFull.dim = {'N_PROF'};

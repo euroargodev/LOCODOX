@@ -55,7 +55,8 @@
 %     v12 11.04.2022    Bug corrected for Work.launchdate (T.Reynaud)
 %     v13 31.10.2023    Online or Dialog Box questions (T. Reynaud and C.Kermabon)
 %     v14 10.11.2023    Hybrid DM PSAL and RT PSAL used
-%     v15 15.12.2023    PSAL values can be replaced by climatological values
+%     v15 22.03.2024    Bug correction line #279 ==> biofiles T. Reynaud
+%     v16 26.04.2024    PWLF option added for Time Drift Gain Correction (T. Reynaud)
 
 
 function [] = locodox(config_prog)
@@ -126,29 +127,12 @@ Work.history.history_software = CONFIG.history_software;
 Work.history.history_reference = CONFIG.history_reference;
 Work.history.history_software_release=CONFIG.history_software_release;
 Work.isokC=CONFIG.isokC;
+
+% Modified by T. Reynaud 26/04/2024- Piece Wise Linear Fitting for Time
+% Drift
+Work.drift_PWLF_N=CONFIG.drift_PWLF_N;
+
 initialWork = Work;
-% Modofied by TR 12/04/2021
-Work.min_drift_depth_deep=CONFIG.min_drift_depth_deep;
-Work.max_drift_depth_deep=CONFIG.max_drift_depth_deep;
-Work.step_drift_depth_deep=CONFIG.step_drift_depth_deep;
-
-Work.min_drift_depth_surf=CONFIG.min_drift_depth_surf;
-Work.max_drift_depth_surf=CONFIG.max_drift_depth_surf;
-Work.step_drift_depth_surf=CONFIG.step_drift_depth_surf;
-
-%Modified by T. Reynaud and C. Kermabon 31/10/2023
-Work.onlineq=CONFIG.onlineq;
-
-% Modified by T. Reynaud 14/12/2023
-if CONFIG.PSAL_REPLACE
-    Work.PSAL_REPLACE_CLIM=CONFIG.PSAL_REPLACE_CLIM;
-    Work.PSAL_REPLACE_DIR=CONFIG.PSAL_REPLACE_DIR;
-    Work.PSAL_REPLACE_CLIM_file=CONFIG.PSAL_REPLACE_CLIM_file;
-    Work.PSAL_REPLACE_plot=CONFIG.PSAL_REPLACE_plot;
-    Work.PSAL_REPLACE_cycle_beg=CONFIG.PSAL_REPLACE_cycle_beg;
-    Work.PSAL_REPLACE_cycle_end=CONFIG.PSAL_REPLACE_cycle_end;
-end
-
 
 % =====================================================================
 %% *Read the WOA and convert in the usefull unit*
@@ -166,6 +150,20 @@ end
 %% *Doxy correction*
 % =====================================================================
 while goProg
+
+    % Modofied by TR 12/04/2021
+    Work.min_drift_depth_deep=CONFIG.min_drift_depth_deep;
+    Work.max_drift_depth_deep=CONFIG.max_drift_depth_deep;
+    Work.step_drift_depth_deep=CONFIG.step_drift_depth_deep;
+
+    Work.min_drift_depth_surf=CONFIG.min_drift_depth_surf;
+    Work.max_drift_depth_surf=CONFIG.max_drift_depth_surf;
+    Work.step_drift_depth_surf=CONFIG.step_drift_depth_surf;
+
+
+    %Modified by T. Reynaud and C. Kermabon 26/04/2024
+    Work.onlineq=CONFIG.onlineq;
+
     options.WindowStyle = 'normal';
     wmoIn = inputdlg('WMO of the float: ','ARGO Float DOXY correction',1,cellstr(''),options);
     if isempty(wmoIn)
@@ -176,6 +174,13 @@ while goProg
     Work.replist=fullfile(cell2mat(wmoIn),'/profiles/');
     Work.metafile=fullfile(cell2mat(wmoIn),'/');
     close all
+
+    a=questdlg('Do you want to use PWLF for Time Drift gain calculation ?',sprintf('%d',Work.wmo),'Yes','No','No');
+    if strcmp(a,'Yes')
+        Work.drift_PWLF=1;
+    else
+        Work.drift_PWLF=0;
+    end
 
     % =================================================================
     %% Chose the correction option : WOA, REF or INAIR
@@ -288,8 +293,8 @@ while goProg
     iscore = ~cellfun('isempty',regexp(core_files,'^R[0-9]*')) | ~cellfun('isempty',regexp(core_files,'^D[0-9]*'));
     core_files = core_files(iscore);
     
-    %if isempty(core_files) && isempty(core_files)
-    if isempty(core_files)
+    if isempty(core_files) && isempty(biofiles) % Corrected by TR: 22.03.2024
+    %if isempty(core_files)
         warndlg(sprintf('No Bio nor Core file in the directory : %s\n \n=> Check CONFIG.DataDir \n',fullfile(CONFIG.DataDir,Work.replist)),'Warning');
         continue
     elseif isempty(biofiles)
@@ -314,13 +319,6 @@ while goProg
         continue
     end
 
-    % *****************************************************************
-    % Subtitute PSAL by climatological values for selected cycles
-    % Added by T. Reynaud 14/12/2023
-    % ***************************************************************** 
-    if CONFIG.PSAL_REPLACE
-        DATA=DOXY_PSAL_clim_replace_main(DATA,WOA,Work);
-    end
     
     %Prepare data to compute drift on NCEP %marine 20/06/19
     if CONFIG.ok_inair_drift==1 && ~strcmp(Work.whichCorr,'INAIR')
@@ -592,9 +590,15 @@ while goProg
     if Work.DODRIFT==true
         %Work.drift_val(num_fic)
         if Work.drift_fitPolynomialDegree == 1
-            a=Work.PPOX_DRIFTCORR_COEF(1);%at+b
-            b=Work.PPOX_DRIFTCORR_COEF(2);
-            c=0;%08.07.2021 added by T. Reynaud
+            if ~Work.drift_PWLF % Added T.Reynaud 18.04.2024
+                a=Work.PPOX_DRIFTCORR_COEF(1);%at+b
+                b=Work.PPOX_DRIFTCORR_COEF(2);
+                c=0;%08.07.2021 added by T. Reynaud
+            else
+                a=Work.PPOX_DRIFTCORR_COEF(1,:);%at+b
+                b=Work.PPOX_DRIFTCORR_COEF(2,:);
+                c=zeros(size(b));%18.04.2022 added by T. Reynaud
+            end
         elseif Work.drift_fitPolynomialDegree == 2
             c=Work.PPOX_DRIFTCORR_COEF(1);%ct^2+at+b
             a=Work.PPOX_DRIFTCORR_COEF(2);
@@ -618,7 +622,7 @@ while goProg
     % Added by T. Reynaud 06/07/2021
     if Work.drift_fitPolynomialDegree == 1
         SLOPE=b*G;
-        DRIFT=100*365*G*a/SLOPE;
+        DRIFT=100*365*G.*a./SLOPE;
         DRIFT2=0;%added by T. Reynaud 08.07.2021
     elseif Work.drift_fitPolynomialDegree == 2
         SLOPE=b*G;
@@ -641,16 +645,24 @@ while goProg
     Work.SLOPE=SLOPE;
     Work.DRIFT=DRIFT;
     Work.DRIFT2=DRIFT2;
+    if Work.drift_PWLF
+        Work.TIME_PWLF=Work.PPOX_DRIFTCORR_SEG(2);
+    else
+        Work.TIME_PWLF=0;
+    end
+    TIME_PWLF=Work.TIME_PWLF;
     % end TR
-        
+    INCLINE_T=0;
+    Work.INCLINE_T=INCLINE_T;
+    Work.OFFSET=OFFSET;
     
     disp('La correction est ')
     disp(['OFFSET = ', num2str(OFFSET)]);
     disp(['SLOPE = ', num2str(SLOPE)]);
     disp(['DRIFT = ', num2str(DRIFT)]);
     disp(['DRIFT2 = ', num2str(DRIFT2)]);
-    INCLINE_T=0;
     disp(['INCLINE_T = ', num2str(INCLINE_T)]);
+    disp(['TIME_PWLF = ', num2str(TIME_PWLF)]);
     
     for n = 1:4
     argoStruct = eval(['argo' num2str(n) 'Struct;']);  
@@ -659,9 +671,50 @@ while goProg
         diffday=argoStructini.argo.juld.data-argo.launchdate*ones(1,size(argoStruct.argoWork.ppox_adjusted.data,2));
         
         GNTD=1;
-        GNTD=GNTD+DRIFT/100*diffday/365;
+        GNTD=GNTD+DRIFT(1)/100*diffday/365;
         GNTD=GNTD+DRIFT2/100.*diffday.*diffday/365/365;
-        GNTD=GNTD+INCLINE_T.*argoStruct.argoWork.temp_adjusted.data;
+        GNTD=GNTD+INCLINE_T.*double(argoStruct.argoWork.temp_adjusted.data);% double added by TR
+
+        SLOPE_TIME=SLOPE(1)*ones(size(GNTD));
+
+        if Work.drift_PWLF % Added T. Reynaud 19.04.2024
+
+            GNTD2=1;
+            GNTD2=GNTD2+DRIFT(2)/100*diffday/365;
+            GNTD2=GNTD2+DRIFT2/100.*diffday.*diffday/365/365;
+            GNTD2=GNTD2+INCLINE_T.*double(argoStruct.argoWork.temp_adjusted.data);% double added by TR
+
+            idx=find(diffday(:,1)>=Work.PPOX_DRIFTCORR_SEG(2));
+            SLOPE_TIME(idx,:)=SLOPE(2);
+
+%             x1=diffday(:,1);
+%             y1=double(GNTD(:,1));
+%             x1=x1(~isnan(y1));
+%             y1=y1(~isnan(y1));
+%             [xs,ii]=sort(x1);
+%             x1=xs;
+%             y1=y1(ii);
+%             p1=polyfit(x1,y1,1);          
+            %test1=SLOPE(1)*(1+(DRIFT(1)/100*Work.PPOX_DRIFTCORR_SEG(2)/365))
+            %test2=SLOPE(2)*(1+(DRIFT(2)/100*Work.PPOX_DRIFTCORR_SEG(2)/365))
+            %time_check=Work.PPOX_daydiff;
+            %gain_check=G*Work.PPOX_fitRegression;
+            % test1=test2=gain_check(10) ==> C bon
+
+            GNTD3=GNTD;
+            GNTD3(idx,:)=GNTD2(idx,:);
+
+%             h0=plot(Work.PPOX_daydiff,G*Work.PPOX_fitRegression,'-+g');hold on
+%             h3=plot(diffday(:,1),SLOPE_TIME(:,1).*GNTD3(:,1),'*m');
+%             ylabel('Gain');
+%             xlabel('Days');
+%             title(num2str(Work.wmo));
+%             hleg=legend([h0,h3],'From Doxy\_drift','Gain Final');
+%             hleg.FontSize=15;
+
+            GNTD=GNTD3;
+            clear GNTD2 GNTD3
+        end
         
         if isfield(Work,'ind_drift_stop')
            idx=find(diffday>=Work.ind_drift_stop(2), 1, 'first');
@@ -670,7 +723,7 @@ while goProg
            end
         end
         
-        argoStruct.argoWork.ppox_adjusted.data = OFFSET+SLOPE.*GNTD.* ...
+        argoStruct.argoWork.ppox_adjusted.data = OFFSET+SLOPE_TIME.*GNTD.* ...
                                                  argoStructini.argoWork.ppox_adjusted.data;
         
         if Work.presEff == 1, P = argoStructini.pres_adjusted.data; else, P = 0; end

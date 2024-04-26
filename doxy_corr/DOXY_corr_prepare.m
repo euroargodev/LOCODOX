@@ -101,24 +101,25 @@
 % HISTORY
 %   $created: 14/01/2015 $author: Emilie Brion, Altran Ouest
 %   $Revision: version $Date: $author:
-%              v2 26/01/2017   Emilie Brion, Altran Ouest
+%            v2 26/01/2017   Emilie Brion, Altran Ouest
 %                              argo - ameliorations 2017 phase 1
-%              v2.1 09/11/2017 Emilie Brion, Altran Ouest
+%            v2.1 09/11/2017 Emilie Brion, Altran Ouest
 %                              drift correction is now re-computed using
 %                              polyval or feval, instead of a default case
 %                              ycorrected = raw - a*daydiff => becomming
 %                              ycorrected = raw - fitRegression and
 %                              fitRegression = polyval(driftCoef,daydiff)
 %                              or feval(function_fit,daydiff).
-%                 26/10/2018   Marine GALLIAN, Altran Ouest :
+%            v2.2 26/10/2018   Marine GALLIAN, Altran Ouest :
 %                              Add the possibility to apply a 
 %                              constant drift from a certain day
-%                 25/03/2019   Marine GALLIAN, Altran Ouest 
+%            v2.3 25/03/2019   Marine GALLIAN, Altran Ouest 
 %                              Fix unit probleme for applying drift : 
 %                              Convert PPOX data when drift is computed on
 %                              WOA 
-%                05/02/2020    Add conversion from mumol/L to mumol/kg when 
+%            v2.4 05/02/2020   Add conversion from mumol/L to mumol/kg when 
 %                              drift is computed on PPOX. V. Thierry
+%            v2.5 26.04.2024   PWLF option added for Time Drift Gain Correction (T. Reynaud)
 
 function [CORR2] = DOXY_corr_prepare(CORR, Work, argoStruct, argoTrajWork)
 
@@ -197,7 +198,11 @@ if Work.DODRIFT==1
         O2DriftCoef = 'PPOX';        
     end
     if Work.drift_spec == 0
-        fitRegression = polyval(Work.([O2DriftCoef '_DRIFTCORR_COEF']),double(dayjul));
+        if ~Work.drift_PWLF % Added T.Reynaud 18.04.2024
+            fitRegression = polyval(Work.([O2DriftCoef '_DRIFTCORR_COEF']),double(dayjul));
+        else
+            fitRegression=polyval_PWLF(Work.([O2DriftCoef '_DRIFTCORR_COEF']),Work.PPOX_DRIFTCORR_SEG,double(dayjul));
+        end
         if iscolumn(fitRegression)
             fitRegression = fitRegression';
         end

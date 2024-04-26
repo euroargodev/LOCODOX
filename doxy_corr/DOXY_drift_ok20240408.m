@@ -132,7 +132,7 @@
 %                               extremum day.
 %            11.04.2022         Bug corrected for Work.launchdate (T.Reynaud)
 %            31.10.2023         Online questions versus Dialog Box choice added (T. Reynaud and C. Kermabon)
-%            26.04.2024         PWLF option added for Time Drift Gain Correction (T. Reynaud)
+
 
 function [Work, DRIFT] = DOXY_drift(Work, argoWork, argo, argoTrajWork)
 % =========================================================================
@@ -221,8 +221,7 @@ if strcmp(Work.whichDrift,'WOA')
     % Nb of day after deployment
     %daydiff = (argo.juld.data - argo.juld.data(1));
     % Nb of day since launch date
-    %daydiff = (argo.juld.data - Work.launchdate);% TR 08.04.2024 -commented
-    daydiff = (argo.juld.data - argo.launchdate);% TR 08.04.2024 - added
+    daydiff = (argo.juld.data - Work.launchdate);
     
     
     
@@ -362,20 +361,11 @@ if Work.drift_spec == 1
         Work.drift_fitPolynomialDegree = str2num(char(inputval)); %#ok<ST2NM>
     end
 end
-%Added by T.Reynaud 05.04.2024 PWLF Time Drift
-if Work.drift_PWLF
-    num_seg=Work.drift_PWLF_N;
-else
-    num_seg=1;
-end
-
 if Work.drift_spec == 0
-    coeffFit = NaN(num_seg,Work.drift_fitPolynomialDegree+1,length(Zq));
+    coeffFit = NaN(Work.drift_fitPolynomialDegree+1,length(Zq));
 else
-    coeffFit = NaN(num_seg,numcoeffs(Work.drift_fittype),length(Zq));
+    coeffFit = NaN(numcoeffs(Work.drift_fittype),length(Zq));
 end
-% 
-
 cpt = 0;
 noDriftComputation = false;
 
@@ -387,33 +377,18 @@ for z=1:length(Zq)
         isok = ~isnan(daydiff) & ~isnan(DRIFT.gainppox(:,z));
         if sum(isok) >= nbr_lin_reg && any(~isnan(DRIFT.gainppox(:,z)))
             if Work.drift_spec == 0
-                if ~Work.drift_PWLF % Added T.Reynaud 05.04.2024
-                    fitResult = polyfit(double(daydiff(isok)),double(DRIFT.gainppox(isok,z)),Work.drift_fitPolynomialDegree);
-                    coeffFit(:,:,z) = fitResult;
-                else
-                    x=double(daydiff(isok));
-                    y=double(DRIFT.gainppox(isok,z));
-                    if ~exist('XI','var')
-                        [XI,YI] = ginput(1);
-                        XI=[0,XI,x(end)];
-                    end
-                    fitResult_PWLF=polyfit_PWLF(x,y,XI,Work.drift_PWLF_N);
-                    coeffFit(:,:,z)=fitResult_PWLF;
-                end
+                fitResult = polyfit(double(daydiff(isok)),double(DRIFT.gainppox(isok,z)),Work.drift_fitPolynomialDegree);
+                coeffFit(:,z) = fitResult;
             else
                 fitResult = fit(double(daydiff(isok)),double(DRIFT.gainppox(isok,z)),Work.drift_fittype);
-                coeffFit(num_seg,:,z) = coeffvalues(fitResult);
+                coeffFit(:,z) = coeffvalues(fitResult);
             end
             
             % control plot : check the coefficient and the linear regression at
             % a local depth
             if Work.makePlot
                 if Work.drift_spec == 0
-                    if ~Work.drift_PWLF % Added T.Reynaud 05.04.2024
-                        DRIFT.poliv_c = polyval(squeeze(coeffFit(num_seg,:,z)), double(daydiff));
-                    else
-                        DRIFT.poliv_c = polyval_PWLF(squeeze(coeffFit(:,:,z)),XI,double(daydiff));
-                    end
+                    DRIFT.poliv_c = polyval(coeffFit(:,z), double(daydiff));
                 else
                     DRIFT.poliv_c = fitResult(double(daydiff));
                 end
@@ -441,17 +416,8 @@ for z=1:length(Zq)
 %         else
         if sum(isok) >= nbr_lin_reg %|| any(~cellfun(@isnan,DRIFT.gainppox,'UniformOutput',false))
             if ~Work.drift_spec
-                if ~Work.drift_PWLF % Added T.Reynaud 04.04.2024
-                    fitResult = polyfit(daydiff(isok),data(isok),Work.drift_fitPolynomialDegree);
-                    coeffFit(:,:,z) = fitResult;
-                else
-                    x=daydiff(isok);
-                    y=data(isok);
-                    [XI,YI] = ginput(1);
-                    XI=[0,XI,x(end)];
-                    fitResult_PWLF=polyfit_PWLF(x,y,XI,Work.drift_PWLF_N);
-                    coeffFit(:,:,z)=fitResult_PWLF;
-                end
+                fitResult = polyfit(daydiff(isok),data(isok),Work.drift_fitPolynomialDegree);
+                coeffFit(:,z) = fitResult;
             else
                 % fit doesn't accept row vectors.
                 if ~iscolumn(daydiff)
@@ -461,17 +427,13 @@ for z=1:length(Zq)
                     data = data';
                 end
                 fitResult = fit(daydiff(isok),data(isok),Work.drift_fittype);
-                coeffFit(:,:,z) = coeffvalues(fitResult);
+                coeffFit(:,z) = coeffvalues(fitResult);
             end
             % control plot : check the coefficient and the linear regression at
             % a local depth
             if Work.makePlot
                 if Work.drift_spec == 0
-                    if ~Work.drift_PWLF % Added T.Reynaud 04.04.2024
-                        DRIFT.poliv_c = polyval(coeffFit(:,z), double(daydiff));%Pas de isok??
-                    else
-                        DRIFT.poliv_c = polyval_PWLF(squeeze(coeffFit(:,:,z)),XI,double(daydiff));
-                    end
+                    DRIFT.poliv_c = polyval(coeffFit(:,z), double(daydiff));
                 else
                     DRIFT.poliv_c = fitResult(double(daydiff));
                 end
@@ -495,9 +457,8 @@ if ~noDriftComputation
     % -------------------------------------------------------------------------
     % Slope averaging
     % -------------------------------------------------------------------------
-    % Added T.Reynaud 05.04.2024
-    coeffFit_mean = nanmean(coeffFit,3);
-    DRIFT.coeffFit_mean=coeffFit_mean;% For all Time Drift
+    coeffFit_mean = nanmean(coeffFit,2);
+    DRIFT.coeffFit_mean=coeffFit_mean;
     
     if Work.drift_fitPolynomialDegree == 2
         first_derivative = polyder(DRIFT.coeffFit_mean);%compute first derivative
@@ -513,11 +474,7 @@ if ~noDriftComputation
             Work.savePlot = 1;
         end
         if Work.drift_spec == 0
-            if ~Work.drift_PWLF % Added T.Reynaud 05.04.2024
-                DRIFT.fitRegression = polyval(coeffFit_mean,double(daydiff));%For all Time Drift
-            else
-                DRIFT.fitRegression = polyval_PWLF(coeffFit_mean,XI,double(daydiff));%For INAIR ONLY
-            end
+            DRIFT.fitRegression = polyval(coeffFit_mean,double(daydiff));
         else
             listCoef = [];
             for i=1:length(coeffFit_mean)
@@ -538,14 +495,8 @@ if ~noDriftComputation
         daydiff = (argo.juld.data - argo.launchdate);
         
         if Work.drift_spec == 0
-            if ~Work.drift_PWLF % Added T.Reynaud 05.04.2024
-                DRIFT.fitRegression = polyval(coeffFit_mean,double(daydiff));
-                DRIFT.daydiff=daydiff;% Added by T. Reynaud 16/07/2021
-            else
-                DRIFT.fitRegression = polyval_PWLF(coeffFit_mean,XI,double(daydiff)); % Added T.Reynaud 08.04.2024
-                DRIFT.daydiff=daydiff;
-                DRIFT.daydiff_Seg=XI;
-            end
+            DRIFT.fitRegression = polyval(coeffFit_mean,double(daydiff));
+            DRIFT.daydiff=daydiff;% Added by T. Reynaud 16/07/2021
         else
             listCoef = [];
             for i=1:length(coeffFit_mean)
@@ -561,14 +512,8 @@ if ~noDriftComputation
         end
     else
         if Work.drift_spec == 0
-            if ~Work.drift_PWLF % Added T.Reynaud 17.04.2024
-                DRIFT.fitRegression = polyval(coeffFit_mean,double(daydiff));
-                DRIFT.daydiff=daydiff;
-            else
-                DRIFT.fitRegression = polyval_PWLF(coeffFit_mean,XI,double(daydiff)); 
-                DRIFT.daydiff=daydiff;
-                DRIFT.daydiff_Seg=XI;
-            end
+            DRIFT.fitRegression = polyval(coeffFit_mean,double(daydiff));
+            DRIFT.daydiff=daydiff;% Added by T. Reynaud 16/07/2021
         else
             listCoef = [];
             for i=1:length(coeffFit_mean)
@@ -598,13 +543,8 @@ if ~noDriftComputation
         end
         %Recompute drift
         if Work.drift_spec == 0
-            if ~Work.drift_PWLF % Added T.Reynaud 08.04.2024
-                DRIFT.fitRegression_airwater = polyval(coeffFit_mean,double(daydiff_airwater));
-                DRIFT.daydiff_airwater=daydiff_airwater;%Added by T. Reynaud 16/07/2021
-            else
-                DRIFT.fitRegression_airwater  = polyval_PWLF(coeffFit_mean,XI,double(daydiff_airwater)); % Added T.Reynaud 08.04.2024
-                DRIFT.daydiff_airwater=daydiff_airwater;% Added T.Reynaud 08.04.2024
-            end
+            DRIFT.fitRegression_airwater = polyval(coeffFit_mean,double(daydiff_airwater));
+            DRIFT.daydiff_airwater=daydiff_airwater;%Added by T. Reynaud 16/07/2021
         else
             listCoef_airwater = [];
             for i=1:length(coeffFit_mean)

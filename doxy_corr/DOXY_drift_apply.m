@@ -126,6 +126,8 @@
 %                               from Work
 %      v3.5  09.07.2021         For NCEP time drift the constant time drift
 %                               index recalculated
+%      v3.6  26.04.2024         PWLF option added for Time Drift Gain Correction (T. Reynaud)
+
 
 function [Work, DRIFT] = DOXY_drift_apply(Work, argoWork, argo, argoTrajWork, DRIFT)
 
@@ -195,6 +197,15 @@ switch DRIFT.applyDriftC
         
         Work.PPOX_DRIFTCORR_COEF = DRIFT.coeffFit_mean;
         Work.PPOX_DRIFTCORR = DRIFT.ppox_corrected;
+        Work.PPOX_fitRegression=DRIFT.fitRegression;
+        Work.PPOX_daydiff=DRIFT.daydiff;
+
+        if Work.drift_PWLF % Added T.Reynaud 16.04.2024
+            Work.PPOX_DRIFTCORR_SEG=DRIFT.daydiff_Seg;
+            num_seg=Work.drift_PWLF_N;
+        else
+            num_seg=1;
+        end
         
         if strcmp(Work.whichCorr,'INAIR')
             
@@ -211,7 +222,11 @@ switch DRIFT.applyDriftC
                 end
                 %Recompute drift
                 if Work.drift_spec == 0
-                    DRIFT.fitRegression_airwater = polyval(DRIFT.coeffFit_mean,double(daydiff_airwater));
+                    if ~Work.drift_PWLF % Added T.Reynaud 16.04.2024
+                        DRIFT.fitRegression_airwater = polyval(DRIFT.coeffFit_mean,double(daydiff_airwater));
+                    else
+                        DRIFT.fitRegression_airwater = polyval_PWLF(DRIFT.coeffFit_mean,DRIFT.daydiff_Seg,double(daydiff_airwater));
+                    end
                 else
                     listCoef_airwater = [];
                     for i=1:length(DRIFT.coeffFit_mean)

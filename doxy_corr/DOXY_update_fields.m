@@ -2,7 +2,7 @@
 % control
 %
 % SYNTAX
-% [argo, DIMD] = DOXY_update_fields(Work,argo,DIM,REF_ARGO,num_fic)
+% [argo, DIMD] = DOXY_update_fields(Work,argo,DIM,REF_ARGO,kwrite)
 %
 % DESCRIPTION
 % DOXY_update_fields updates the following fields :
@@ -73,7 +73,7 @@
 %                                 wmo : [1x1 double]
 %                                 replist: [1x1 string]
 %
-%   num_fic (double)        Number of the file to write
+%   kwrite (double)        writing selection number added for PWLF
 %
 % OUTPUT
 %     argo (structure)      Argo float data structure (get directly from data),
@@ -108,8 +108,13 @@
 %       v3.6 11.02.2022   Modified for Multi REF use (T.Reynaud)
 %       v3.7 01.09.2022   Modifications added for handling Automatic Pressure corrections in R/D files. 
 %       v3.7 05.09.2022   Modifications added for handling Automatic Pressure corrections in R/D files. 
+%       v3.8 26.04.2024   Modifications added for handling PWLF:
+%                         kwrite = 1 ==> SLOPE(1) and DRIFT(1) all cases+PWLF linear segment 1 
+%                         kwrite = 2 ==> SLOPE(2) and DRIFT(2) PWLF linear segment 2
+%      
 
-function [argo, DIMD] = DOXY_update_fields(Work,argo,DIM,REF_ARGO,num_fic)
+
+function [argo, DIMD] = DOXY_update_fields(Work,argo,DIM,REF_ARGO,kwrite)
 
 % =========================================================================
 %% General
@@ -432,6 +437,8 @@ end
 % Modified TR 09/07/2021
 %SLOPE=b*G;
 %DRIFT=100*365*G*a/SLOPE;
+OFFSET=Work.OFFSET;
+INCLINE_T=Work.INCLINE_T;
 SLOPE=Work.SLOPE;
 DRIFT=Work.DRIFT;
 DRIFT2=Work.DRIFT2;
@@ -439,9 +446,17 @@ DRIFT2=Work.DRIFT2;
 
 %coefficient.DOXY = sprintf('INCLINE_T=%d; SLOPE=%2.6f, DRIFT=%2.6f, OFFSET=%2.6f',0,SLOPE,DRIFT,OFFSET);
 % Modified by T. Reynaud 09.07.2021
-coefficient.DOXY = sprintf('INCLINE_T=%d; SLOPE=%2.6f, DRIFT=%2.6f, OFFSET=%2.6f, DRIFT2=%4.6f',0,SLOPE,DRIFT,OFFSET,DRIFT2);
+ctmp1=sprintf('INCLINE_T=%d, ',INCLINE_T);
 
+ctmp2=sprintf('SLOPE=%2.6f, ',SLOPE(kwrite));
+ctmp3=sprintf('DRIFT=%2.6f, ',DRIFT(kwrite));
 
+ctmp4=sprintf('OFFSET=%2.6f, ',OFFSET);
+ctmp5=sprintf('DRIFT2=%4.6f',DRIFT2);
+
+% Commented TR 24.04.2024
+%coefficient.DOXY = sprintf('INCLINE_T=%d; SLOPE=%2.6f, DRIFT=%2.6f, OFFSET=%2.6f, DRIFT2=%4.6f',0,SLOPE,DRIFT,OFFSET,DRIFT2);
+coefficient.DOXY=[ctmp1,ctmp2,ctmp3,ctmp4,ctmp5];
 coefficient.DOXY=[coefficient.DOXY blanks(256-length(coefficient.DOXY))];
 
 
