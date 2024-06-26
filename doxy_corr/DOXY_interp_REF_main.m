@@ -285,15 +285,17 @@ end
 % =========================================================================
 
 for k=1:size(iokCyc,2)
-    cqc=argoWork.doxy_adjusted_qc.data(iokCyc(:,k),:);
-    cqc(strfind(cqc,' '))='0';
-    cqc=cqc';% Should be a Column Vector
+    if sum(iokCyc(:,k))
+        cqc=argoWork.doxy_adjusted_qc.data(iokCyc(:,k),:);
+        cqc(strfind(cqc,' '))='0';
+        cqc=cqc';% Should be a Column Vector
 
-    isnok = find(str2num(cqc) > 1); %#ok<ST2NM>
-    if ~isempty(isnok)
-        REF.(['doxy_CV' cmpl{1}])(k,isnok) = NaN;
-        REF.(['psat' cmpl{1}])(k,isnok) = NaN;
-        REF.(['ppox' cmpl{1}])(k,isnok) = NaN;
+        isnok = find(str2num(cqc) > 1); %#ok<ST2NM>
+        if ~isempty(isnok)
+            REF.(['doxy_CV' cmpl{1}])(k,isnok) = NaN;
+            REF.(['psat' cmpl{1}])(k,isnok) = NaN;
+            REF.(['ppox' cmpl{1}])(k,isnok) = NaN;
+        end
     end
 end
 % TR 08.02.2022

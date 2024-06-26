@@ -87,7 +87,7 @@
 %   $Revision: version $Date: $author:
 %     v02 11.02.2022    Modified for Mutliple REF profiles use (T.Reynaud)
 %                       see idxref
-
+%     v03 25.06.2024    Bug corrected see Zq
 function [REF] = DOXY_interp_REF_2_argo(REF,iok,argoWork,icyc, PorD,presEff)
 
 
@@ -140,8 +140,10 @@ for k=1:size(icyc,2)
         REF.(['doxy_CV' cmpl])(iok,:) = NaN;
     else
         Zq = argoWork.(PorD{2}).data(icyc(:,k),:);
-        for v=1:length(VarInRef)
-            REF.([VarInRef{v} cmpl])(k,:) = interp1(Z',REF.(VarInRef{v})(idxref(k),isok),Zq,'linear');
+        if size(Zq,1) % Added T. Reynaud 25.06.2024
+            for v=1:length(VarInRef)
+                REF.([VarInRef{v} cmpl])(k,:) = interp1(Z',REF.(VarInRef{v})(idxref(k),isok),Zq,'linear');
+            end
         end
     end
 end

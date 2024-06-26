@@ -208,7 +208,7 @@ CONFIG.logo = fullfile(CONFIG.LocodoxMainDir,'locodox_logo.jpg');
 % ncepFtpSubDir : the sub directory where to find the NCEP data in the ftp website
 % ncepFiles : the NCEP files to be read
 % ncepYears : read the NCEP data for the years specified
-CONFIG.ncepDoUpdate = 0;  
+CONFIG.ncepDoUpdate = 1;  
 CONFIG.ncepFtp = 'ftp.cdc.noaa.gov';
 CONFIG.ncepFtpDir = 'Datasets/ncep.reanalysis/';
 CONFIG.ncepFtpSubDir = {'surface','surface','surface'};
@@ -295,7 +295,7 @@ end
 %Compute inair drift if possible for WOA and REF correction 
 CONFIG.ok_inair_drift=1;
 
-% Added by T. Reynaud for Piece wise linear fitting for Time Drift INAIR Time Drift ONLY 
+% Added by T. Reynaud for Piece wise linear fitting for Time Drift 
 % 26/04/2024
 CONFIG.drift_PWLF_N = 2;% Number of linear segments
 
