@@ -32,7 +32,7 @@ path_func='Function/';
 
 rep_data_lpo='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/Convert_CTD/data_lpo/';
 
-for ifile=15:15
+for ifile=1:16
 %for ifile=10:10    
     
 %     if i==1; path_file='/Volumes/qlpo5/HYDROCEAN/MLT_NC/LPO/OVIDE/ovid10_PRES.nc';name_func='rd_O2data_hydro_LOPS';end
@@ -60,13 +60,15 @@ for ifile=15:15
     if ifile==13; path_file='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/Convert_CTD/data/ATA03_phys_oce.tr.xlsx';name_func= 'rd_O2data_hydro_pangae';end
     if ifile==14; path_file=strcat(rep_data_lpo,'ovid21_PRES.nc');name_func='rd_O2data_hydro_LOPS';end
     if ifile==15; path_file=strcat(rep_data_lpo,'bo23_PRES.nc');name_func='rd_O2data_hydro_LOPS';end
+    if ifile==16; path_file='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/Convert_CTD/data/m164_2020/ctd_ascii/';name_func= 'rd_O2data_hydro_pangae_ctd';end
     display(path_file);
     
     %Path of the .mat structure to update, or create
     %BDD_O2_REF= 'bddo2ref_avecov18_temp.mat';
     %BDD_O2_REF= 'bddo2ref_ov18_temp.mat';
     %BDD_O2_REF= 'bddo2ref_vracape.mat';
-    BDD_O2_REF= 'bddo2ref_all_TR.mat';
+    %BDD_O2_REF= 'bddo2ref_all_TR.mat';
+    BDD_O2_REF= 'bddo2ref_all_TR_2024.mat';
 
     % =========================================================================
     %% Initialisation
@@ -141,12 +143,18 @@ for ifile=15:15
         lid=1;
         addzero=0;
         [refId,lon,lat,~,juld,~,tempi,~,psali,sig0i,doxyi,~] = feval(name_func,path_file,ctd_sta,'ctd',presi,lid,scar,addzero);
+    elseif ifile==16
+        addpath /Users/treynaud/IFREMER/MATLAB/seawater_330_its90_lpo
+        scar='M164_2020';
+        lid=1;
+        addzero=0;
+        [refId,lon,lat,~,juld,~,tempi,~,psali,sig0i,doxyi,~] = feval(name_func,path_file,'ctd',presi,lid,scar,addzero);
     else
         [refId,lon,lat,~,juld,pres,temp,~,psal,sig0,doxy,~] = feval(name_func,path_file,'ctd');
     end
     
     %Interpolate data on pressure
-    if ~isempty(lon) && ~strcmp(name_func,'rd_O2data_hydro_LOPS')&& ~strcmp(name_func,'rd_O2data_hydro_pangae')
+    if ~isempty(lon) && ~strcmp(name_func,'rd_O2data_hydro_LOPS')&& ~strcmp(name_func,'rd_O2data_hydro_pangae')&& ~strcmp(name_func,'rd_O2data_hydro_pangae_ctd')
         for i = 1:length(lon)
             iok = find(isfinite(pres(i,:)));
             pres=double(pres);

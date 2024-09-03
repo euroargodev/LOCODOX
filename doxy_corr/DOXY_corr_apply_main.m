@@ -235,9 +235,9 @@ if Work.makePlot
         dayjul = argo1Struct.argo.juld.data - argo1Struct.argo.juld.data(1);
         % Plots
         argo1Struct.Work.savePlot=0;
-        DOXY_PLOT_corr(hFig, 4, CORR1, argo1Struct.Work, dayjul);
-        DOXY_PLOT_corr(hFig, 5, CORR1, argo1Struct.Work);
-        DOXY_PLOT_corr(hFig, 6, CORR1, argo1Struct.Work);
+        DOXY_PLOT_corr(hFig, 4, CORR1, argo1Struct.Work, dayjul);% PSAT time series
+        DOXY_PLOT_corr(hFig, 5, CORR1, argo1Struct.Work);% PSAT vertical profils
+        DOXY_PLOT_corr(hFig, 6, CORR1, argo1Struct.Work);% DOXY vertical profils
         
     elseif ismember(Work.whichCorr,{'INAIR'})
         % keep primary sampling for plots
@@ -433,3 +433,5 @@ else
         DOXY_PLOT_corr(m_Fig, 10, CORRtmp, argoStruct.Work,9);        
     end
 end
+%saveFile = fullfile(Work.dirPlot,sprintf('DOXY_drift_%s_%s_%d',drift_type,presEffStr,Work.wmo));
+%DOXY_PLOT_settingsToPrint(m_Fig,Work,saveFile);

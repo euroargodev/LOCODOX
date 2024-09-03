@@ -57,7 +57,7 @@
 %     v14 10.11.2023    Hybrid DM PSAL and RT PSAL used
 %     v15 22.03.2024    Bug correction line #279 ==> biofiles T. Reynaud
 %     v16 26.04.2024    PWLF option added for Time Drift Gain Correction (T. Reynaud)
-
+%     v16 17.08.2024    Save matlab Figures as .fig as well
 
 function [] = locodox(config_prog)
 
@@ -115,6 +115,7 @@ Work.QC_T = CONFIG.QC_T;
 Work.QC_S = CONFIG.QC_S;
 Work.makePlot = 1;
 Work.savePlot = CONFIG.savePlot;
+Work.savePlotFig = CONFIG.savePlotFig;%Added by T. Reynaud 17.08.2024
 Work.formattype = CONFIG.formattype;
 Work.drift_fitPolynomialDegree = CONFIG.drift_fitPolynomialDegree;
 Work.drift_spec = CONFIG.drift_spec;
@@ -175,12 +176,12 @@ while goProg
     Work.metafile=fullfile(cell2mat(wmoIn),'/');
     close all
 
-    a=questdlg('Do you want to use PWLF for Time Drift gain calculation ?',sprintf('%d',Work.wmo),'Yes','No','No');
-    if strcmp(a,'Yes')
-        Work.drift_PWLF=1;
-    else
-        Work.drift_PWLF=0;
-    end
+%     a=questdlg('Do you want to use PWLF for Time Drift gain calculation ?',sprintf('%d',Work.wmo),'Yes','No','No');
+%     if strcmp(a,'Yes')
+%         Work.drift_PWLF=1;
+%     else
+%         Work.drift_PWLF=0;
+%     end
 
     % =================================================================
     %% Chose the correction option : WOA, REF or INAIR

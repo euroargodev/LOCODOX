@@ -138,8 +138,9 @@
 %              12/03/2020      Thierry Reynaud
 %                              whichDrift was forced to WOA for argoXStruct
 %                              whichDrfit is now extracted from Work
-%             v3 11.02.2022   Modified for Mutliple REF profile use (T.Reynaud)
-
+%             v3 11.02.2022    Modified for Mutliple REF profile use (T.Reynaud)
+%             v4 12.08.2024    Thierry Reynaud
+%                              transfert to Work.drift_PWLF
 
 function [argo1Struct,argo2Struct,argo3Struct,argo4Struct,WOA, Work, goProg] = DOXY_ref_corr(CONFIG, ...
                 WOA, REF_ARGO, argo1Struct, argo2Struct, argo3Struct, argo4Struct, argo, argoWork, Work)
@@ -195,6 +196,9 @@ if isfield(Work,'NCEP_drift')
         
         %calculate drift with NCEP data and Argo near-sruface data
         [Work.NCEP_drift.Work_NCEP, DRIFT] = DOXY_drift(Work.NCEP_drift.Work,Work.NCEP_drift.argoWork, Work.NCEP_drift.argo, Work.NCEP_drift.argoTrajWork);
+        if isfield(Work.NCEP_drift.Work_NCEP,'drift_PWLF') % Added T. Reynaud 12.08.2024
+            Work.drift_PWLF=Work.NCEP_drift.Work_NCEP.drift_PWLF;
+        end
           
         if isfield(Work.NCEP_drift.Work_NCEP,'ind_drift_stop')
                 Work.ind_drift_stop=Work.NCEP_drift.Work_NCEP.ind_drift_stop;

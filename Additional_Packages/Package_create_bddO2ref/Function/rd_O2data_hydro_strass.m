@@ -7,7 +7,7 @@ function [refID,lon,lat,sta_ctd,juld,pres,temp,theta0,psal,sig0,doxy,o2ok] = rd_
 addpath /Users/treynaud/IFREMER/MATLAB/seawater_330_its90_lpo;
 o2ok = 1;
 % chargement des donnees realisees au deploiement
-strasse = load('/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_DATA/Convert_CTD/ARGO_DEEP/DEEP_ARVOR/CTDeduitup.017');
+strasse = load('/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/Convert_CTD/ARGO_DEEP/DEEP_ARVOR/CTDeduitup.017');
 strasse = flipud(strasse);
 pres = strasse(:,2)';
 temp = strasse(:,3)';

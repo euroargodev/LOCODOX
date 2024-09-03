@@ -93,6 +93,7 @@
 %          02.02.2021   Bug correction for PPOX plots
 %     v3.2 11.02.2022   Modified for Mutliple REF profiles use (T.Reynaud)
 %     v3.3 03.05.2022   x and y label modified for CORR.whichO2quantity (T.Reynaud)
+%     v3.4 17.08.2024   text position modified in Figure 3x3
 
 %
 function [hFig] = DOXY_PLOT_corr(varargin)
@@ -250,7 +251,7 @@ switch plotTyp
         fprintf('\t aX+b <0.2, avg ± 2.8 std => a=%2.3f, b=%2.3f, R²=%2.3f\n',...
             CORR.LRcoef(3,1),CORR.LRcoef(3,2),CORR.LRcoef(3,3));
         text(0.05,0.9,'aX+b<0.2, avg+-2.8 std =>','color','r','units','normalized','fontsize',Work.fontsize)
-        text(0.05,0.8,sprintf('a=%2.3f, b=%2.3f, R²=%2.3f\n',...
+        text(0.05,0.75,sprintf('a=%2.3f, b=%2.3f, R²=%2.3f\n',...
             CORR.LRcoef(3,1),CORR.LRcoef(3,2),CORR.LRcoef(3,3)),'color','r','units','normalized','fontsize',Work.fontsize)
         hold off
         xlabel(sprintf('%s from float',CORR.whichO2quantity));

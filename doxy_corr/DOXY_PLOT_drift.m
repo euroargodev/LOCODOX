@@ -70,10 +70,11 @@
 %                             Drift calculation Depth Variables renamed
 %             29.04.2021      Thierry Reynaud
 %                             test on whichDrift=='WOA' added for titles
-
-
-function [ax,Work] = DOXY_PLOT_drift(DRIFT,Work,daydiff,unit,type,ax)
-
+%             10.08.2024      Thierry Reynaud
+%                             modifications added for PWLF loop
+%             20.08.2024      Thierry Reynaud
+%                             saveFile name modified
+function [ax,Work,DRIFT] = DOXY_PLOT_drift(DRIFT,Work,daydiff,unit,type,ax)
 
 % =========================================================================  
 %% Initialisation
@@ -210,12 +211,24 @@ switch type
     case 2
         hFig = gcf;
         hold(ax,'on');
-	    plot(ax,double(daydiff),DRIFT.poliv_c,':k');        
-
+        if isfield(DRIFT,'h2')
+            if length(DRIFT.h2)>=DRIFT.iplt_h2
+                delete(DRIFT.h2(DRIFT.iplt_h2));
+            end
+        end
+	    DRIFT.h2(DRIFT.iplt_h2)=plot(ax,double(daydiff),DRIFT.poliv_c,':k');        
+        DRIFT.h2(DRIFT.iplt_h2).LineWidth=2;
+        DRIFT.h2(DRIFT.iplt_h2).Color=[252,141,14]/255;%orange
     case 3
         hFig = gcf;
         hold(ax,'on');
-        plot(ax,double(daydiff),DRIFT.fitRegression,'r');
+        if isfield(DRIFT,'h3')
+            if length(DRIFT.h3)>=DRIFT.iplt_h3
+                delete(DRIFT.h3(DRIFT.iplt_h3));
+            end
+        end
+        DRIFT.h3(DRIFT.iplt_h3)=plot(ax,double(daydiff),DRIFT.fitRegression,'r');
+        DRIFT.h3(DRIFT.iplt_h3).LineWidth=2;
 end
 set(gca,'fontweight','bold')
 hold off
@@ -257,7 +270,8 @@ end
 if Work.savePlot == 1
     if Work.presEff, presEffStr = 'okpreseff'; else, presEffStr = 'nopreseff'; end    
     if strcmp(Work.whichCorr,'REF') || strcmp(Work.whichCorr,'WOA')
-        drift_type='onWOA'; 
+        drift_type=strcat('onWOA');%Commented by T.R 20.08.2024
+        drift_type=strcat('on',Work.whichDrift); % Added by T.Reynaud 20.08.2024
     elseif  strcmp(Work.whichCorr,'INAIR')
         drift_type='onNCEP'; 
     end

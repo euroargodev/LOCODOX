@@ -50,14 +50,14 @@ case 'ov11me'
 
             nfile = size(tabo2file,1);
             inpathlpo = '/home4/homedir4/perso/vthierry/';
-            inpathmac = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_DATA/Convert_CTD/';
+            inpathmac = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/Convert_CTD/';
             if exist(inpathmac, 'dir') == 7
-                inpath = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_DATA/Convert_CTD/PROJETS/OXYGEN/ACHATS/2010/OXYBTL4CALIB/';
+                inpath = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/Convert_CTD/PROJETS/OXYGEN/ACHATS/2010/OXYBTL4CALIB/';
             elseif exist(inpathlpo,'dir') == 7
                 inpath = fullfile(inpathlpo,'PROJETS/OXYGEN/ACHATS/2010/OXYBTL4CALIB/');
             else
                 disp('Pas de donnees de reference');
-                stop
+                dbstop
             end
             lat = NaN(nfile,1);
             lon = NaN(nfile,1);
@@ -128,7 +128,7 @@ case 'ov11me'
         if strcmp(datatype,'ctd') == 1
             o2ok = 1;
             % Lecture des donnees campagne CTD
-            inpath = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_DATA/Convert_CTD/PROJETS/OXYGEN/ACHATS/2010/DISCOVERY/DATA/';
+            inpath = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/Convert_CTD/PROJETS/OXYGEN/ACHATS/2010/DISCOVERY/DATA/';
             pres = NaN(29,6000);
             presqc = NaN(29,6000);
             temp = NaN(29,6000);

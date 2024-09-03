@@ -76,10 +76,58 @@ set(hFig, 'PaperPositionMode', 'auto') %02/07/19 marine
 % =========================================================================
 if length(Work.formattype)>1
     for i = 1:length(Work.formattype)
+        if isempty(strfind(saveFile,Work.formattype{i}))
+            saveFile=strcat(saveFile,strrep(Work.formattype{i},'-d','.'));
+        end
         print(hFig,Work.formattype{i},Work.resol,saveFile);
+        if Work.savePlotFig
+            suf=strrep(Work.formattype{i},'-d','.');
+            saveFileFig=strrep(saveFile,suf,'.fig');
+            % DOXY_PLOT_data_corr_*.fig 3x3
+            % DOXY_PLOT_interpolation*.fig ==> time drift 2 x 1
+            saveifig=0;
+            if ~isempty(strfind(saveFileFig,'DOXY_PLOT_corr'))
+                saveifig=1;
+            end
+            if ~isempty(strfind(saveFileFig,'DOXY_PLOT_data_corr'))
+                saveifig=1;
+            end
+            if ~isempty(strfind(saveFileFig,'DOXY_drift_on'))
+                saveifig=1;
+            end
+            if ~isempty(strfind(saveFileFig,'DOXY_PLOT_interpolation'))
+                saveifig=1;
+            end
+            if saveifig
+                savefig(saveFileFig);
+            end
+        end
     end
 else
+    if isempty(strfind(saveFile,Work.formattype{1}))
+        saveFile=strcat(saveFile,strrep(Work.formattype{1},'-d','.'));
+    end
     print(hFig,Work.formattype{1},Work.resol,saveFile);
+    if Work.savePlotFig
+        suf=strrep(Work.formattype{1},'-d','.');
+        saveFileFig=strrep(saveFile,suf,'.fig');
+        saveifig=0;
+        if ~isempty(strfind(saveFileFig,'DOXY_PLOT_corr'))
+            saveifig=1;
+        end
+        if ~isempty(strfind(saveFileFig,'DOXY_PLOT_data_corr'))
+            saveifig=1;
+        end
+        if ~isempty(strfind(saveFileFig,'DOXY_drift_on'))
+            saveifig=1;
+        end
+        if ~isempty(strfind(saveFileFig,'DOXY_PLOT_interpolation'))
+            saveifig=1;
+        end
+        if saveifig
+            savefig(saveFileFig);
+        end
+    end
 end
 
 % =========================================================================  

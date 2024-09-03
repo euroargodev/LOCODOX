@@ -188,7 +188,7 @@ CONFIG.WOAfile = [CONFIG.WOADataDir,'WOA2018_DECAV_monthly_5500_1deg.nc'];
 %CONFIG.bddFile='bddo2ref_ov18_temp.mat'; % Only for floats no 6901763 6902818 6902881 6902882 6901601 6902800
 %CONFIG.bddFile='bddo2ref.mat'; % rr15+rr17
 %CONFIG.bddFile='bddo2ref_vracape.mat'; % 1900943 6900629
-CONFIG.bddFile='bddo2ref_all_TR.mat';
+CONFIG.bddFile='bddo2ref_all_TR_2024.mat';
 
 
 % Reference data associated to a wmo
@@ -208,7 +208,7 @@ CONFIG.logo = fullfile(CONFIG.LocodoxMainDir,'locodox_logo.jpg');
 % ncepFtpSubDir : the sub directory where to find the NCEP data in the ftp website
 % ncepFiles : the NCEP files to be read
 % ncepYears : read the NCEP data for the years specified
-CONFIG.ncepDoUpdate = 1;  
+CONFIG.ncepDoUpdate = 0;  
 CONFIG.ncepFtp = 'ftp.cdc.noaa.gov';
 CONFIG.ncepFtpDir = 'Datasets/ncep.reanalysis/';
 CONFIG.ncepFtpSubDir = {'surface','surface','surface'};
@@ -381,7 +381,8 @@ CONFIG.prefix = 'BD';
 %                      for more information). Cell array of string.
 % ------
 CONFIG.savePlot = 1;
-CONFIG.fontsize = 12;
+CONFIG.savePlotFig = 1;%Save figures as matlab .fig files
+CONFIG.fontsize = 14;
 CONFIG.resolution = 100;
 CONFIG.formattype = {'-dpng'}; 
 

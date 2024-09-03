@@ -130,7 +130,8 @@
 %                              Compute reference profile if it exists
 %              12/03/2020      Thierry Reynaud
 %                              whichDrift was missing for argo4Struct
-
+%              12/08/2024      Thierry Reynaud
+%                              transfert to Work.drift_PWLF
 function [argo1Struct,argo2Struct,argo3Struct,argo4Struct,WOA,NCEP, Work,goProg] = DOXY_inair_corr(CONFIG, WOA,...
     NCEP, argo1Struct, argo2Struct, argo3Struct, argo4Struct, argo, argoWork, Work, argoTrajWork)
 
@@ -431,12 +432,18 @@ if strcmp(Work.whichDrift,'WOA')
     argoWork_WOA.psal_adjusted.data =argoWork_WOA.psal_adjusted.data(vect_WOA,:);
     argoWork_WOA.temp_adjusted.data=argoWork_WOA.temp_adjusted.data(vect_WOA,:);
     Work_WOA.isnotREFcorr=1;
-    Work_WOA.min_drift_depth=Work.min_drift_depth;
-    Work_WOA.max_drift_depth=Work.max_drift_depth;
-    Work_WOA.step_drift_depth=Work.step_drift_depth;
+    Work_WOA.min_drift_depth_deep=Work.min_drift_depth_deep;%T. Reynaud 12.08.2024
+    Work_WOA.max_drift_depth_deep=Work.max_drift_depth_deep;%T. Reynaud 12.08.2024
+    Work_WOA.min_drift_depth_surf=Work.min_drift_depth_surf;%T. Reynaud 12.08.2024
+    Work_WOA.max_drift_depth_surf=Work.max_drift_depth_surf;%T. Reynaud 12.08.2024
+    Work_WOA.step_drift_depth_deep=Work.step_drift_depth_deep;%T. Reynaud 12.08.2024
+    Work_WOA.step_drift_depth_surf=Work.step_drift_depth_surf;%T. Reynaud 12.08.2024
     Work_WOA.launchdate=Work.launchdate;
      
-    [Work_WOA, DRIFT] = DOXY_drift(Work_WOA, argoWork_WOA, argo_WOA,[]);  
+    [Work_WOA, DRIFT] = DOXY_drift(Work_WOA, argoWork_WOA, argo_WOA,[]);
+    if isfield(Work_WOA,'drift_PWLF') % Added T. Reynaud 12.08.2024
+        Work.drift_PWLF=Work_WOA.drift_PWLF;
+    end
     
     Work.driftondeeplevels=Work_WOA.driftondeeplevels;
     

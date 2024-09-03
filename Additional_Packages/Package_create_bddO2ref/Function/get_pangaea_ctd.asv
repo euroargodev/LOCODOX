@@ -1,0 +1,49 @@
+function data=get_pangaea_ctd(filename)
+
+fid=fopen(filename,'rt');
+iread=1;
+while iread
+    line=fgetl(fid);
+    if ~isempty(strfind(line,'Columns'))
+        iread=0;%Start Reading data
+    end
+    if ~isempty(strfind(line,'Station'))
+        idx=strfind(line,'=');
+        cval=line(idx+1:end);
+        nsta=str2num(cval);
+    end
+    if ~isempty(strfind(line,'Profile'))
+        idx=strfind(line,'=');
+        cval=line(idx+1:end);
+        nprof=str2num(cval);
+    end
+    if ~isempty(strfind(line,'Date'))
+        if isempty(strfind(line,'FileDat'))
+            idx=strfind(line,'=');
+            cdate=line(idx+1:end);
+        end
+    end
+    if ~isempty(strfind(line,'Time'))
+        idx=strfind(line,'=');
+        ctime=line(idx+1:end);
+    end
+    if ~isempty(strfind(line,'Latitude'))
+        idx=strfind(line,'=');
+        clat=line(idx+1:end);
+        val=sscanf(clat(1:end-1),'%f %f');
+        lat=val(1)+val(2)/60;
+
+
+    end
+    if ~isempty(strfind(line,'Longitude'))
+        idx=strfind(line,'=');
+        clon=line(idx+1:end);
+    end
+end
+jul=datenum([cdate ctime],'yyyy/mm/dd HH:MM');
+
+fclose(fid);
+
+
+return
+end
