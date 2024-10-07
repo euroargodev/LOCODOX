@@ -427,6 +427,7 @@ while DRIFT.igopwlf % added by T. Reynaud 10.08.2024
                     if Work.drift_spec == 0
                         if ~Work.drift_PWLF % Added T.Reynaud 05.04.2024
                             DRIFT.poliv_c = polyval(squeeze(coeffFit(num_seg,:,z)), double(daydiff));
+                            DRIFT.igopwlf=0;%Added T.Reynaud 27.09.2024
                         else
                             DRIFT.poliv_c = polyval_PWLF(squeeze(coeffFit(:,:,z)),XI,double(daydiff));
                         end

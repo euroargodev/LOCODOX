@@ -208,7 +208,7 @@ CONFIG.logo = fullfile(CONFIG.LocodoxMainDir,'locodox_logo.jpg');
 % ncepFtpSubDir : the sub directory where to find the NCEP data in the ftp website
 % ncepFiles : the NCEP files to be read
 % ncepYears : read the NCEP data for the years specified
-CONFIG.ncepDoUpdate = 0;  
+CONFIG.ncepDoUpdate = 1;  
 CONFIG.ncepFtp = 'ftp.cdc.noaa.gov';
 CONFIG.ncepFtpDir = 'Datasets/ncep.reanalysis/';
 CONFIG.ncepFtpSubDir = {'surface','surface','surface'};
