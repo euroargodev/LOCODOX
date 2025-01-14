@@ -309,7 +309,7 @@ CONFIG.drift_PWLF_N = 2;% Number of linear segments
 
 CONFIG.min_drift_depth_deep=1700;
 %CONFIG.max_drift_depth_deep=1800;% Normal
-CONFIG.max_drift_depth_deep=2100;
+CONFIG.max_drift_depth_deep=4100;
 CONFIG.step_drift_depth_deep=100;
 
 %CONFIG.min_drift_depth_deep=2500;

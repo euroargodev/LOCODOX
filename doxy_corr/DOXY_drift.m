@@ -167,7 +167,8 @@ if    strcmp(Work.whichDrift,'WOA')
 end
 
 %nbr_lin_reg= Minimum number of points to compute a drift. Default value :10.
-nbr_lin_reg=10;
+nbr_lin_reg=10;% Default
+nbr_lin_reg=5;% TR 13.01.2025
 
 % for saving plot
 if Work.savePlot == 1

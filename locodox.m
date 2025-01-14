@@ -646,6 +646,9 @@ while goProg
     Work.SLOPE=SLOPE;
     Work.DRIFT=DRIFT;
     Work.DRIFT2=DRIFT2;
+    if ~isfield(Work,'drift_PWLF')%Added by T. Reynaud 10.01.2025
+        Work.drift_PWLF=0;
+    end
     if Work.drift_PWLF
         Work.TIME_PWLF=Work.PPOX_DRIFTCORR_SEG(2);
     else
