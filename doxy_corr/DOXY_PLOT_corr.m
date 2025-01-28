@@ -803,7 +803,6 @@ switch plotTyp
                     end
                     % Added by T. Reynaud 11.02.2022
                     for k=1:length(ind_ref)
-                        display('Debug DOXY_PLOT_CORR.m .... line 824')
                         plot(Work.(['DOXY_LINCORR_' CORR.whichO2quantity])(ind_ref(k),:), CORR.level(ind_ref(k),:),'r','LineWidth',3,'Parent',hg_mar_r);
                         hg_mar_c=hggroup;
                         plot(Work.plotREF.(['DOXY_REF' CORR.cmpl])(k,:), CORR.level(ind_ref(k),:),'k','LineWidth',3,'Parent',hg_mar_c);

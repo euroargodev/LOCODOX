@@ -208,7 +208,7 @@ CONFIG.logo = fullfile(CONFIG.LocodoxMainDir,'locodox_logo.jpg');
 % ncepFtpSubDir : the sub directory where to find the NCEP data in the ftp website
 % ncepFiles : the NCEP files to be read
 % ncepYears : read the NCEP data for the years specified
-CONFIG.ncepDoUpdate = 1;  
+CONFIG.ncepDoUpdate = 0;  
 CONFIG.ncepFtp = 'ftp.cdc.noaa.gov';
 CONFIG.ncepFtpDir = 'Datasets/ncep.reanalysis/';
 CONFIG.ncepFtpSubDir = {'surface','surface','surface'};
@@ -307,14 +307,14 @@ CONFIG.drift_PWLF_N = 2;% Number of linear segments
 %CONFIG.max_drift_depth_deep=2500;
 %CONFIG.step_drift_depth_deep=100;
 
-CONFIG.min_drift_depth_deep=1700;
+%CONFIG.min_drift_depth_deep=1700;
 %CONFIG.max_drift_depth_deep=1800;% Normal
-CONFIG.max_drift_depth_deep=4100;
-CONFIG.step_drift_depth_deep=100;
-
-%CONFIG.min_drift_depth_deep=2500;
-%CONFIG.max_drift_depth_deep=4000;
+%CONFIG.max_drift_depth_deep=4100;
 %CONFIG.step_drift_depth_deep=100;
+
+CONFIG.min_drift_depth_deep=2500;
+CONFIG.max_drift_depth_deep=4000;
+CONFIG.step_drift_depth_deep=100;
 
 %CONFIG.min_drift_depth_deep=450;
 %CONFIG.max_drift_depth_deep=550;

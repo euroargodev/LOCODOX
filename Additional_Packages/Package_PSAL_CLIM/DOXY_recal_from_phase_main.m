@@ -23,9 +23,23 @@ addpath /Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX/share/seawater/seawater_3
 %cwmo='6902800';%4330
 %rep_float=strcat('/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_FLOAT_DATA/For_VT/DMQC_EXPORT/coriolis/',cwmo,'/');
 
-
-cwmo='5902297';%3830
-rep_float=strcat('/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_FLOAT_DATA/CORIOLIS/coriolis/',cwmo,'/');
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Load configuration informations
+config_prog = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX/Additional_Packages/Package_PSAL_CLIM/DOXY_PSAL_CLIM_config';
+[config_dir,config_prog] = fileparts(config_prog);
+cd(config_dir);
+CONFIG_CLIM = feval(config_prog);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% choose float number
+options.WindowStyle = 'normal';
+wmoIn = inputdlg('WMO of the float: ','ARGO Float DOXY correction',1,cellstr(''),options);
+if isempty(wmoIn)
+    msgbox({'  Good Bye !  ';''},sprintf('%s',CONFIG.history_software),'custom',imread(CONFIG.logo));
+    return
+end
+cwmo=wmoIn;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+rep_float=strcat(CONFIG_CLIM.FloatMainDir,cwmo,'/');
 
 [coef,equations,tech]=DOXY_recal_from_phase_extr(cwmo,rep_float);% O2 mM/L
 %L1 DOXY in Water

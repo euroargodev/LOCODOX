@@ -79,6 +79,7 @@ if length(Work.formattype)>1
         if isempty(strfind(saveFile,Work.formattype{i}))
             saveFile=strcat(saveFile,strrep(Work.formattype{i},'-d','.'));
         end
+        %figure(hFig);
         print(hFig,Work.formattype{i},Work.resol,saveFile);
         if Work.savePlotFig
             suf=strrep(Work.formattype{i},'-d','.');
@@ -99,6 +100,7 @@ if length(Work.formattype)>1
                 saveifig=1;
             end
             if saveifig
+                figure(hFig);
                 savefig(saveFileFig);
             end
         end
@@ -107,6 +109,7 @@ else
     if isempty(strfind(saveFile,Work.formattype{1}))
         saveFile=strcat(saveFile,strrep(Work.formattype{1},'-d','.'));
     end
+    %figure(hFig);
     print(hFig,Work.formattype{1},Work.resol,saveFile);
     if Work.savePlotFig
         suf=strrep(Work.formattype{1},'-d','.');
@@ -125,6 +128,7 @@ else
             saveifig=1;
         end
         if saveifig
+            figure(hFig);
             savefig(saveFileFig);
         end
     end
