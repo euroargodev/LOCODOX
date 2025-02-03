@@ -57,7 +57,8 @@
 %     v14 10.11.2023    Hybrid DM PSAL and RT PSAL used
 %     v15 22.03.2024    Bug correction line #279 ==> biofiles T. Reynaud
 %     v16 26.04.2024    PWLF option added for Time Drift Gain Correction (T. Reynaud)
-%     v16 17.08.2024    Save matlab Figures as .fig as well
+%     v17 17.08.2024    Save matlab Figures as .fig as well
+%     v18 03.02.2025    Mengyu Li corrections line 89.
 
 function [] = locodox(config_prog)
 
@@ -86,7 +87,7 @@ CONFIG.saveLogDir = fullfile(CONFIG.resultsDir,'logs',filesep);
 % CONFIG.NCEPDataDir = fullfile(CONFIG.LocodoxMainDir,'data_input',filesep);
 
 % Initialise Work Structure
-Work = load('readme');
+% Work = load('readme'); % commented by Mengyu Li 03/02/2025
 Work.R2threshold = CONFIG.R2threshold;
 Work.adjusted_error_abs = CONFIG.adjusted_error_abs;
 Work.adjusted_error_rel = CONFIG.adjusted_error_rel;

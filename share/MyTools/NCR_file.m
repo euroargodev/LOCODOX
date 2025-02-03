@@ -60,6 +60,7 @@
 %       NC_FLOAT ... 5
 %       NC_DOUBLE .. 6
 % -----------------------------
+% Bug corrected 03.02.2025 Mengyu Li line 94.
 
 function [S,Dim,Globatt] = NCR_file(Ficname,VarIN,verbose)
 
@@ -91,7 +92,8 @@ poss_fillval_name = {'FillValue','FillValue_','_FillValue','_fillvalue','fillval
 % =========================================================================
 
 % Open the NetCDF file
-ncid = netcdf.open(Ficname, 'NC_NOWRITE');
+%ncid = netcdf.open(Ficname, 'NC_NOWRITE');
+ncid = netcdf.open(Ficname); % Bug corrected by Mengyu Li 03.02.2025
 
 % Get the file information
 %   Nbdims      : number of dimensions
