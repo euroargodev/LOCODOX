@@ -1,0 +1,21 @@
+copernicusmarine, version 2.2.3
+INFO - 2025-11-26T16:15:42Z - Selected dataset version: "202511"
+INFO - 2025-11-26T16:15:42Z - Selected dataset part: "default"
+INFO - 2025-11-26T16:15:43Z - Starting download. Please wait...
+INFO - 2025-11-26T16:15:45Z - Successfully downloaded to dataset_subset_PSAL.nc
+{
+  "file_size": 0.018740458015267174,
+  "data_transfer_size": 114.06265648854962,
+  "status": "000",
+  "message": "The request was successful."
+}
+INFO - 2025-11-26T16:15:48Z - Selected dataset version: "202511"
+INFO - 2025-11-26T16:15:48Z - Selected dataset part: "default"
+INFO - 2025-11-26T16:15:49Z - Starting download. Please wait...
+INFO - 2025-11-26T16:15:51Z - Successfully downloaded to dataset_subset_TEMP.nc
+{
+  "file_size": 0.018740458015267174,
+  "data_transfer_size": 114.06265648854962,
+  "status": "000",
+  "message": "The request was successful."
+}

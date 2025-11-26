@@ -1,6 +1,7 @@
 function [out]=gen_A3D_files(juld_float,lat_float,lon_float)
 % Author Thierry Reynaud
-% 2024/02/07
+% 2024.02.07
+% 2025.12.26 modification imposed on dataset_id by copernicus
 
 % Generate Armor-3D interpolated files
 % Interpolates ARMOD-3D fields on float a specific float position.
@@ -36,9 +37,16 @@ access.login=fscanf(fid,'%s/n');
 access.pwd=fscanf(fid,'%s/n');
 fclose(fid);
 
-wline1='#!/bin/csh -f';
-wline2='source ~/.cshrc';
-wline3='conda activate cmt_1.0';
+% env csh
+%wline1='#!/bin/csh -f';
+%wline2='source ~/.cshrc';
+%wline3='conda activate cmt_1.0';
+%wline4='copernicusmarine --version';
+
+% env bash
+wline1='#!/bin/bash -f';
+wline2='source ~/.bash_profile';
+wline3='mamba activate copernicus';
 wline4='copernicusmarine --version';
 
 
@@ -50,22 +58,28 @@ end
 % Build the CLI subset lines
 % CLI subset do not interpolate times
 % get 2 profiles 1 before and 1 after
-delta=21;% Days
-juld_min=juld_float-delta;
-cjuld_min=datestr(juld_min,'yyyy-mm-ddTHH:MM:SS');
+juld_min=juld_float;
+%cjuld_min=datestr(juld_min,'yyyy-mm-ddTHH:MM:SS');
+cjuld_min=datestr(juld_min,'yyyy-mm-01T00:00:00');
+
+delta=31;% Days
 juld_max=juld_float+delta;
-cjuld_max=datestr(juld_max,'yyyy-mm-ddTHH:MM:SS');
+%cjuld_max=datestr(juld_max,'yyyy-mm-ddTHH:MM:SS');
+cjuld_max=datestr(juld_max,'yyyy-mm-01T00:00:00');
 
 % La re-analyse:
-% dataset_id="dataset-armor-3d-rep-weekly", # 1993-01-06 / 2022-12-28
-% Le real-time:
-% dataset_id="dataset-armor-3d-nrt-weekly", # 2019-01-02 / 2024-01-24
-juld_copernicus_rep=datenum(2022,12,28,0,0,0);
+% https://data.marine.copernicus.eu/product/MULTIOBS_GLO_PHY_TSUV_3D_MYNRT_015_012/services
+% MONTHLY   01/01/1993–01/12/2024 ==>  dataset_id="cmems_obs-mob_glo_phy_my_0.125deg_P1M-m"; 
+
+% NRT DAILY 01/12/2023–20/11/2025 ==>
+% dataset_id="cmems_obs-mob_glo_phy_nrt_0.125deg_P1D-m";
+
+juld_copernicus_rep=datenum(2023,12,01,0,0,0);
 
 if juld_max<=juld_copernicus_rep
-    dataset_id="dataset-armor-3d-rep-weekly";
+    dataset_id="cmems_obs-mob_glo_phy_my_0.125deg_P1M-m";
 else 
-    dataset_id="dataset-armor-3d-nrt-weekly"
+    dataset_id="cmems_obs-mob_glo_phy_nrt_0.125deg_P1D-m";
 end
 %wline_part1_PSAL='copernicusmarine subset -i dataset-armor-3d-rep-weekly -v so';
 %wline_part1_TEMP='copernicusmarine subset -i dataset-armor-3d-rep-weekly -v to';
@@ -112,8 +126,8 @@ tmp=deblank(fliplr(tmp));
 tmp=fliplr(tmp);
 wline_part3=strrep(wline_part3,'latmax',tmp);
 
-wline_part4_PSAL='-f dataset_subset_PSAL.nc --disable-progress-bar --overwrite --force-download';
-wline_part4_TEMP='-f dataset_subset_TEMP.nc --disable-progress-bar --overwrite --force-download';
+wline_part4_PSAL='-f dataset_subset_PSAL.nc --disable-progress-bar --overwrite';
+wline_part4_TEMP='-f dataset_subset_TEMP.nc --disable-progress-bar --overwrite';
 wline_part5='--username LOGIN --password PWD';
 wline_part5=strrep(wline_part5,'LOGIN',access.login);
 wline_part5=strrep(wline_part5,'PWD',access.pwd);

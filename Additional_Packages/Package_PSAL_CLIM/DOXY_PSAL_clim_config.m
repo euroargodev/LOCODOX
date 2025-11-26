@@ -70,13 +70,42 @@
 %   $Revision: version $Date: $author:
 
 
-function [CONFIG_CLIM] = DOXY_PSAL_clim_config
+function [CONFIG_CLIM] = DOXY_PSAL_clim_config(cwmo)
+
+if ismac
+    % Code to run on Mac platform
+    username=deblank(getenv('USER'));% For Mac and Linux
+elseif isunix
+    % Code to run on Linux platform
+    username=deblank(getenv('USER'));% For Mac and Linux
+elseif ispc
+    % Code to run on Windows platform
+    username=deblank(getenv('USERNAME'));% For windows   
+else
+    disp('Platform not supported')
+    exit;
+end
 
 if strfind(username,'treynaud')
     % Main directory of DOXY computation
     CONFIG_CLIM.FloatMainDir = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_FLOAT_DATA/DMQC_STEP1/coriolis/';
     % Directory for saving
     CONFIG_CLIM.resultsDir= '/Users/treynaud/IFREMER/MATLAB/LOCODOX/results/';
+
+    % CONFIG_CLIM.PSAL_REPLACE_CLIM='ISAS';
+    % CONFIG_CLIM.PSAL_REPLACE_DIR='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/ISAS/';
+    % CONFIG_CLIM.PSAL_REPLACE_CLIM_file='isas17.mat';
+
+    % CONFIG_CLIM.PSAL_REPLACE_CLIM='WOA';
+    % CONFIG_CLIM.PSAL_REPLACE_DIR='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/WOA/';
+    % CONFIG_CLIM.PSAL_REPLACE_CLIM_file='woa18.mat';
+
+    CONFIG_CLIM.PSAL_REPLACE_CLIM='ARMOR-3D';
+    CONFIG_CLIM.PSAL_REPLACE_DIR='/Users/treynaud/IFREMER/MATLAB/LOCODOX/Tools_treynaud/';
+    CONFIG_CLIM.PSAL_REPLACE_CLIM_file='copernicus';
+
+    CONFIG_CLIM.PSAL_REPLACE_plot=true;
+    CONFIG_CLIM.PSAL_REPLACE_plot_close=false;
     
 else
     disp('User unknown ==> Define path in DOXY_PSAL_CLIM_config.m')

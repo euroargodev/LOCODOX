@@ -1,0 +1,6 @@
+#!/bin/bash -f
+source ~/.bash_profile
+mamba activate copernicus
+copernicusmarine --version
+copernicusmarine subset -i cmems_obs-mob_glo_phy_my_0.125deg_P1M-m -v so -t 2022-10-01T00:00:00 -T 2022-11-01T00:00:00 -x 16.98792000 -X 17.48792000 -y -39.61528167 -Y -38.61528167 -z 0.0 -Z 4000.0 -f dataset_subset_PSAL.nc --disable-progress-bar --overwrite --username treynaud --password Can14692!
+copernicusmarine subset -i cmems_obs-mob_glo_phy_my_0.125deg_P1M-m -v to -t 2022-10-01T00:00:00 -T 2022-11-01T00:00:00 -x 16.98792000 -X 17.48792000 -y -39.61528167 -Y -38.61528167 -z 0.0 -Z 4000.0 -f dataset_subset_TEMP.nc --disable-progress-bar --overwrite --username treynaud --password Can14692!

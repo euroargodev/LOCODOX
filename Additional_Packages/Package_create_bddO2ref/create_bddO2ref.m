@@ -32,7 +32,7 @@ path_func='Function/';
 
 rep_data_lpo='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/Convert_CTD/data_lpo/';
 
-for ifile=1:16
+for ifile=1:17
 %for ifile=10:10    
     
 %     if i==1; path_file='/Volumes/qlpo5/HYDROCEAN/MLT_NC/LPO/OVIDE/ovid10_PRES.nc';name_func='rd_O2data_hydro_LOPS';end
@@ -61,6 +61,8 @@ for ifile=1:16
     if ifile==14; path_file=strcat(rep_data_lpo,'ovid21_PRES.nc');name_func='rd_O2data_hydro_LOPS';end
     if ifile==15; path_file=strcat(rep_data_lpo,'bo23_PRES.nc');name_func='rd_O2data_hydro_LOPS';end
     if ifile==16; path_file='/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_LOPS_DATA/Convert_CTD/data/m164_2020/ctd_ascii/';name_func= 'rd_O2data_hydro_pangae_ctd';end
+    if ifile==17; path_file=strcat(rep_data_lpo,'cr24_PRES.nc');name_func='rd_O2data_hydro_LOPS';end
+
     display(path_file);
     
     %Path of the .mat structure to update, or create
@@ -68,7 +70,8 @@ for ifile=1:16
     %BDD_O2_REF= 'bddo2ref_ov18_temp.mat';
     %BDD_O2_REF= 'bddo2ref_vracape.mat';
     %BDD_O2_REF= 'bddo2ref_all_TR.mat';
-    BDD_O2_REF= 'bddo2ref_all_TR_2024.mat';
+    %BDD_O2_REF= 'bddo2ref_all_TR_2024.mat';
+    BDD_O2_REF= 'bddo2ref_all_CK_TEMPO_2025.mat';
 
     % =========================================================================
     %% Initialisation

@@ -63,7 +63,7 @@ i_exe=ones(size(tmp2,1),1);
 while sum(i_exe)
     for ieq=1:size(tmp2,1)
         if i_exe(ieq)
-            line=strcat(deblank(tmp2(ieq,:)));
+            line=strcat(deblank(tmp2(ieq,:)))
 
             % Build the function or variable name
             % Split LHS and RHS part of the equations
@@ -84,6 +84,7 @@ while sum(i_exe)
             droite=strrep(droite,'^2',' ');
             droite=strrep(droite,'^3',' ');
             droite=strrep(droite,'^4',' ');
+            droite=strrep(droite,'^5',' ');
             droite=strrep(droite,'1000',' ');
             droite=strrep(droite,'1013.25',' ');
             droite=strrep(droite,'100',' ');
@@ -99,6 +100,7 @@ while sum(i_exe)
             droite=strrep(droite,'  ',' ');
             droite=strrep(droite,'   ',' ');
             droite=strrep(droite,',',' ');
+            droite=strrep(droite,'2.56847e','2.56847');%Attention
 
             toto=split(droite);
 
@@ -151,12 +153,28 @@ while sum(i_exe)
                 i_exe(ieq)=0;
             end
 
+            % iok=true;
+            % for ivar=1:size(toto,1)
+            %     %                if ~exist(toto{ivar}) && ~strcmp(toto{ivar},'1')
+            %     if ~exist(toto{ivar}) | isempty(str2num(toto{ivar}))
+            %         iok=false;
+            %     end
+            % end
             iok=true;
             for ivar=1:size(toto,1)
-                if ~exist(toto{ivar}) && ~strcmp(toto{ivar},'1')
-                    iok=false;
+                if iok && isempty(str2num(toto{ivar}))
+                  iok=false;
+                  if exist(toto{ivar})
+                      iok=true;
+                  end
+                elseif iok && ~exist(toto{ivar})
+                  iok=false;
+                  if ~isempty(str2num(toto{ivar}))
+                      iok=true;
+                  end
                 end
             end
+
             if iok
                 line=strrep(line,'^','.^');
                 line=strrep(line,'ln','log');
@@ -171,6 +189,14 @@ while sum(i_exe)
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% O2=MOLAR_DOXY*Scorr*Pcorr 
 
+if ~exist('O2')
+  if exist('PPOX_DOXY')
+      O2=O2ptoO2c(PPOX_DOXY,TEMP,PSAL,PRES);
+  else
+      O2=NaN;
+  end
+end
 return
 end
