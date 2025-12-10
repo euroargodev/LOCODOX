@@ -82,6 +82,7 @@ Work.PSAL_REPLACE_cycle_end=imax;
 
 iwrite_nc=1;%Writting netcdf files
 
+
 for i=imin:imax
     %for i=1:1
     file_doxy=file_list(i).name;
@@ -173,8 +174,8 @@ for i=imin:imax
     julref=datenum(dateref');
 
 
-    %    for ip=1:size(PRES_DOXY,2)
-    for ip=1:1
+    for ip=1:size(PRES_DOXY,2)
+    %for ip=1:1
         PRES=PRES_DOXY(:,ip);
         TEMP=TEMP_ctd(:,ip);
         PSAL=PSAL_ctd(:,ip);
@@ -477,7 +478,6 @@ for i=imin:imax
 
         end
         clr=[0 1 0];
-
         % Use climatological recalculated DOXY profile if QC=4 for
         % PSAL_adjusted values
          if exist('QC_PSAL_ctd_NEW')
@@ -493,7 +493,7 @@ for i=imin:imax
             end
             clr=f*[255,0,0]/255;
         end
-        if Work.PSAL_REPLACE_plot
+        if Work.DOXY_PLOT_all
             fig2=figure(100);
             title('Original ',strcat(strrep(file_first,'_','\_'),'-',strrep(file_doxy,'_','\_')));
             hold on;
@@ -511,7 +511,7 @@ for i=imin:imax
             clr=f*[0,0,255]/255;
         end
 
-        if Work.PSAL_REPLACE_plot
+        if Work.DOXY_PLOT_all
             fig3=figure(101);
             title('Clim ',strcat(strrep(file_first,'_','\_'),'-',strrep(file_doxy,'_','\_')));
             hold on;
@@ -560,7 +560,7 @@ if Work.PSAL_REPLACE_plot
     %close(fig2);
 end
 
-if Work.PSAL_REPLACE_plot
+if Work.DOXY_PLOT_all
     figure(101);
     xlabel('DOXY (MM/Kg)');
     ylabel('Pressure (Db)');
@@ -573,7 +573,7 @@ if Work.PSAL_REPLACE_plot
     %close(fig3);
 end
 
-if Work.PSAL_REPLACE_plot
+if Work.DOXY_PLOT_all
     fig3=figure(102);
 
     idx=find(diff(global_num)==1);%Last values
@@ -624,7 +624,7 @@ if Work.PSAL_REPLACE_plot
     eval(['print -dpdf ',char(Work.PSAL_REPLACE_plot_dir),'Takeshita_',strcat(file_first(1:end-3),'-',file_doxy(1:end-3)),'_',char(Work.PSAL_REPLACE_CLIM),'.pdf']);
 end
 
-if Work.PSAL_REPLACE_plot
+if Work.DOXY_PLOT_all
     fig4=figure(104);
 
     clr='m';

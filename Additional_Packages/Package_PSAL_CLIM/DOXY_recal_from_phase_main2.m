@@ -82,6 +82,7 @@ Work.PSAL_REPLACE_cycle_end=imax;
 
 iwrite_nc=1;%Writting netcdf files
 
+
 for i=imin:imax
     %for i=1:1
     file_doxy=file_list(i).name;
@@ -173,8 +174,8 @@ for i=imin:imax
     julref=datenum(dateref');
 
 
-    %    for ip=1:size(PRES_DOXY,2)
-    for ip=1:1
+    for ip=1:size(PRES_DOXY,2)
+    %for ip=1:1
         PRES=PRES_DOXY(:,ip);
         TEMP=TEMP_ctd(:,ip);
         PSAL=PSAL_ctd(:,ip);
@@ -196,7 +197,7 @@ for i=imin:imax
             TEMP_DOXY1=[];
             C1PHASE=[];
             C2PHASE=[];
-            TPHASE_DOXY1=[];            
+            TPHASE_DOXY1=[];
         end
 
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -272,42 +273,6 @@ for i=imin:imax
         DOXY_REC2=O2./(dens0/1000);% Convert units in Mm/Kg
 
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-        prompt={'Enter pressure upper limit for salinity mean correction calculation (dbars):'};
-        defaultanswer = {num2str(1000)};
-        name= 'Pressure selection';
-        numlines      = 1;
-        PRES_MEAN_UP=inputdlg(prompt,name,numlines,defaultanswer);
-        %XI=inputdlg(num2str(XI));
-        PRES_MEAN_UP=str2num(PRES_MEAN_UP{1});
-
-
-        kdx_do=find(PRES2>=PRES_MEAN_UP);
-        kdx_up=find(PRES2<PRES_MEAN_UP);
-        PSAL2_MOY=nanmean(PSAL2(kdx_do));
-        
-        kdx_do=find(PRES>=PRES_MEAN_UP);
-        kdx_up=find(PRES<PRES_MEAN_UP);
-        PSAL_MOY=nanmean(PSAL(kdx_do));
-
-        Delta_PSAL=-PSAL_MOY+PSAL2_MOY;
-        if isnan(Delta_PSAL)
-            Delta_PSAL=0;
-        end
-        PSAL3=PSAL+Delta_PSAL;
-
-        h99=figure(99);
-        subplot(1,3,1)
-        h33=plot(PSAL3,-PRES,'b');
-        hLegend = findobj(gcf, 'Type', 'Legend');
-        hLegend(2).String(3)={'PSAL Deep shifted'};
-
-        O2=DOXY_recal_from_phase_apply(coef,equations,optode,PRES,TEMP,PSAL3,C1PHASE,C2PHASE,TEMP_DOXY1,MOLAR_DOXY1,TPHASE_DOXY1,ieq_water);
-        PR=0;
-        PTEMP3 = sw_ptmp(PSAL3,TEMP,PRES,PR);
-        dens0 = sw_dens0(PSAL,PTEMP);
-        DOXY_REC3=O2./(dens0/1000);% Convert units in Mm/Kg
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         if isfield(out_std,'std_clim_psal_float')
             err=out_std.std_clim_psal_float';
         else
@@ -336,22 +301,20 @@ for i=imin:imax
 
         DOXY_ORI(DOXY_ORI<0)=NaN;
         DOXY_REC2(DOXY_REC2<0)=NaN;
-        DOXY_REC3(DOXY_REC3<0)=NaN;
         DOXY_REC2PE(DOXY_REC2PE<0)=NaN;
         DOXY_REC2ME(DOXY_REC2ME<0)=NaN;
 
         DOXY_CRIT_MAX=600;
         DOXY_ORI(DOXY_ORI>DOXY_CRIT_MAX)=NaN;
         DOXY_REC2(DOXY_REC2>DOXY_CRIT_MAX)=NaN;
-        DOXY_REC3(DOXY_REC3>DOXY_CRIT_MAX)=NaN;
         DOXY_REC2PE(DOXY_REC2PE>DOXY_CRIT_MAX)=NaN;
         DOXY_REC2ME(DOXY_REC2ME>DOXY_CRIT_MAX)=NaN;
 
         DOXY_CRIT_MAX=20;
+        DOXY_ORI=despike(DOXY_ORI,3,DOXY_CRIT_MAX);
         DOXY_REC2=despike(DOXY_REC2,3,DOXY_CRIT_MAX);
         DOXY_REC2PE=despike(DOXY_REC2PE,3,DOXY_CRIT_MAX);
         DOXY_REC2ME=despike(DOXY_REC2ME,3,DOXY_CRIT_MAX);
-        DOXY_REC3=despike(DOXY_REC3,3,DOXY_CRIT_MAX);
 
         if Work.PSAL_REPLACE_plot
             fig=figure(99);
@@ -369,16 +332,11 @@ for i=imin:imax
 
             h3=plot(DOXY_REC2PE,-PRES2,'.m');
             h4=plot(DOXY_REC2ME,-PRES2,'.c');
-            h5=plot(DOXY_REC3,-PRES,'b');%DOXY PSAL SHIFTED
-
-
 
             %title(strrep(file_doxy,'_','\_'));
             xlabel('DOXY (MM/Kg)');
             ylabel('Pressure (Db)');
-            hleg=legend([h1,h2,h3,h4,h5],['Clim ',num2str(nanmean(DOXY_REC2-DOXY_ORI),'%7.2f MM/Kg')],'Float MM/Kg',['3s=> ', num2str(nanmean(abs(err)),'%6.2f PSU')],['3s => ', num2str(nanmean(-abs(err)),'%6.2f PSU')],['Float shifted',num2str(nanmean(DOXY_REC3-DOXY_ORI),'%7.2f MM/Kg')],'Location','SouthEast');
-            %psal_float (:,ilat)= squeeze(tmp);
-            %pause;
+            hleg=legend([h1,h2,h3,h4],['Clim ',num2str(nanmean(DOXY_REC2-DOXY_ORI),'%7.2f MM/Kg')],'Float MM/Kg',['3s=> ', num2str(nanmean(abs(err)),'%6.2f PSU')],['3s => ', num2str(nanmean(-abs(err)),'%6.2f PSU')],'Location','SouthEast');
 
             hAx(1)=gca;
             hAx(2)=axes('Position',hAx(1).Position,'XAxisLocation','top','YAxisLocation','right','color','none');
@@ -388,104 +346,110 @@ for i=imin:imax
             orient(fig,'portrait');
             fig.Position(3)=1.45*700;
             fig.Position(4)=1.45*900;
-            eval(['print -dpdf ',char(Work.PSAL_REPLACE_plot_dir),file_doxy(1:end-3),'_',char(Work.PSAL_REPLACE_CLIM),'.pdf']);
-            %pause;
+            eval(['print -dpdf ',char(Work.PSAL_REPLACE_plot_dir),file_doxy(1:end-3),'_',char(Work.PSAL_REPLACE_CLIM),'_',sprintf('%2.2i',ip),'.pdf']);
+            if Work.DOXY_PLOT_manual
+                display('Press ENTER to continue');
+                pause;
+            end
         end
         if iwrite_nc
 
             msg = "Choose New DOXY/PSAL  to be written in Netcdf files";
-            opts = ["Original" "Recalculated from CLIM" "Shifted from deep CLIM"];
+            opts = ["Original" "Recalculated from CLIM" ];
             choice = menu(msg,opts);
-            
+
             if choice==2
                 %Set new values in BR+BD for clim file
                 DOXY_NEW(:,ip)=DOXY_REC2;% ===> output file
                 PSAL_ctd_NEW(:,ip)=PSAL2;% ===> output file
             end
-            if choice==3
-                %Set new values in BR+BD for clim file
-                DOXY_NEW(:,ip)=DOXY_REC3;% ===> output file
-                PSAL_ctd_NEW(:,ip)=PSAL3;% ===> output file
+
+
+            if choice>=2
+                idx=~isnan(DOXY_NEW(:,ip));
+                QC_DOXY_NEW(idx,ip)='3';
+
+                idx=~isnan(PSAL_ctd_NEW(:,ip));
+                QC_PSAL_ctd_NEW(idx,ip)='3';
+
+                if Work.DOXY_QUEST_TOP
+                    PRES_DOWN=500;
+                    quest = questdlg(['Do you want to flag the upper ', num2str(PRES_DOWN),'m?'], ...
+                        'Yes/No', ...
+                        'Yes', 'No', 'No');
+
+                    switch quest
+                        case 'Yes'
+                            idx=find(PRES_ctd(:,ip)<=PRES_DOWN);
+                            QC_PSAL_ctd_NEW(idx,ip)='4';
+                            QC_DOXY_NEW(idx,ip)='4';
+                    end % switch
+                end
+
+                %write new values in BR+BD clim file
+                ncwrite(file_doxy_full,'DOXY', DOXY_NEW);
+                ncwrite(file_doxy_full,'DOXY_QC',QC_DOXY_NEW);
+
+                %write new values in R+D clim file
+                ncwrite(file_ctd_full,'PSAL', PSAL_ctd_NEW);
+                ncwrite(file_ctd_full,'PSAL_QC',QC_PSAL_ctd_NEW);
+
+
+                tmp=ncread(file_doxy_full,'SCIENTIFIC_CALIB_COMMENT');
+                % tmp       256x5x1x2
+                % char SCIENTIFIC_CALIB_COMMENT(N_PROF, N_CALIB, N_PARAM, STRING256) ;
+                % STRING256 = 256 ;
+                % N_PARAM = 5 ;
+                % N_CALIB = 1 ;
+                % N_PROF = 2 ;
+                %'Recovered BGC profile. ARMOR3D product salinity used. DOI???'
+                % Use N_CALIB=1
+
+                i_prof=ip;
+                list_param=ncread(file_doxy_full,'STATION_PARAMETERS');
+                list_param=squeeze(list_param(:,:,ip))';
+
+                i_param=[];
+                for ii=1:size(list_param,1)
+                    if strcmp(deblank(list_param(ii,:)),'DOXY')
+                        i_param=ii;
+                    end
+                end
+
+                i_calib=size(tmp,3);
+
+                if strcmp(Work.PSAL_REPLACE_CLIM,'ARMOR-3D')
+                    linec=['Recovered BGC profile. ',Work.PSAL_REPLACE_CLIM,' product salinity used. https://doi.org/10.48670/moi-00052'];
+                elseif strcmp(Work.PSAL_REPLACE_CLIM,'ISAS')
+                    linec=['Recovered BGC profile. ',Work.PSAL_REPLACE_CLIM,' product salinity used. https://doi.org/10.1175/JCLI-D-15-0028.1'];
+                elseif strcmp(Work.PSAL_REPLACE_CLIM,'WOA')
+                    linec=['Recovered BGC profile. ',Work.PSAL_REPLACE_CLIM,' product salinity used. https://accession.nodc.noaa.gov/NCEI-WOA18'];
+                else
+                    linec=['Recovered BGC profile. ',Work.PSAL_REPLACE_CLIM,' product salinity used.'];
+                end
+                linec=[linec,blanks(size(tmp,1)-length(linec))];
+                tmp(:,i_param,i_calib,i_prof)=linec';
+                ncwrite(file_doxy_full,'SCIENTIFIC_CALIB_COMMENT',tmp);
             end
-
-            if choice >=2
-            idx=~isnan(DOXY_NEW(:,ip));
-            QC_DOXY_NEW(idx,ip)='3';
-
-            idx=~isnan(PSAL_ctd_NEW(:,ip));
-            QC_PSAL_ctd_NEW(idx,ip)='3';
-
-            PRES_DOWN=500;
-            quest = questdlg(['Do you want to flag the upper ', num2str(PRES_DOWN),'m?'], ...
-                'Yes/No', ...
-                'Yes', 'No', 'No');
-
-            switch quest
-                case 'Yes'
-                    idx=find(PRES_ctd(:,ip)<=PRES_DOWN);
-                    QC_PSAL_ctd_NEW(idx,ip)='4';
-                    QC_DOXY_NEW(idx,ip)='4';
-            end % switch
-
-            %write new values in BR+BD clim file
-            ncwrite(file_doxy_full,'DOXY', DOXY_NEW);
-            ncwrite(file_doxy_full,'DOXY_QC',QC_DOXY_NEW);
-
-            %write new values in R+D clim file
-            ncwrite(file_ctd_full,'PSAL', PSAL_ctd_NEW);
-            ncwrite(file_ctd_full,'PSAL_QC',QC_PSAL_ctd_NEW);
-
-
-           tmp=ncread(file_doxy_full,'SCIENTIFIC_CALIB_COMMENT');
-           % tmp       256x5x1x2
-           % char SCIENTIFIC_CALIB_COMMENT(N_PROF, N_CALIB, N_PARAM, STRING256) ;
-           % STRING256 = 256 ;	
-           % N_PARAM = 5 ;	
-           % N_CALIB = 1 ;
-           % N_PROF = 2 ;	
-           %'Recovered BGC profile. ARMOR3D product salinity used. DOI???'
-           % Use N_CALIB=1
-            
-           i_prof=ip;
-           list_param=ncread(file_doxy_full,'STATION_PARAMETERS');
-           list_param=squeeze(list_param(:,:,ip))';
-
-           i_param=[];
-           for ii=1:size(list_param,1)
-               if strcmp(deblank(list_param(ii,:)),'DOXY')
-                   i_param=ii;
-               end
-           end
-           
-           i_calib=size(tmp,3);
-
-           if strcmp(Work.PSAL_REPLACE_CLIM,'ARMOR-3D')
-               linec=['Recovered BGC profile. ',Work.PSAL_REPLACE_CLIM,' product salinity used. https://doi.org/10.48670/moi-00052'];
-           elseif strcmp(Work.PSAL_REPLACE_CLIM,'ISAS')
-               linec=['Recovered BGC profile. ',Work.PSAL_REPLACE_CLIM,' product salinity used. https://doi.org/10.1175/JCLI-D-15-0028.1'];
-           elseif strcmp(Work.PSAL_REPLACE_CLIM,'WOA')
-               linec=['Recovered BGC profile. ',Work.PSAL_REPLACE_CLIM,' product salinity used. https://accession.nodc.noaa.gov/NCEI-WOA18'];
-           else
-               linec=['Recovered BGC profile. ',Work.PSAL_REPLACE_CLIM,' product salinity used.'];
-           end
-           linec=[linec,blanks(size(tmp,1)-length(linec))];
-           tmp(:,i_param,i_calib,i_prof)=linec';
-           ncwrite(file_doxy_full,'SCIENTIFIC_CALIB_COMMENT',tmp);
-           display('Press ENTER to continue');
-           pause
 
         end
         clr=[0 1 0];
-
         % Use climatological recalculated DOXY profile if QC=4 for
         % PSAL_adjusted values
-        qc_psal_num=str2num(QC_PSAL_adjusted_ctd(:,ip:ip));
+         if exist('QC_PSAL_ctd_NEW')
+             qc_psal_num=str2num(QC_PSAL_ctd_NEW(:,ip)); % choise == 2 or 3
+         else
+             qc_psal_num=str2num(QC_PSAL_adjusted_ctd(:,ip:ip)); %choice ==1
+         end
 
         if all(qc_psal_num==4)
             f=(i-imin)/(imax-imin);
+            if isnan(f)
+                f=1;
+            end
             clr=f*[255,0,0]/255;
         end
-        if Work.PSAL_REPLACE_plot
+        if Work.DOXY_PLOT_all
             fig2=figure(100);
             title('Original ',strcat(strrep(file_first,'_','\_'),'-',strrep(file_doxy,'_','\_')));
             hold on;
@@ -503,7 +467,7 @@ for i=imin:imax
             clr=f*[0,0,255]/255;
         end
 
-        if Work.PSAL_REPLACE_plot
+        if Work.DOXY_PLOT_all
             fig3=figure(101);
             title('Clim ',strcat(strrep(file_first,'_','\_'),'-',strrep(file_doxy,'_','\_')));
             hold on;
@@ -535,7 +499,7 @@ for i=imin:imax
     end
 
 end
-if Work.PSAL_REPLACE_plot
+if Work.DOXY_PLOT_all
     figure(100);
     xlabel('DOXY (MM/Kg)');
     ylabel('Pressure (Db)');
@@ -552,7 +516,7 @@ if Work.PSAL_REPLACE_plot
     %close(fig2);
 end
 
-if Work.PSAL_REPLACE_plot
+if Work.DOXY_PLOT_all
     figure(101);
     xlabel('DOXY (MM/Kg)');
     ylabel('Pressure (Db)');
@@ -565,7 +529,7 @@ if Work.PSAL_REPLACE_plot
     %close(fig3);
 end
 
-if Work.PSAL_REPLACE_plot
+if Work.DOXY_PLOT_all
     fig3=figure(102);
 
     idx=find(diff(global_num)==1);%Last values
@@ -616,7 +580,7 @@ if Work.PSAL_REPLACE_plot
     eval(['print -dpdf ',char(Work.PSAL_REPLACE_plot_dir),'Takeshita_',strcat(file_first(1:end-3),'-',file_doxy(1:end-3)),'_',char(Work.PSAL_REPLACE_CLIM),'.pdf']);
 end
 
-if Work.PSAL_REPLACE_plot
+if Work.DOXY_PLOT_all
     fig4=figure(104);
 
     clr='m';

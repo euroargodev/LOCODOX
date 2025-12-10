@@ -104,9 +104,12 @@ if strfind(username,'treynaud')
     CONFIG_CLIM.PSAL_REPLACE_DIR='/Users/treynaud/IFREMER/MATLAB/LOCODOX/Tools_treynaud/';
     CONFIG_CLIM.PSAL_REPLACE_CLIM_file='copernicus';
 
-    CONFIG_CLIM.PSAL_REPLACE_plot=true;
+    CONFIG_CLIM.PSAL_REPLACE_plot=true;% plot figures for each individual cycle
     CONFIG_CLIM.PSAL_REPLACE_plot_close=false;
-    
+    CONFIG_CLIM.DOXY_PLOT_all=false; % plot figures all cumulatives cycles    
+    CONFIG_CLIM.DOXY_PLOT_manual=true; % generate figures 1 by 1   
+    CONFIG_CLIM.DOXY_QUEST_TOP=false; % flag top DOXY CLIM values    
+
 else
     disp('User unknown ==> Define path in DOXY_PSAL_CLIM_config.m')
     exit;
