@@ -393,7 +393,8 @@ for i=imin:imax
                 %write new values in R+D clim file
                 ncwrite(file_ctd_full,'PSAL', PSAL_ctd_NEW);
                 ncwrite(file_ctd_full,'PSAL_QC',QC_PSAL_ctd_NEW);
-
+                ncwrite(file_ctd_full,'PSAL_ADJUSTED', PSAL_ctd_NEW);
+                ncwrite(file_ctd_full,'PSAL_ADJUSTED_QC',QC_PSAL_ctd_NEW);
 
                 tmp=ncread(file_doxy_full,'SCIENTIFIC_CALIB_COMMENT');
                 % tmp       256x5x1x2
