@@ -151,7 +151,7 @@ for ilat=1:length(lat_float)
             idz=find(dz==0);
             tmp(idz)=NaN;
             tmp2=interp1(depth_float(~isnan(tmp)),tmp(~isnan(tmp)),depth_float,'linear');
-            ilast=find(isnan(tmp2)==1,1,'first')-1;
+            ilast=find(isnan(tmp)==1,1,'first')-1;
             tmp2(ilast+1:end)=tmp2(ilast);
 
             if Work.PSAL_REPLACE_plot

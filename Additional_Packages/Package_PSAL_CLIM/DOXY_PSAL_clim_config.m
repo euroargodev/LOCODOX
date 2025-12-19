@@ -88,7 +88,7 @@ end
 
 if strfind(username,'treynaud')
     % Main directory of DOXY computation
-    CONFIG_CLIM.FloatMainDir = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_FLOAT_DATA/DMQC_STEP1/coriolis/';
+    CONFIG_CLIM.FloatMainDir = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX_EXTERNAL_FLOAT_DATA/DMQC_PSAL/coriolis/';
     % Directory for saving
     CONFIG_CLIM.resultsDir= '/Users/treynaud/IFREMER/MATLAB/LOCODOX/results/';
 

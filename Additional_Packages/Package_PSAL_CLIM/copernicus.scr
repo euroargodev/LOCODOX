@@ -2,5 +2,5 @@
 source ~/.bash_profile
 mamba activate copernicus
 copernicusmarine --version
-copernicusmarine subset -i cmems_obs-mob_glo_phy_my_0.125deg_P1M-m -v so -t 2022-10-01T00:00:00 -T 2022-11-01T00:00:00 -x 17.55428167 -X 18.05428167 -y -40.01355000 -Y -39.01355000 -z 0.0 -Z 4000.0 -f dataset_subset_PSAL.nc --disable-progress-bar --overwrite --username treynaud --password Can14692!
-copernicusmarine subset -i cmems_obs-mob_glo_phy_my_0.125deg_P1M-m -v to -t 2022-10-01T00:00:00 -T 2022-11-01T00:00:00 -x 17.55428167 -X 18.05428167 -y -40.01355000 -Y -39.01355000 -z 0.0 -Z 4000.0 -f dataset_subset_TEMP.nc --disable-progress-bar --overwrite --username treynaud --password Can14692!
+copernicusmarine subset -i cmems_obs-mob_glo_phy_nrt_0.125deg_P1D-m -v so -t 2023-11-01T00:00:00 -T 2023-12-01T00:00:00 -x -23.42183167 -X -22.92183167 -y 38.98909333 -Y 39.98909333 -z 0.0 -Z 4000.0 -f dataset_subset_PSAL.nc --disable-progress-bar --overwrite --username treynaud --password Can14692!
+copernicusmarine subset -i cmems_obs-mob_glo_phy_nrt_0.125deg_P1D-m -v to -t 2023-11-01T00:00:00 -T 2023-12-01T00:00:00 -x -23.42183167 -X -22.92183167 -y 38.98909333 -Y 39.98909333 -z 0.0 -Z 4000.0 -f dataset_subset_TEMP.nc --disable-progress-bar --overwrite --username treynaud --password Can14692!
