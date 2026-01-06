@@ -1,23 +1,21 @@
 copernicusmarine, version 2.2.3
-INFO - 2025-12-18T20:31:21Z - Selected dataset version: "202511"
-INFO - 2025-12-18T20:31:21Z - Selected dataset part: "default"
-WARNING - 2025-12-18T20:31:21Z - Some of your subset selection [2023-11-01 00:00:00+00:00, 2023-12-01 00:00:00+00:00] for the time dimension exceed the dataset coordinates [2023-12-01 00:00:00+00:00, 2025-12-12 00:00:00+00:00]
-INFO - 2025-12-18T20:31:22Z - Starting download. Please wait...
-INFO - 2025-12-18T20:31:23Z - Successfully downloaded to dataset_subset_PSAL.nc
+INFO - 2026-01-05T20:09:32Z - Selected dataset version: "202511"
+INFO - 2026-01-05T20:09:32Z - Selected dataset part: "default"
+INFO - 2026-01-05T20:09:33Z - Starting download. Please wait...
+INFO - 2026-01-05T20:09:36Z - Successfully downloaded to dataset_subset_PSAL.nc
 {
-  "file_size": 0.015870229007633588,
-  "data_transfer_size": 105.80812213740458,
+  "file_size": 0.018740458015267174,
+  "data_transfer_size": 384.2110534351145,
   "status": "000",
   "message": "The request was successful."
 }
-INFO - 2025-12-18T20:31:25Z - Selected dataset version: "202511"
-INFO - 2025-12-18T20:31:25Z - Selected dataset part: "default"
-WARNING - 2025-12-18T20:31:25Z - Some of your subset selection [2023-11-01 00:00:00+00:00, 2023-12-01 00:00:00+00:00] for the time dimension exceed the dataset coordinates [2023-12-01 00:00:00+00:00, 2025-12-12 00:00:00+00:00]
-INFO - 2025-12-18T20:31:26Z - Starting download. Please wait...
-INFO - 2025-12-18T20:31:26Z - Successfully downloaded to dataset_subset_TEMP.nc
+INFO - 2026-01-05T20:09:39Z - Selected dataset version: "202511"
+INFO - 2026-01-05T20:09:39Z - Selected dataset part: "default"
+INFO - 2026-01-05T20:09:40Z - Starting download. Please wait...
+INFO - 2026-01-05T20:09:43Z - Successfully downloaded to dataset_subset_TEMP.nc
 {
-  "file_size": 0.015870229007633588,
-  "data_transfer_size": 105.80812213740458,
+  "file_size": 0.018740458015267174,
+  "data_transfer_size": 384.2110534351145,
   "status": "000",
   "message": "The request was successful."
 }

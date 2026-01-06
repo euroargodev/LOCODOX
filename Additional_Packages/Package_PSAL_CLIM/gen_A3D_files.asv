@@ -60,25 +60,20 @@ end
 % get 2 profiles 1 before and 1 after
 juld_min=juld_float;
 %cjuld_min=datestr(juld_min,'yyyy-mm-ddTHH:MM:SS');
-%cjuld_min=datestr(juld_min,'yyyy-mm-01T00:00:00');
-cjuld_min=datestr(juld_min,'yyyy-mm-ddT00:00:00');
+cjuld_min=datestr(juld_min,'yyyy-mm-01T00:00:00');
 
-%delta=31;% Days
-delta=1;% Days
+delta=31;% Days
 juld_max=juld_float+delta;
 %cjuld_max=datestr(juld_max,'yyyy-mm-ddTHH:MM:SS');
-%cjuld_max=datestr(juld_max,'yyyy-mm-01T00:00:00');
-cjuld_max=datestr(juld_max,'yyyy-mm-ddT00:00:00');
+cjuld_max=datestr(juld_max,'yyyy-mm-01T00:00:00');
 
 % La re-analyse:
 % https://data.marine.copernicus.eu/product/MULTIOBS_GLO_PHY_TSUV_3D_MYNRT_015_012/description
 
 if juld_min>= datenum(2023,12,1) & juld_max<= datenum(2025,11,1)
-            %dataset_id="cmems_obs-mob_glo_phy_nrt_0.125deg_P1M-m";%Monthly
-            dataset_id="cmems_obs-mob_glo_phy_nrt_0.125deg_P1D-m";%Daily
+            dataset_id="cmems_obs-mob_glo_phy_nrt_0.125deg_P1D-m";
 elseif juld_min>= datenum(1993,01,01) & juld_max<= datenum(2024,12,1)
-            %dataset_id="cmems_obs-mob_glo_phy_my_0.125deg_P1M-m";%Monthly
-            dataset_id="cmems_obs-mob_glo_phy_my_0.125deg_P1D-m";%Daily
+            dataset_id="cmems_obs-mob_glo_phy_my_0.125deg_P1M-m";
 else
         dataset_id="None";
 end

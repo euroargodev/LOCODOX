@@ -176,6 +176,7 @@ for i=imin:imax
 
     for ip=1:size(PRES_DOXY,2)
     %for ip=1:1
+        %Here we assume that PRES_ctd=PRES_DOXY
         PRES=PRES_DOXY(:,ip);
         TEMP=TEMP_ctd(:,ip);
         PSAL=PSAL_ctd(:,ip);
@@ -327,6 +328,7 @@ for i=imin:imax
 
             %[xout,nspike,ispike] = despike(DOXY_REC2,3,10);
             h1=plot(DOXY_REC2,-PRES2,'r');%DOXY CLIM
+
             hold on;
             h2=plot(DOXY_ORI,-PRES,'g');%DOXY
 
@@ -351,6 +353,7 @@ for i=imin:imax
                 choice=1;
             end
             h1bis=plot(DOXY_REC2-DOXY_ORI, -PRES,clr);
+            h1bis.LineStyle=':';
 
             orient(fig,'portrait');
             fig.Position(3)=0.94*700;
