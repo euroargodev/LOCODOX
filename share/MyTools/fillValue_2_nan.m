@@ -71,8 +71,8 @@ if gotoend==0
                     %if ~isempty(Co.(oneChamp).(fillvalName))         
                         %selec_fill = isnan(Co.(oneChamp).data);
                         selec_fill = Co.(oneChamp).data == Co.(oneChamp).(fillvalName);
-                        if Co.(oneChamp).type == 4 || Co.(oneChamp).type == 2
-                            % type = int32 or string : NaN could not exist : keep
+                        if Co.(oneChamp).type == 4 || Co.(oneChamp).type == 2 || Co.(oneChamp).type == 3
+                            % type = int32 or string or int16 : NaN could not exist : keep
                             % fillValue as is                            
                         else
                             Co.(oneChamp).data(selec_fill) = NaN;
