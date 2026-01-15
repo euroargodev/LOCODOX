@@ -623,7 +623,7 @@ switch plotTyp
                         whichDrift=Work.whichDrift;
                     end
                     
-                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdrift_on%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
                 else
                     saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_nodrift_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,offset,presEff));
                 end
