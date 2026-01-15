@@ -78,10 +78,10 @@ set(hFig, 'PaperType','A4');
 if length(Work.formattype)>1
     for i = 1:length(Work.formattype)
         if isempty(strfind(saveFile,Work.formattype{i}))
-            saveFile=strcat(saveFile,strrep(Work.formattype{i},'-d','.'));
+            saveFile_f=strcat(saveFile,strrep(Work.formattype{i},'-d','.'));
         end
         %figure(hFig);
-        print(hFig,Work.formattype{i},Work.resol,saveFile);
+        print(hFig,Work.formattype{i},Work.resol,saveFile_f);
         if Work.savePlotFig
             suf=strrep(Work.formattype{i},'-d','.');
             saveFileFig=strrep(saveFile,suf,'.fig');
@@ -108,10 +108,10 @@ if length(Work.formattype)>1
     end
 else
     if isempty(strfind(saveFile,Work.formattype{1}))
-        saveFile=strcat(saveFile,strrep(Work.formattype{1},'-d','.'));
+        saveFile_f=strcat(saveFile,strrep(Work.formattype{1},'-d','.'));
     end
     %figure(hFig);
-    print(hFig,Work.formattype{1},Work.resol,saveFile);
+    print(hFig,Work.formattype{1},Work.resol,saveFile_f);
     if Work.savePlotFig
         suf=strrep(Work.formattype{1},'-d','.');
         saveFileFig=strrep(saveFile,suf,'.fig');
