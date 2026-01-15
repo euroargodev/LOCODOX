@@ -61,15 +61,16 @@ initPaperSize = get(hFig,'PaperSize');
 % =========================================================================  
 %% Modify the figure to make it printable
 % =========================================================================  
-set(hFig,'Units','normalized');
 set(hFig,'Visible','off');
-set(hFig,'Position',[0 0 0.99 0.99]);
-set(hFig,'Units','centimeters');
-set(hFig,'PaperUnits','centimeters');
-finalpos = get(hFig,'Position');
-set(hFig,'PaperPosition',[0 0 finalpos(3:4)]);
-set(hFig,'PaperSize',finalpos(3:4))
-set(hFig, 'PaperPositionMode', 'auto') %02/07/19 marine
+pos = get(hFig,'Position');
+figsize = pos(3:4);
+
+%paper orientation
+Lpos = find(figsize == max(figsize));
+coef = 32 / figsize(Lpos(1));
+finalpos = [0 0 (figsize .* coef)];
+set(hFig,'Position',finalpos)
+set(hFig, 'PaperType','A4');
 
 % =========================================================================  
 %% Print the figure
