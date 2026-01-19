@@ -551,7 +551,11 @@ switch plotTyp
                 end
                 if Work.presEff, presEff = 'okpreseff'; else, presEff = 'nopreseff'; end
                 if Work.DODRIFT
-                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+                    if Work.driftondeeplevels
+                        saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdeepdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+                    else
+                        saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_oksurfdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+                    end
                 else
                     saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_nodrift_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,offset,presEff));
                 end
@@ -622,8 +626,11 @@ switch plotTyp
                         %13/03/2020
                         whichDrift=Work.whichDrift;
                     end
-                    
-                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+                    if Work.driftondeeplevels
+                        saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdeepdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+                    else                    
+                        saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_oksurfdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+                    end
                 else
                     saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_nodrift_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,offset,presEff));
                 end
@@ -1050,7 +1057,11 @@ switch plotTyp
             end
             if Work.presEff, presEff = 'okpreseff'; else, presEff = 'nopreseff'; end
             if Work.DODRIFT
-                saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+                if Work.driftondeeplevels
+                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdeepdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+                else
+                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_oksurfdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+                end
             else
                 saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_nodrift_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,offset,presEff));
             end
@@ -1068,9 +1079,13 @@ if Work.savePlot
         else, offset = 'okoffset';
         end
         if Work.presEff, presEff = 'okpreseff'; else, presEff = 'nopreseff'; end
-        
+
         if Work.DODRIFT
-            saveFile2 = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_data_corr_%d_%s_%s_okdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+            if Work.driftondeeplevels
+                saveFile2 = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_data_corr_%d_%s_%s_okdeepdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+            else
+                saveFile2 = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_data_corr_%d_%s_%s_oksurfdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+            end
         else
             saveFile2 = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_data_corr_%d_%s_%s_nodrift_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,offset,presEff));
         end
@@ -1082,7 +1097,11 @@ if Work.savePlot
         if Work.presEff, presEff = 'okpreseff'; else, presEff = 'nopreseff'; end
         
         if Work.DODRIFT
-            saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+            if Work.driftondeeplevels
+                saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdeepdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+            else
+                saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_oksurfdrift_on%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff));
+            end
         else
             saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_nodrift_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,offset,presEff));
         end
