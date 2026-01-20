@@ -173,6 +173,11 @@ if Work.savePlot == 1
     if Work.presEff, presEffStr = 'okpreseff'; else, presEffStr = 'nopreseff'; end
     %saveFile =
     %fullfile(Work.dirPlot,sprintf('DOXY_PLOT_interpolation_%d_on%s_%s',Work.wmo,cmpl,presEffStr));
-    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_interpolation_%d_on%s_%s',Work.wmo,Work.whichCorr,presEffStr));% TR 06/03/2020
+    if isempty(Work.coeff_corr) || str2double(Work.coeff_corr)==0
+        presCorrStr='nopresCorr';
+    else
+        presCorrStr=['presCorr' (Work.coeff_corr)];
+    end
+    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_interpolation_%d_on%s_%s_%s',Work.wmo,Work.whichCorr,presEffStr,presCorrStr));% TR 06/03/2020
     DOXY_PLOT_settingsToPrint(hFig,Work,saveFile);
 end

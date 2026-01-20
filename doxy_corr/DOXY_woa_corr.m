@@ -252,10 +252,12 @@ for n=1:4
     argoStruct = eval(['argo' num2str(n) 'Struct;']);
     argoStruct.Work.whichO2quantity = Work.whichO2quantity;
     argoStruct.Work.DODRIFT = Work.DODRIFT;
-    argoStruct.Work.driftondeeplevels = Work.driftondeeplevels;
     argoStruct.Work.(['FIT_slope_' Work.whichO2quantity]) = Work.(['FIT_slope_' Work.whichO2quantity]);
     argoStruct.Work.(['FIT_intercept_' Work.whichO2quantity]) = Work.(['FIT_intercept_' Work.whichO2quantity]);
     argoStruct.Work.whichDrift=Work.whichDrift;
+    if Work.DODRIFT == 1 && strcmp(Work.whichDrift,'WOA')
+        argoStruct.Work.driftondeeplevels = Work.driftondeeplevels;
+    end
     if isfield(Work,'ind_drift_stop')
         argoStruct.Work.ind_drift_stop=Work.ind_drift_stop;
     end

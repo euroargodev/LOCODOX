@@ -275,10 +275,12 @@ if Work.savePlot == 1
     elseif  strcmp(Work.whichCorr,'INAIR')
         drift_type='onNCEP'; 
     end
-    if Work.driftondeeplevels
+    if strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 1
         saveFile = fullfile(Work.dirPlot,sprintf('DOXY_deepdrift_%s_%s_%d',drift_type,presEffStr,Work.wmo));
-    else
+    elseif strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 0
         saveFile = fullfile(Work.dirPlot,sprintf('DOXY_surfdrift_%s_%s_%d',drift_type,presEffStr,Work.wmo));
+    else
+        saveFile = fullfile(Work.dirPlot,sprintf('DOXY_drift_%s_%s_%d',drift_type,presEffStr,Work.wmo));
     end
     DOXY_PLOT_settingsToPrint(hFig,Work,saveFile);        
 end
