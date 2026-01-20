@@ -1122,7 +1122,11 @@ if Work.savePlot
         else, offset = 'okoffset';
         end
         if Work.presEff, presEff = 'okpreseff'; else, presEff = 'nopreseff'; end
-        
+        if isempty(Work.coeff_corr) || str2double(Work.coeff_corr)==0
+            presCorrStr='nopresCorr';
+        else
+            presCorrStr=['presCorr' (Work.coeff_corr)];
+        end        
         if Work.DODRIFT
             if strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 1
                 saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdeepdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
