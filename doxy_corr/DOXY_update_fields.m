@@ -120,7 +120,7 @@ function [argo, DIMD] = DOXY_update_fields(Work,argo,DIM,REF_ARGO,kwrite)
 %% General
 % =========================================================================
 argo.date_update.data = datestr(now,'yyyymmddHHMMSS');
-[argo.data_mode.data(:)] = 'D';
+% [argo.data_mode.data(:)] = 'D';
 if isfield(argo,'n_prof')
     n_prof = argo.n_prof;
     argo.data_state_indicator.data = repmat('2C  ',argo.n_prof,1);
@@ -135,6 +135,9 @@ for n = 1:n_prof
     myparam = cellstr(permute(argo.parameter.data(n,1,:,:),[3,4,2,1]));
     isdoxy = strcmp(myparam,'DOXY');
     argo.parameter_data_mode.data(n,isdoxy) = 'D';
+    if any(isdoxy==1)
+        [argo.data_mode.data(n)] = 'D';
+    end
 end
 
 % =========================================================================

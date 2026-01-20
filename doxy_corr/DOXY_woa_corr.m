@@ -255,6 +255,9 @@ for n=1:4
     argoStruct.Work.(['FIT_slope_' Work.whichO2quantity]) = Work.(['FIT_slope_' Work.whichO2quantity]);
     argoStruct.Work.(['FIT_intercept_' Work.whichO2quantity]) = Work.(['FIT_intercept_' Work.whichO2quantity]);
     argoStruct.Work.whichDrift=Work.whichDrift;
+    if Work.DODRIFT == 1 && strcmp(Work.whichDrift,'WOA')
+        argoStruct.Work.driftondeeplevels = Work.driftondeeplevels;
+    end
     if isfield(Work,'ind_drift_stop')
         argoStruct.Work.ind_drift_stop=Work.ind_drift_stop;
     end
