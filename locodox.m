@@ -764,7 +764,13 @@ while goProg
     end
         
     if Work.DODRIFT
-        driftStr = ['drifton' Work.whichDrift];
+        if strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 1
+            driftStr = ['deepdrifton' Work.whichDrift];
+        elseif strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 0
+            driftStr = ['surfdrifton' Work.whichDrift];
+        else
+            driftStr = ['drifton' Work.whichDrift];
+        end
     else
         driftStr = 'nodrift';
     end
@@ -776,8 +782,18 @@ while goProg
     else
         corr_type=Work.whichCorr;
     end
-    Work.dirout=sprintf('%s_%s_%s_%s_%s_%s',corr_type,presEffStr,presCorrStr,driftStr,offsetStr,Work.whichO2quantity);
-    
+
+    if strcmp(Work.whichCorr,'INAIR')
+        if Work.isokC == 1
+            coverStr = 'okco';
+        else
+            coverStr = 'noco';
+        end
+        Work.dirout=sprintf('%s_%s_%s_%s_%s_%s_%s',corr_type,presEffStr,presCorrStr,driftStr,offsetStr,coverStr,Work.whichO2quantity);
+    else
+        Work.dirout=sprintf('%s_%s_%s_%s_%s_%s',corr_type,presEffStr,presCorrStr,driftStr,offsetStr,Work.whichO2quantity);
+    end
+
     if ~exist(fullfile(CONFIG.saveDataDir,'MAT',Work.dirout),'dir')
         mkdir(fullfile(CONFIG.saveDataDir,'MAT',Work.dirout));
     end 

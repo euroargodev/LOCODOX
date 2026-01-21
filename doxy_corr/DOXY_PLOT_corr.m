@@ -557,14 +557,24 @@ switch plotTyp
                 end
                 if Work.DODRIFT
                     if strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 1
-                        saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdeepdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                        driftStr = ['okdeepdrift_on' Work.whichDrift];
                     elseif strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 0
-                        saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_oksurfdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                        driftStr = ['oksurfdrift_on' Work.whichDrift];
                     else
-                        saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                        driftStr = ['okdrift_on' Work.whichDrift];
                     end
                 else
-                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_nodrift_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,offset,presEff,presCorrStr));
+                    driftStr = 'nodrift'
+                end
+                if strcmp(Work.whichCorr,'INAIR')
+                    if Work.isokC == 1
+                        coverStr = 'okco';
+                    else
+                        coverStr = 'noco';
+                    end
+                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_%s_%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,driftStr,offset,presEff,presCorrStr,coverStr));
+                else
+                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,driftStr,offset,presEff,presCorrStr));
                 end
                 [hFig] = DOXY_PLOT_settingsToPrint(hFig,Work,saveFile);
                 
@@ -639,14 +649,24 @@ switch plotTyp
                         whichDrift=Work.whichDrift;
                     end
                     if strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 1
-                        saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdeepdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
-                    elseif strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 0                   
-                        saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_oksurfdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                        driftStr = ['okdeepdrift_on' Work.whichDrift];
+                    elseif strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 0
+                        driftStr = ['oksurfdrift_on' Work.whichDrift];
                     else
-                        saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                        driftStr = ['okdrift_on' Work.whichDrift];
                     end
                 else
-                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_nodrift_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,offset,presEff,presCorrStr));
+                    driftStr = 'nodrift'
+                end
+                if strcmp(Work.whichCorr,'INAIR')
+                    if Work.isokC == 1
+                        coverStr = 'okco';
+                    else
+                        coverStr = 'noco';
+                    end
+                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_%s_%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,driftStr,offset,presEff,presCorrStr,coverStr));
+                else
+                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,driftStr,offset,presEff,presCorrStr));
                 end
                 [hFig] = DOXY_PLOT_settingsToPrint(hFig,Work,saveFile);
                 
@@ -1077,14 +1097,24 @@ switch plotTyp
             end
             if Work.DODRIFT
                 if strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 1
-                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdeepdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                    driftStr = ['okdeepdrift_on' Work.whichDrift];
                 elseif strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 0
-                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_oksurfdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                    driftStr = ['oksurfdrift_on' Work.whichDrift];
                 else
-                    saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                    driftStr = ['okdrift_on' Work.whichDrift];
                 end
             else
-                saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_nodrift_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,offset,presEff,presCorrStr));
+                driftStr = 'nodrift'
+            end
+            if strcmp(Work.whichCorr,'INAIR')
+                if Work.isokC == 1
+                    coverStr = 'okco';
+                else
+                    coverStr = 'noco';
+                end
+                saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_%s_%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,driftStr,offset,presEff,presCorrStr,coverStr));
+            else
+                saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,driftStr,offset,presEff,presCorrStr));
             end
             [hFig] = DOXY_PLOT_settingsToPrint(hFig,Work,saveFile);
             
@@ -1107,14 +1137,24 @@ if Work.savePlot
         end
         if Work.DODRIFT
             if strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 1
-                saveFile2 = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_data_corr_%d_%s_%s_okdeepdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                driftStr = ['okdeepdrift_on' Work.whichDrift];
             elseif strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 0
-                saveFile2 = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_data_corr_%d_%s_%s_oksurfdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                driftStr = ['oksurfdrift_on' Work.whichDrift];
             else
-                saveFile2 = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_data_corr_%d_%s_%s_okdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                driftStr = ['okdrift_on' Work.whichDrift];
             end
         else
-            saveFile2 = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_data_corr_%d_%s_%s_nodrift_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,offset,presEff,presCorrStr));
+            driftStr = 'nodrift'
+        end
+        if strcmp(Work.whichCorr,'INAIR')
+            if Work.isokC == 1
+                coverStr = 'okco';
+            else
+                coverStr = 'noco';
+            end
+            saveFile2 = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_data_corr_%d_%s_%s_%s_%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,driftStr,offset,presEff,presCorrStr,coverStr));
+        else
+            saveFile2 = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_data_corr_%d_%s_%s_%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,driftStr,offset,presEff,presCorrStr));
         end
         [hFig] = DOXY_PLOT_settingsToPrint(hFig,Work,saveFile2);
     else
@@ -1129,14 +1169,24 @@ if Work.savePlot
         end        
         if Work.DODRIFT
             if strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 1
-                saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdeepdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                driftStr = ['okdeepdrift_on' Work.whichDrift];
             elseif strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 0
-                saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_oksurfdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                driftStr = ['oksurfdrift_on' Work.whichDrift];
             else
-                saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_okdrift_on%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,Work.whichDrift,offset,presEff,presCorrStr));
+                driftStr = ['okdrift_on' Work.whichDrift];
             end
         else
-            saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_nodrift_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,offset,presEff,presCorrStr));
+            driftStr = 'nodrift'
+        end
+        if strcmp(Work.whichCorr,'INAIR')
+            if Work.isokC == 1
+                coverStr = 'okco';
+            else
+                coverStr = 'noco';
+            end
+            saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_%s_%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,driftStr,offset,presEff,presCorrStr,coverStr));
+        else
+            saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_corr_%d_%s_%s_%s_%s_%s_%s',Work.wmo,Work.whichCorr,Work.whichO2quantity,driftStr,offset,presEff,presCorrStr));
         end
         [hFig] = DOXY_PLOT_settingsToPrint(hFig,Work,saveFile);
     end
