@@ -93,6 +93,7 @@
 %       v4.0 18.01.2021 Thierry Reynaud -> add path selection upon username
 %       v5.0 12.04.2021 Thierry Reynaud --> Time Drift Depth parameters
 %       modified
+%            30.01.2026 virginie Racape --> remove exit if unknown username
 
 function [CONFIG] = locodox_config
 
@@ -154,7 +155,8 @@ elseif strfind(username,'vthierry')
     CONFIG.resultsDir= '/Users/vthierry/matlab/GITHUB_LOCODOX/LOCODOX/results/';
 else
     disp('User unknown ==> Define path in locodox_config.m')
-    exit;
+    % exit; % 30.01.206 vr commented
+    return  % 30.01.206 vr added
 end
 
 % Add the useful paths
