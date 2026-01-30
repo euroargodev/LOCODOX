@@ -141,7 +141,7 @@
 %             v3 11.02.2022    Modified for Mutliple REF profile use (T.Reynaud)
 %             v4 12.08.2024    Thierry Reynaud
 %                              transfert to Work.drift_PWLF
-%                30.01.2026    transfert deepondriftlevel information by Virginie Racape
+
 function [argo1Struct,argo2Struct,argo3Struct,argo4Struct,WOA, Work, goProg] = DOXY_ref_corr(CONFIG, ...
                 WOA, REF_ARGO, argo1Struct, argo2Struct, argo3Struct, argo4Struct, argo, argoWork, Work)
  
@@ -314,7 +314,7 @@ for n=1:4
     argoStruct = eval(['argo' num2str(n) 'Struct;']);
     argoStruct.Work.whichO2quantity = Work.whichO2quantity;
     argoStruct.Work.DODRIFT = Work.DODRIFT;
-    if Work.DODRIFT == 1 && strcmp(Work.whichDrift,'WOA') %jan26, vr - pokapok : add to complete repository and figure name
+    if Work.DODRIFT == 1 && strcmp(Work.whichDrift,'WOA')
         argoStruct.Work.driftondeeplevels = Work.driftondeeplevels;
     end
     argoStruct.Work.(['FIT_slope_' Work.whichO2quantity]) = Work.(['FIT_slope_' Work.whichO2quantity]);

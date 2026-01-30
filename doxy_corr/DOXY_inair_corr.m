@@ -132,7 +132,6 @@
 %                              whichDrift was missing for argo4Struct
 %              12/08/2024      Thierry Reynaud
 %                              transfert to Work.drift_PWLF
-%              30.01.2026      transfert deepondriftlevel information by Virginie Racape
 function [argo1Struct,argo2Struct,argo3Struct,argo4Struct,WOA,NCEP, Work,goProg] = DOXY_inair_corr(CONFIG, WOA,...
     NCEP, argo1Struct, argo2Struct, argo3Struct, argo4Struct, argo, argoWork, Work, argoTrajWork)
 
@@ -491,7 +490,7 @@ for n=1:4
     argoStruct.Work.whichO2quantity = Work.whichO2quantity;
     argoStruct.Work.DODRIFT = Work.DODRIFT;
     argoStruct.Work.whichDrift=Work.whichDrift;
-    if Work.DODRIFT == 1 && strcmp(Work.whichDrift,'WOA') %jan26, vr - pokapok : add to complete repository and figure name
+    if Work.DODRIFT == 1 && strcmp(Work.whichDrift,'WOA')
         argoStruct.Work.driftondeeplevels = Work.driftondeeplevels;
     end
     argoStruct.Work.(['FIT_slope_' Work.whichO2quantity]) = Work.(['FIT_slope_' Work.whichO2quantity]);

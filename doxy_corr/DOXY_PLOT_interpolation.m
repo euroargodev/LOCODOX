@@ -66,7 +66,6 @@
 %              v2.4 23/02/2022   Thierry Reynaud
 %                                Multi REF added on plots ==> modify
 %                                legend
-%                   30.01.2026   saveFilename mmodified by Virginie Racape
 function [] = DOXY_PLOT_interpolation(Work, argoWork, WOAorREF, icycle, refcyc)
 
 % =====================================================================
@@ -174,13 +173,11 @@ if Work.savePlot == 1
     if Work.presEff, presEffStr = 'okpreseff'; else, presEffStr = 'nopreseff'; end
     %saveFile =
     %fullfile(Work.dirPlot,sprintf('DOXY_PLOT_interpolation_%d_on%s_%s',Work.wmo,cmpl,presEffStr));
-    % Jan26, vr - pokapok : complete the figure file name -- start
     if isempty(Work.coeff_corr) || str2double(Work.coeff_corr)==0
         presCorrStr='nopresCorr';
     else
         presCorrStr=['presCorr' (Work.coeff_corr)];
     end
-    % Jan26, vr - pokapok : complete the figure file name -- end
     saveFile = fullfile(Work.dirPlot,sprintf('DOXY_PLOT_interpolation_%d_on%s_%s_%s',Work.wmo,Work.whichCorr,presEffStr,presCorrStr));% TR 06/03/2020
     DOXY_PLOT_settingsToPrint(hFig,Work,saveFile);
 end
