@@ -111,7 +111,7 @@
 %       v3.8 26.04.2024   Modifications added for handling PWLF:
 %                         kwrite = 1 ==> SLOPE(1) and DRIFT(1) all cases+PWLF linear segment 1 
 %                         kwrite = 2 ==> SLOPE(2) and DRIFT(2) PWLF linear segment 2
-%      
+%            30.01.2025   debug paramter data mode filling by Virginie Racape
 
 
 function [argo, DIMD] = DOXY_update_fields(Work,argo,DIM,REF_ARGO,kwrite)
@@ -120,7 +120,7 @@ function [argo, DIMD] = DOXY_update_fields(Work,argo,DIM,REF_ARGO,kwrite)
 %% General
 % =========================================================================
 argo.date_update.data = datestr(now,'yyyymmddHHMMSS');
-% [argo.data_mode.data(:)] = 'D';
+% [argo.data_mode.data(:)] = 'D'; % jan26, vr - pokapok : commented
 if isfield(argo,'n_prof')
     n_prof = argo.n_prof;
     argo.data_state_indicator.data = repmat('2C  ',argo.n_prof,1);
@@ -135,7 +135,7 @@ for n = 1:n_prof
     myparam = cellstr(permute(argo.parameter.data(n,1,:,:),[3,4,2,1]));
     isdoxy = strcmp(myparam,'DOXY');
     argo.parameter_data_mode.data(n,isdoxy) = 'D';
-    if any(isdoxy==1)
+    if any(isdoxy==1) % Jan26, vr - pokapok : select right place for writing D
         [argo.data_mode.data(n)] = 'D';
     end
 end

@@ -74,6 +74,7 @@
 %                             modifications added for PWLF loop
 %             20.08.2024      Thierry Reynaud
 %                             saveFile name modified
+%             30.01.206       saveFile name modified by Virginie Racape
 function [ax,Work,DRIFT] = DOXY_PLOT_drift(DRIFT,Work,daydiff,unit,type,ax)
 
 % =========================================================================  
@@ -275,6 +276,7 @@ if Work.savePlot == 1
     elseif  strcmp(Work.whichCorr,'INAIR')
         drift_type='onNCEP'; 
     end
+    % Jan26, vr - pokapok : complete the figure file name -- start
     if strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 1
         saveFile = fullfile(Work.dirPlot,sprintf('DOXY_deepdrift_%s_%s_%d',drift_type,presEffStr,Work.wmo));
     elseif strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 0
@@ -282,6 +284,7 @@ if Work.savePlot == 1
     else
         saveFile = fullfile(Work.dirPlot,sprintf('DOXY_drift_%s_%s_%d',drift_type,presEffStr,Work.wmo));
     end
+    % Jan26, vr - pokapok : complete the figure file name -- end
     DOXY_PLOT_settingsToPrint(hFig,Work,saveFile);        
 end
 

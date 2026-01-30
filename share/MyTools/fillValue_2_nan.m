@@ -34,6 +34,7 @@
 %   $Revision: version $Date: $author:
 %       v2 18/11/2015   Emilie Brion, ALTRAN OUEST
 %                       adapted to be shared to the O2 community
+%       30.01.2026      add int16 in the except condition by Virginie Racape
 
 function [Co] = fillValue_2_nan(Co,fillvalName,verbose)
 
@@ -71,7 +72,7 @@ if gotoend==0
                     %if ~isempty(Co.(oneChamp).(fillvalName))         
                         %selec_fill = isnan(Co.(oneChamp).data);
                         selec_fill = Co.(oneChamp).data == Co.(oneChamp).(fillvalName);
-                        if Co.(oneChamp).type == 4 || Co.(oneChamp).type == 2 || Co.(oneChamp).type == 3
+                        if Co.(oneChamp).type == 4 || Co.(oneChamp).type == 2 || Co.(oneChamp).type == 3 % Jan26, vr - pokapok : add int16
                             % type = int32 or string or int16 : NaN could not exist : keep
                             % fillValue as is                            
                         else
