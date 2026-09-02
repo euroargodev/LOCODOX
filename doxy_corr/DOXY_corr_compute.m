@@ -313,11 +313,19 @@ elseif ismember(Work.whichCorr,{'INAIR'})
     
     isok = ~isnan(CORR.ncep_pO2_scaled);
     if Work.isokC==1
-        slopefun=@(beta,X)abs(beta(2)).*X(:,1)+(1-abs(beta(2)))./beta(1).*X(:,2);
+        slopefun=@(beta,X)beta(2).*X(:,1)+(1-beta(2))./(1+beta(1)/100).*X(:,2);
         strfun = 'PO2_inair ~ c*PO2_inwater + ((1-c)/m)PO2_ncep';
-        % compute the coefficient c and m
-        [beta,mdl] = nlinfitci([CORR.po2_inwater_sizeInair(isok)' ...
-        CORR.ncep_pO2_scaled(isok)'],CORR.po2_inair(isok)',slopefun,[1;0]);
+        % compute the coefficient c and m 
+        % -- OLD version - bug discover with the float 6903237
+        % [beta,mdl] = nlinfitci([CORR.po2_inwater_sizeInair(isok)' ...
+        % CORR.ncep_pO2_scaled(isok)'],CORR.po2_inair(isok)',slopefun,[0;0.23]);
+
+        % Replaced by C.Kermabon codes -------------------------------------------
+        [beta,mdl] = nlinfitci([Work.surface.argo.pO2_water(isok)' Work.surface.argo.pO2_air(isok)'],CORR.po2_inair(isok)',slopefun,[0;0.23]);
+        CORR.po2_inair(isok) = beta(2,1)*Work.surface.argo.pO2_water(isok) +(1-beta(2,1))/(1+beta(1,1)/100) *Work.surface.argo.pO2_air(isok) ;
+        slopefun=@(beta,X)(1)./(1+beta/100).*X; 
+        [beta2,mdl2] = nlinfitci(CORR.ncep_pO2_scaled(isok)',CORR.po2_inair(isok)',slopefun,[0]);
+        beta(1,1) = beta(1,1) * beta2(1,1) 
     
     elseif Work.isokC==0
         slopefun=@(beta,X)(1)./beta.*X; %--MG
