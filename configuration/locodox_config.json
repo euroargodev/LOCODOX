@@ -1,8 +1,0 @@
-{ 
-    "mask_file":
-    {
-        "maskFile":"landsea_masks.cdf",
-        "varMask":"landsea"
-    },
-    "logo_file":"locodox_logo.jpg"
-}
