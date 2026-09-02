@@ -762,7 +762,7 @@ while goProg
         %presCorrStr=['presCorr' num2str(Work.coeff_corr)];
         presCorrStr=['presCorr' (Work.coeff_corr)];
     end
-        
+    % jan26, vr - pokapok : modified repository name -- start     
     if Work.DODRIFT
         if strcmp(Work.whichDrift,'WOA') && Work.driftondeeplevels == 1
             driftStr = ['deepdrifton' Work.whichDrift];
@@ -774,6 +774,7 @@ while goProg
     else
         driftStr = 'nodrift';
     end
+    % jan26, vr - pokapok : modified repository name -- end
     if Work.(['FIT_intercept_' Work.whichO2quantity]) == 0, offsetStr = 'nooffset';
     else, offsetStr = 'okoffset';
     end
