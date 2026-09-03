@@ -59,7 +59,8 @@
 %     v16 26.04.2024    PWLF option added for Time Drift Gain Correction (T. Reynaud)
 %     v17 17.08.2024    Save matlab Figures as .fig as well
 %     v18 03.02.2025    Mengyu Li corrections line 89.
-
+%         03.09.2026    json file for configutation. 
+%                       locodox_config.m could always be used as INPUT
 function [] = locodox(config_prog)
 
 close all
@@ -70,14 +71,25 @@ goProg = 1;
 
 % Read the configuration file, addpath and load files
 if nargin == 0
-    config_prog = '/Users/treynaud/IFREMER/MATLAB/LOCODOX/LOCODOX/locodox_config';
+    config_prog = 'locodox_jsonconfig';
+else %Sep26, vr - pokapok : for tool version
+    jsonText = fileread('configuration/locodox_tool_config.json');
+    tool_jsondata = jsondecode(jsonText);
+    fprintf('WARN : the tool version is %s, change in your locodox_config.m if not yet done\n', tool_jsondata.tool_version.history_software_release)
 end
 % if nargin == 0
 %     config_prog = '/Users/vthierry/matlab/GITHUB_LOCODOX/LOCODOX/locodox_config';
 % end
 [config_dir,config_prog] = fileparts(config_prog);
-cd(config_dir);
+% cd(config_dir); % sept26, vr unuseful
 CONFIG = feval(config_prog);
+
+% Sep26, vr - pokapok : for json file checking  -- start
+if isempty(CONFIG)
+    fprintf('END of the process - check above to continue\n')
+    return
+end
+% Sep26, vr - pokapok : for json file checking  -- end
 
 % Prepare results directories 
 CONFIG.saveDataDir=fullfile(CONFIG.resultsDir,'data',filesep);

@@ -1,0 +1,135 @@
+{ 
+    "directories":
+    {
+        "comment":"fill with your path",
+        "LocodoxMainDir":"",
+        "DataDir":"",
+        "NCEPDataDir":"",
+        "WOADataDir":"",
+        "BathyDataDir":"",
+        "RefBddDir":"",
+        "resultsDir":""
+
+    },
+    "data_mode_selection":
+    {
+        "comment":"1 for mode Adjusted, 0 for mode Raw",
+        "DM_pres":1,
+        "DM_temp":1,
+        "DM_psal":1 
+    },
+    "QC_selection":
+    {
+        "comment":"select QC value(s) 1 good, 2 maybe good, 3 doubful, 4 bad",
+        "QC_O":[1,2,3],
+        "QC_P":[1,2],
+        "QC_T":[1,2],
+        "QC_S":[1,2,3]
+    },
+    "doxy_correction":
+    {
+        "general":
+        {
+            "comment": 
+            {
+                "presEff": "pressure effect 0 unactivate - 1 activate",
+                "R2threshold":"Linear correction R2 coefficient : treshold under which LOCODOX suggests to apply Constant correction",
+                "adjusted_error_abs":"(absolute): adjusted_error is a fixed value",
+                "adjusted_error_rel":"(relative): adjusted error is a % value:  doxy_adjusted + adjusted_error_rel*doxy_adjusted/100"
+            },
+            "presEff":0,
+            "R2threshold":0.80,
+            "adjusted_error_abs":1,
+            "adjusted_error_rel":1
+        },
+        "drift":
+        {
+            "comment":
+            {
+                "ok_inair_drift":"0 unactivate - 1 activate for drift calculation from WOA and for NCEP",
+                "drift_fitPolynomialDegree":"By default, the data drift is computed using the polynomial fitting (order 1, y ~ ax+b). The polynomial degree can be increased up to 3",
+                "drift_PWLF_N":"Number of linear segments for Piece wise linear fitting for Time Drift ",
+                "##_drift_depth_##":"Minimum/maximum depth and step for calculating drift"
+            },
+            "ok_inair_drift":1,
+            "drift_fitPolynomialDegree":1,
+            "drift_PWLF_N":2,
+            "drift_spec":0,
+            "drift_fittype":"NoApplication",
+            "min_drift_depth_surf":0,
+            "max_drift_depth_surf":25,
+            "step_drift_depth_surf":5,
+            "min_drift_depth_deep":1700,
+            "max_drift_depth_deep":2000,
+            "step_drift_depth_deep":100
+
+        },
+        "from_reference":
+        {
+            "comment":
+            {
+                "refUnit":"precise the unit of your reference data (most of the time in-situ CTD) mL/L, milliliter per liter, milliliter/L, mumol/m3, micromole per m3, mmol/m3, micromole/m3, mumol/L, micromole per liter, mmol/L, micromole/L, mg/L, milligram per liter, milligram/L, mumol/kg, micromole per kilo, mmol/kg, micromole per kilogram, micromole/kg",
+                "bddFile":"Reference In-Situ DataBase",
+                "RefArgoFile":"Reference data associated to a wmo"
+            },
+            "refUnit":"",
+            "bddFile":"",
+            "RefArgoFile":""
+        },
+        "from_inair":
+        {
+           "comment":
+           {
+            "isokC":"0 no carry over, we suppose that in air oxygen measurements are not biased by splash/ 1 with carry over",
+            "inWaterMC":"MC for the in-water samples, part of the surface sequence (or the profile sequence).(double, array)",
+            "inAirMC":"MC for the in-air samples, part of the surface sequence (double, array)",
+            "ncepDoUpdate":"0/1 unread/read the ftp website to update your NCEP",
+            "inAirMaxPresForTS":"maximum depth for TEMP and PSAL selection as surface temperature and surface salinity"
+           },
+           "isokC":1,
+           "inWaterMC":[690,710],
+           "inAirMC":[699,711,799],
+           "ncepDoUpdate":0,
+           "ncepYearStart":2014,
+           "ncepYearEnd":2023,
+           "inAirMaxPresForTS":20
+        },
+        "from_clim":
+        {
+            "comment":"fill information used for NetCDF history section (WOA_YEAR) and gain/drift calculation (WOAfile)",
+            "WOA_YEAR":"",
+            "WOA_file":""
+        }
+    },
+    "graphical_information":
+    {
+        "comment":
+        {
+            "savePlot": "1=yes, 0=no",
+            "savePlotFig":"Save figures as matlab .fig files",
+            "fontsize":"tunes the font size on the plot, for both screen display and saving plots",
+            "resolution":"0 : screen resolution, 100 : mid resolution, 300 : high resolution warning: the higher the resolution setting, the longer it takes to render your figure",
+            "formattype":"'-dpng', '-jpeg', '-ps',... all the fromattypeallowed by matlab for the print function (doc print for more information). in []."            
+        },
+        "savePlot":1,
+        "savePlotFig":0,
+        "fontsize":10,
+        "resolution":100,
+        "formattype":["-dpng"]
+    },
+    "mmap_information":
+    {
+        "comment":{
+            "M_MAP_ACTIVE":"1 >mmap plot, 0 ==> google_map plots",
+            "M_MAP_PLOT_BATHY": "0 unactivate /1 activate PLOTTING ==> Reading ETOPO2 File"
+        },
+        "M_MAP_ACTIVE":1,
+        "M_MAP_PLOT_BATHY":1
+    },
+    "online_requeriment":
+    {
+        "comment":"0 Open dialog box for questions, 1;%matlab prompt questions",
+        "onlineq":0
+    }
+
+}

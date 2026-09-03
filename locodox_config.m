@@ -366,7 +366,7 @@ CONFIG.adjusted_error_rel = 3;
 % -------------------------------------------------------------------------
 CONFIG.history_software = 'LOCODOX';
 CONFIG.history_reference = ['LOPS2020_WOA',WOA_YEAR];
-CONFIG.history_software_release = '4.4';
+CONFIG.history_software_release = '5.0';
 CONFIG.prefix = 'BD';
 
 % -------------------------------------------------------------------------
