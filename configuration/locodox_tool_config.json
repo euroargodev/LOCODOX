@@ -1,0 +1,24 @@
+{ 
+    "mask_file":
+    {
+        "maskFile":"landsea_masks.cdf",
+        "varMask":"landsea"
+    },
+    "logo_file":"locodox_logo.jpg",
+    "doxy_correction":
+    {
+        "from_inair":
+        {
+            "ncepFtp":"ftp.cdc.noaa.gov",
+            "ncepFtpDir":"Datasets/ncep.reanalysis/",
+            "ncepFtpSubDir":["surface","surface","surface"],
+            "ncepFiles":["slp","air.sig995","rhum.sig995"]
+        }
+    },
+    "tool_version":
+    {
+        "history_software":"LOCODOX",
+        "history_software_release":"5.0",
+        "prefix":"BD"
+    }
+}

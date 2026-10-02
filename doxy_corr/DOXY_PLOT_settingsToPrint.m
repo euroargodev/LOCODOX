@@ -43,6 +43,7 @@
 % HISTORY
 %   $created: 25/07/2018 $author: Emilie Brion, Altran Ouest
 %   $Revision: version $Date: $author:
+%           30.01.2025     fingure print + debug filename by Virginie Racape
 
 function [hFig] = DOXY_PLOT_settingsToPrint(hFig,Work,saveFile)
 
@@ -60,7 +61,18 @@ initPaperSize = get(hFig,'PaperSize');
 
 % =========================================================================  
 %% Modify the figure to make it printable
-% =========================================================================  
+% =========================================================================
+% set(hFig,'Units','normalized'); % Jan26, vr - pokapok, commented
+% set(hFig,'Visible','off');
+% set(hFig,'Position',[0 0 0.99 0.99]);
+% set(hFig,'Units','centimeters');
+% set(hFig,'PaperUnits','centimeters');
+% finalpos = get(hFig,'Position');
+% set(hFig,'PaperPosition',[0 0 finalpos(3:4)]);
+% set(hFig,'PaperSize',finalpos(3:4))
+% set(hFig, 'PaperPositionMode', 'auto') %02/07/19 marine 
+
+% Jan26, vr - pokapok : change to be screen independant
 set(hFig,'Visible','off');
 pos = get(hFig,'Position');
 figsize = pos(3:4);
@@ -78,10 +90,10 @@ set(hFig, 'PaperType','A4');
 if length(Work.formattype)>1
     for i = 1:length(Work.formattype)
         if isempty(strfind(saveFile,Work.formattype{i}))
-            saveFile_f=strcat(saveFile,strrep(Work.formattype{i},'-d','.'));
+            saveFile_f=strcat(saveFile,strrep(Work.formattype{i},'-d','.')); % Jan26, vr - pokapok : change file parameter
         end
         %figure(hFig);
-        print(hFig,Work.formattype{i},Work.resol,saveFile_f);
+        print(hFig,Work.formattype{i},Work.resol,saveFile_f); % Jan26, vr - pokapok : change file parameter
         if Work.savePlotFig
             suf=strrep(Work.formattype{i},'-d','.');
             saveFileFig=strrep(saveFile,suf,'.fig');
@@ -108,10 +120,10 @@ if length(Work.formattype)>1
     end
 else
     if isempty(strfind(saveFile,Work.formattype{1}))
-        saveFile_f=strcat(saveFile,strrep(Work.formattype{1},'-d','.'));
+        saveFile_f=strcat(saveFile,strrep(Work.formattype{1},'-d','.')); % Jan26, vr - pokapok : change file parameter
     end
     %figure(hFig);
-    print(hFig,Work.formattype{1},Work.resol,saveFile_f);
+    print(hFig,Work.formattype{1},Work.resol,saveFile_f); % Jan26, vr - pokapok : change file parameter
     if Work.savePlotFig
         suf=strrep(Work.formattype{1},'-d','.');
         saveFileFig=strrep(saveFile,suf,'.fig');

@@ -122,6 +122,7 @@
 %                               Cosmetic Changes "Drift" ==> "Time Drift"
 %            12/08/2024         Thierry Reynaud
 %                               transfert to Work.drift_PWLF
+%            30/01/2026         transfert deepondriftlevel information by Virginie Racape
 function [argo1Struct,argo2Struct,argo3Struct,argo4Struct,WOA, Work,goProg] = DOXY_woa_corr(CONFIG, ...
                 WOA, argo1Struct, argo2Struct, argo3Struct,argo4Struct, argo, argoWork, Work)
                
@@ -255,7 +256,7 @@ for n=1:4
     argoStruct.Work.(['FIT_slope_' Work.whichO2quantity]) = Work.(['FIT_slope_' Work.whichO2quantity]);
     argoStruct.Work.(['FIT_intercept_' Work.whichO2quantity]) = Work.(['FIT_intercept_' Work.whichO2quantity]);
     argoStruct.Work.whichDrift=Work.whichDrift;
-    if Work.DODRIFT == 1 && strcmp(Work.whichDrift,'WOA')
+    if Work.DODRIFT == 1 && strcmp(Work.whichDrift,'WOA') %jan26, vr - pokapok : add to complete repository and figure name
         argoStruct.Work.driftondeeplevels = Work.driftondeeplevels;
     end
     if isfield(Work,'ind_drift_stop')
